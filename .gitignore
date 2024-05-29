@@ -14,7 +14,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -24,9 +23,18 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
 *.out
 *.app
+
+.vs
+Build
+*.Log
+*.DuckLog
+DuckWorks/Run/Debug.json
+DuckWorks/Run/imgui.ini
+DuckWorks/Run/UserSettings.json
+
+!Optick.exe
