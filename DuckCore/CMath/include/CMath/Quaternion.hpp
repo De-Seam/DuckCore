@@ -28,6 +28,18 @@ struct Quat
 	Quat(const Vec3& i)
 		: Quat(i.x, i.y, i.z) {}
 
+	Quat(const Quat& inOther)
+		: x(inOther.x), y(inOther.y), z(inOther.z), w(inOther.w) {}
+
+	Quat& operator=(const Quat& inOther)
+	{
+		x = inOther.x;
+		y = inOther.y;
+		z = inOther.z;
+		w = inOther.w;
+		return *this;
+	}
+
 	Quat operator -() const { return {-x, -y, -z, -w}; }
 	Quat operator +(const Quat& i) const { return {x + i.x, y + i.y, z + i.z, w + i.w}; }
 	Quat operator -(const Quat& i) const { return {x - i.x, y - i.y, z - i.z, w - i.w}; }
@@ -91,7 +103,7 @@ struct Quat
 	}
 };
 
-inline Quat gNormalize(const Quat& q)
+Quat gNormalize(const Quat& q)
 {
 	float n = sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
 	if (n <= 0.f)
@@ -106,7 +118,7 @@ inline Quat gNormalize(const Quat& q)
 	};
 }
 
-inline Quat angle_axis(float angle, const Vec3& i)
+Quat angle_axis(float angle, const Vec3& i)
 {
 	float a(angle);
 	float s = std::sin(a * 0.5f);

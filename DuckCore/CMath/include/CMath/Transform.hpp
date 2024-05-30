@@ -1,5 +1,6 @@
 #pragma once
 #include <CMath/Vector.hpp>
+#include <CMath/Quaternion.hpp>
 
 struct Transform2D
 {

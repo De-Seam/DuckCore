@@ -3,7 +3,6 @@
 
 #include <cmath>
 #include <cassert>
-#include <cstdint>
 #include <string>
 
 
@@ -25,7 +24,7 @@ taType gMax(taType a, taType b)
 template<typename taType>
 taType clamp(taType x, taType a, taType b)
 {
-	return max(min(x, b), a);
+	return gMax(gMin(x, b), a);
 }
 
 template<typename taType>
@@ -51,6 +50,13 @@ struct IVec2
 
 	IVec2(const IVec2& i)
 		: IVec2(i.x, i.y) {}
+
+	IVec2& operator=(const IVec2& inOther)
+	{
+		x = inOther.x;
+		y = inOther.y;
+		return *this;
+	}
 
 	int32& operator[](size_t i)
 	{
@@ -89,8 +95,22 @@ struct Vec2
 	Vec2(const Vec2& i)
 		: Vec2(i.x, i.y) {}
 
+	Vec2& operator=(const Vec2& inOther)
+	{
+		x = inOther.x;
+		y = inOther.y;
+		return *this;
+	}
+
 	Vec2(const IVec2& i)
 		: x(static_cast<float>(i.x)), y(static_cast<float>(i.y)) {}
+
+	Vec2& operator=(const IVec2& inOther)
+	{
+		x = static_cast<float>(inOther.x);
+		y = static_cast<float>(inOther.y);
+		return *this;
+	}
 
 	float& operator[](size_t i)
 	{
@@ -168,6 +188,14 @@ struct Vec3
 	Vec3(const Vec3& i)
 		: Vec3(i.x, i.y, i.z) {}
 
+	Vec3& operator=(const Vec3& inOther)
+	{
+		x = inOther.x;
+		y = inOther.y;
+		z = inOther.z;
+		return *this;
+	}
+
 	float& operator[](size_t i)
 	{
 		assert(i < 3);
@@ -190,12 +218,12 @@ struct Vec3
 
 	bool operator==(const Vec3& i) { return x == i.x && y == i.y && z == i.z; }
 
-	[[nodiscard]] uint32_t get_argb() const
+	[[nodiscard]] uint32 get_argb() const
 	{
 		const float t_r = clamp<float>(x, 0, 1);
 		const float t_g = clamp<float>(y, 0, 1);
 		const float t_b = clamp<float>(z, 0, 1);
-		return 255 | (static_cast<uint8_t>(t_r * 255) << 16) | (static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<
+		return (uint32)255 | (static_cast<uint8_t>(t_r * 255) << 16) | (static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<
 			uint8_t>(t_b * 255));
 	}
 
@@ -237,6 +265,15 @@ struct alignas(4 * sizeof(float)) Vec4
 
 	Vec4(const Vec4& i)
 		: Vec4(i.x, i.y, i.z, i.w) {}
+
+	Vec4& operator=(const Vec4& inOther)
+	{
+		x = inOther.x;
+		y = inOther.y;
+		z = inOther.z;
+		w = inOther.w;
+		return *this;
+	}
 
 	Vec4(const Vec3& i)
 		: Vec4(i.x, i.y, i.z, 0.f) {}
@@ -304,6 +341,15 @@ struct alignas(4 * sizeof(float)) IVec4
 	IVec4(const IVec4& i)
 		: IVec4(i.x, i.y, i.z, i.w) {}
 
+	IVec4& operator=(const IVec4& inOther)
+	{
+		x = inOther.x;
+		y = inOther.y;
+		z = inOther.z;
+		w = inOther.w;
+		return *this;
+	}
+
 	IVec4(const IVec2& xy, const IVec2& zw)
 		: IVec4(xy.x, xy.y, zw.x, zw.y) {}
 
@@ -334,7 +380,7 @@ struct alignas(4 * sizeof(float)) IVec4
 	const IVec4& operator /=(const int32 i) { return *this = *this / i; }
 };
 
-inline Vec2 gNormalize(const Vec2& i)
+Vec2 gNormalize(const Vec2& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y);
 	assert(mag != 0.f && "Try using normalize_safe instead");
@@ -343,7 +389,7 @@ inline Vec2 gNormalize(const Vec2& i)
 }
 
 
-inline Vec2 gNormalizeSafe(const Vec2& i)
+Vec2 gNormalizeSafe(const Vec2& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y);
 	if (mag == 0.f)
@@ -352,7 +398,7 @@ inline Vec2 gNormalizeSafe(const Vec2& i)
 	return {i.x * inv, i.y * inv};
 }
 
-inline Vec3 gNormalize(const Vec3& i)
+Vec3 gNormalize(const Vec3& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	assert(mag != 0.f && "Try using normalize_safe instead");
@@ -360,7 +406,7 @@ inline Vec3 gNormalize(const Vec3& i)
 	return {i.x * inv, i.y * inv, i.z * inv};
 }
 
-inline Vec3 gNormalizeSafe(const Vec3& i)
+Vec3 gNormalizeSafe(const Vec3& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	if (mag == 0.f)
@@ -369,7 +415,7 @@ inline Vec3 gNormalizeSafe(const Vec3& i)
 	return {i.x * inv, i.y * inv, i.z * inv};
 }
 
-inline Vec4 gNormalize(const Vec4& i)
+Vec4 gNormalize(const Vec4& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	assert(mag != 0.f && "Try using normalize_safe instead");
@@ -377,7 +423,7 @@ inline Vec4 gNormalize(const Vec4& i)
 	return {i.x * inv, i.y * inv, i.z * inv, i.w * inv};
 }
 
-inline Vec4 gNormalizeSafe(const Vec4& i)
+Vec4 gNormalizeSafe(const Vec4& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	if (mag == 0.f)
@@ -386,7 +432,7 @@ inline Vec4 gNormalizeSafe(const Vec4& i)
 	return {i.x * inv, i.y * inv, i.z * inv, i.w * inv};
 }
 
-inline Vec2 gClamp2(Vec2 x, Vec2 a, Vec2 b)
+Vec2 gClamp2(Vec2 x, Vec2 a, Vec2 b)
 {
 	return
 	{
@@ -395,7 +441,7 @@ inline Vec2 gClamp2(Vec2 x, Vec2 a, Vec2 b)
 	};
 }
 
-inline IVec2 gClamp2(IVec2 x, IVec2 a, IVec2 b)
+IVec2 gClamp2(IVec2 x, IVec2 a, IVec2 b)
 {
 	return
 	{
@@ -404,7 +450,7 @@ inline IVec2 gClamp2(IVec2 x, IVec2 a, IVec2 b)
 	};
 }
 
-inline Vec2 gMax2(Vec2 a, Vec2 b)
+Vec2 gMax2(Vec2 a, Vec2 b)
 {
 	return
 	{
@@ -413,7 +459,7 @@ inline Vec2 gMax2(Vec2 a, Vec2 b)
 	};
 }
 
-inline Vec2 gMin2(Vec2 a, Vec2 b)
+Vec2 gMin2(Vec2 a, Vec2 b)
 {
 	return
 	{
@@ -422,12 +468,12 @@ inline Vec2 gMin2(Vec2 a, Vec2 b)
 	};
 }
 
-inline Vec2 gLerp2(Vec2 a, Vec2 b, float t)
+Vec2 gLerp2(Vec2 a, Vec2 b, float t)
 {
 	return a + (b - a) * t;
 }
 
-inline Vec3 gLerp3(Vec3 a, Vec3 b, float t)
+Vec3 gLerp3(Vec3 a, Vec3 b, float t)
 {
 	return a + (b - a) * t;
 }

@@ -19,6 +19,14 @@ struct Mat3
 	Mat3(const Mat3& i)
 		: x(i.x), y(i.y), z(i.z) {}
 
+	Mat3& operator=(const Mat3& inOther)
+	{
+		x = inOther.x;
+		y = inOther.y;
+		z = inOther.z;
+		return *this;
+	}
+
 	Vec3& operator[](size_t i)
 	{
 		assert(i < 3);
@@ -53,6 +61,15 @@ struct Mat4
 
 	Mat4(const Mat4& i)
 		: x(i.x), y(i.y), z(i.z), w(i.w) {}
+
+	Mat4& operator=(const Mat4& inOther)
+	{
+		x = inOther.x;
+		y = inOther.y;
+		z = inOther.z;
+		w = inOther.w;
+		return *this;
+	}
 
 	Mat4(const Mat3& i)
 		: x(i.x), y(i.y), z(i.z), w(0.f, 0.f, 0.f, 1.f) {}
@@ -143,13 +160,13 @@ struct Mat4
 	}
 };
 
-inline Mat4 translate(Mat4 matrix, Vec3 vector)
+Mat4 translate(Mat4 matrix, Vec3 vector)
 {
 	matrix.w = matrix.x * vector.x + matrix.y * vector.y + matrix.z * vector.z + matrix.w;
 	return matrix;
 }
 
-inline Mat4 scale(Mat4 matrix, Vec3 vector)
+Mat4 scale(Mat4 matrix, Vec3 vector)
 {
 	matrix[0] = matrix[0] * vector[0];
 	matrix[1] = matrix[1] * vector[1];
@@ -157,7 +174,7 @@ inline Mat4 scale(Mat4 matrix, Vec3 vector)
 	return matrix;
 }
 
-inline Mat4 rotate(Mat4 m, float angle, Vec3 v)
+Mat4 rotate(Mat4 m, float angle, Vec3 v)
 {
 	const float a = angle;
 	const float c = cos(a);
@@ -187,7 +204,7 @@ inline Mat4 rotate(Mat4 m, float angle, Vec3 v)
 	return result;
 }
 
-inline Mat4 get_perspective(float fovy, float aspect, float znear, float zfar)
+Mat4 get_perspective(float fovy, float aspect, float znear, float zfar)
 {
 	assert(abs(aspect - std::numeric_limits<float>::epsilon()) > 0.f);
 
@@ -202,7 +219,7 @@ inline Mat4 get_perspective(float fovy, float aspect, float znear, float zfar)
 	return result;
 }
 
-inline Mat4 look_at(const Vec3& eye, const Vec3& target, const Vec3& up)
+Mat4 look_at(const Vec3& eye, const Vec3& target, const Vec3& up)
 {
 	Vec3 zaxis = gNormalize(eye - target);
 	Vec3 xaxis = gNormalize(up.cross(zaxis));
@@ -227,7 +244,7 @@ inline Mat4 look_at(const Vec3& eye, const Vec3& target, const Vec3& up)
 	return view;
 }
 
-inline Mat3 to_mat3(const Quat& q)
+Mat3 to_mat3(const Quat& q)
 {
 	Mat3 result(1.f);
 	float qxx(q.x * q.x);
@@ -254,7 +271,7 @@ inline Mat3 to_mat3(const Quat& q)
 	return result;
 }
 
-inline Mat4 to_mat4(const Quat& q)
+Mat4 to_mat4(const Quat& q)
 {
 	Mat3 matrix3 = to_mat3(q);
 	Mat4 matrix4 = Mat4(matrix3);
