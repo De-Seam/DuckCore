@@ -1,11 +1,15 @@
 #include <Example/Example.hpp>
 
-#include <CMath/Math.hpp>
+#include <CContainers/String.hpp>
 
-#include <stdio.h>
+#include <cstdio>
 
 int main()
 {
+	String string = "Test";
+	string += " string";
+
+	printf("%s", *string);
 
 	return 0;
 }

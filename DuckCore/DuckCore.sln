@@ -4,10 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{106A96DF-9542-4109-9472-D8D98904961F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6C71FBD1-56DB-493B-ADA0-E66065190275} = {6C71FBD1-56DB-493B-ADA0-E66065190275}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Template", "Template\Template.vcxproj", "{B7B385AD-A2E7-48EB-9CF5-E403A559777A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuckCore", "DuckCore\DuckCore.vcxproj", "{6C71FBD1-56DB-493B-ADA0-E66065190275}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests", "UnitTests\UnitTests.vcxproj", "{28364E49-A265-450E-B311-7C1FB4538506}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +32,10 @@ Global
 		{6C71FBD1-56DB-493B-ADA0-E66065190275}.Debug|x64.Build.0 = Debug|x64
 		{6C71FBD1-56DB-493B-ADA0-E66065190275}.Release|x64.ActiveCfg = Release|x64
 		{6C71FBD1-56DB-493B-ADA0-E66065190275}.Release|x64.Build.0 = Release|x64
+		{28364E49-A265-450E-B311-7C1FB4538506}.Debug|x64.ActiveCfg = Debug|x64
+		{28364E49-A265-450E-B311-7C1FB4538506}.Debug|x64.Build.0 = Debug|x64
+		{28364E49-A265-450E-B311-7C1FB4538506}.Release|x64.ActiveCfg = Release|x64
+		{28364E49-A265-450E-B311-7C1FB4538506}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

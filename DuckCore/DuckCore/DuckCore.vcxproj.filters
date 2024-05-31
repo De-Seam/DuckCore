@@ -56,10 +56,13 @@
     <ClInclude Include="include\CUtilities\GUID.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\CContainers\String.h">
+    <ClInclude Include="include\CContainers\String.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\CUtilities\Assert.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CUnitTests\UnitTestBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -103,7 +103,7 @@
     <ClCompile Include="src\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\CContainers\String.h" />
+    <ClInclude Include="include\CContainers\String.hpp" />
     <ClInclude Include="include\CMath\HelperFunctions.hpp" />
     <ClInclude Include="include\CMath\Math.hpp" />
     <ClInclude Include="include\CMath\Matrix.hpp" />
@@ -113,6 +113,7 @@
     <ClInclude Include="include\CCore\Types.hpp" />
     <ClInclude Include="include\CMath\Vector.hpp" />
     <ClInclude Include="include\CRTTI\RTTIBaseClass.hpp" />
+    <ClInclude Include="include\CUnitTests\UnitTestBase.h" />
     <ClInclude Include="include\CUtilities\Assert.hpp" />
     <ClInclude Include="include\CUtilities\GUID.hpp" />
   </ItemGroup>

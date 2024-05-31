@@ -20,15 +20,19 @@ public:
 	bool operator!=(const String& inOther) const { return !(*this == inOther); }
 	bool operator!=(const char* inCharacters) const { return !(*this == inCharacters); }
 
+	String operator+(const String& inOther) const;
+	String& operator+=(const String& inOther);
+
 	uint64 Hash() const { return mHash; }
 
 	bool Contains(const char* inCharacters) const;
+
 private:
 	void SetCharacters(const char* inCharacters, uint32 inLength);
 
-	char* mCharacters;
-	uint32 mLength;
-	uint64 mHash;
+	char* mCharacters = nullptr;
+	uint32 mLength = 0;
+	uint64 mHash = 0;
 };
 
 uint64 gHash(const char* inCharacters, uint32 inLength, uint64 inSeed = 0);
