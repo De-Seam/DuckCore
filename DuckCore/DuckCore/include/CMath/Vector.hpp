@@ -1,5 +1,5 @@
 #pragma once
-#include <CMath/Types.hpp>
+#include <CCore/Types.hpp>
 
 #include <cmath>
 #include <cassert>

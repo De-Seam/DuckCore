@@ -1,5 +1,5 @@
 #pragma once
-#include <CMath/Types.hpp>
+#include <CCore/Types.hpp>
 
 //Random functions
 inline uint32 gWangHash(uint32 seed)

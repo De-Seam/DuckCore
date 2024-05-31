@@ -10,24 +10,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\CMath\HelperFunctions.hpp" />
-    <ClInclude Include="include\CMath\Quaternion.hpp" />
-    <ClInclude Include="include\CMath\Math.hpp" />
-    <ClInclude Include="include\CMath\Matrix.hpp" />
-    <ClInclude Include="include\CMath\Random.hpp" />
-    <ClInclude Include="include\CMath\Transform.hpp" />
-    <ClInclude Include="include\CMath\Types.hpp" />
-    <ClInclude Include="include\CMath\Vector.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\CMath\Math.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{02b21f02-35a4-4449-aea8-a0e7def4bd5d}</ProjectGuid>
-    <RootNamespace>CMath</RootNamespace>
+    <ProjectGuid>{6c71fbd1-56db-493b-ada0-e66065190275}</ProjectGuid>
+    <RootNamespace>DuckCore</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -54,7 +41,6 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="PropertySheet.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -83,12 +69,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build/Out/$(Platform)_$(Configuration)</AdditionalLibraryDirectories>
     </Lib>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -112,13 +94,28 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build/Out/$(Platform)_$(Configuration)</AdditionalLibraryDirectories>
     </Lib>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CContainers\String.cpp" />
+    <ClCompile Include="src\CMath\Math.cpp" />
+    <ClCompile Include="src\Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\CContainers\String.h" />
+    <ClInclude Include="include\CMath\HelperFunctions.hpp" />
+    <ClInclude Include="include\CMath\Math.hpp" />
+    <ClInclude Include="include\CMath\Matrix.hpp" />
+    <ClInclude Include="include\CMath\Quaternion.hpp" />
+    <ClInclude Include="include\CMath\Random.hpp" />
+    <ClInclude Include="include\CMath\Transform.hpp" />
+    <ClInclude Include="include\CCore\Types.hpp" />
+    <ClInclude Include="include\CMath\Vector.hpp" />
+    <ClInclude Include="include\CRTTI\RTTIBaseClass.hpp" />
+    <ClInclude Include="include\CUtilities\Assert.hpp" />
+    <ClInclude Include="include\CUtilities\GUID.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
