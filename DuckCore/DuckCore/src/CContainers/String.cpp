@@ -35,6 +35,8 @@ String& String::operator=(const String& inOther)
 	Clear();
 
 	SetCharacters(inOther.mCharacters, inOther.mLength);
+
+	return *this;
 }
 
 bool String::operator==(const String& inOther) const
