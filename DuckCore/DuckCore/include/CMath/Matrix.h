@@ -1,5 +1,5 @@
 #pragma once
-#include <CMath/Vector.hpp>
+#include <CMath/Vector.h>
 
 struct Mat3
 {
@@ -10,8 +10,7 @@ struct Mat3
 	Mat3(float i) :
 		x(i, 0, 0),
 		y(0, i, 0),
-		z(0, 0, i)
-	{}
+		z(0, 0, i) {}
 
 	Mat3(Vec3 x, Vec3 y, Vec3 z)
 		: x(x), y(y), z(z) {}

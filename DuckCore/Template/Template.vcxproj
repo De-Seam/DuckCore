@@ -108,7 +108,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\Example\Example.hpp" />
+    <ClInclude Include="include\Example\Example.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Example\Example.cpp" />

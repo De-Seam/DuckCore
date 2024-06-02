@@ -1,6 +1,6 @@
-#include <Example/Example.hpp>
+#include <Example/Example.h>
 
-#include <CContainers/String.hpp>
+#include <CContainers/String.h>
 
 #include <cstdio>
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <CMath/Vector.hpp>
+#include <CMath/Vector.h>
 
 struct Quat
 {

@@ -1,6 +1,6 @@
-#include <CContainers/String.hpp>
+#include <CContainers/String.h>
 
-#include <CUtilities/Assert.hpp>
+#include <CUtilities/Assert.h>
 
 #include <cstring>
 

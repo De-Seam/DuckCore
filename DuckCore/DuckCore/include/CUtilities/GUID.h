@@ -1,5 +1,6 @@
 #pragma once
-#include <CCore/Types.hpp>
+#include <CContainers/String.h>
+#include <CCore/Types.h>
 
 class GUID
 {
@@ -25,15 +26,15 @@ private:
 
 namespace std
 {
-	template<typename T>
-	struct hash;
+template<typename T>
+struct hash;
 
-	template<>
-	struct hash<GUID>
+template<>
+struct hash<GUID>
+{
+	size_t operator()(const GUID& inUID) const
 	{
-		size_t operator()(const GUID& inUID) const
-		{
-			return inUID;
-		}
-	};
+		return inUID;
+	}
+};
 }

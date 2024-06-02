@@ -1,10 +1,9 @@
 #pragma once
-#include <CCore/Types.hpp>
+#include <CCore/Types.h>
 
-#include <cmath>
 #include <cassert>
+#include <cmath>
 #include <string>
-
 
 #pragma warning (push)
 #pragma warning (disable : 4201) //to avoid nameless struct / union warning.
@@ -387,7 +386,6 @@ Vec2 gNormalize(const Vec2& i)
 	float inv = 1.f / mag;
 	return {i.x * inv, i.y * inv};
 }
-
 
 Vec2 gNormalizeSafe(const Vec2& i)
 {

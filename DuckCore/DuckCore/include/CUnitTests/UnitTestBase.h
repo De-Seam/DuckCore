@@ -4,7 +4,6 @@
 if (!(inCondition)) \
 { \
 	gAssert(false && "Condition failed: " #inCondition); \
-	gLog(ELogType::Error, "Condition failed: " #inCondition); \
 }
 
 class UnitTestBase

@@ -98,24 +98,28 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CContainers\HashMap.cpp" />
     <ClCompile Include="src\CContainers\String.cpp" />
     <ClCompile Include="src\CMath\Math.cpp" />
+    <ClCompile Include="src\CUtilities\GUID.cpp" />
     <ClCompile Include="src\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\CContainers\String.hpp" />
-    <ClInclude Include="include\CMath\HelperFunctions.hpp" />
-    <ClInclude Include="include\CMath\Math.hpp" />
-    <ClInclude Include="include\CMath\Matrix.hpp" />
-    <ClInclude Include="include\CMath\Quaternion.hpp" />
-    <ClInclude Include="include\CMath\Random.hpp" />
-    <ClInclude Include="include\CMath\Transform.hpp" />
-    <ClInclude Include="include\CCore\Types.hpp" />
-    <ClInclude Include="include\CMath\Vector.hpp" />
-    <ClInclude Include="include\CRTTI\RTTIBaseClass.hpp" />
+    <ClInclude Include="include\CContainers\HashMap.h" />
+    <ClInclude Include="include\CContainers\Pair.h" />
+    <ClInclude Include="include\CContainers\String.h" />
+    <ClInclude Include="include\CMath\HelperFunctions.h" />
+    <ClInclude Include="include\CMath\Math.h" />
+    <ClInclude Include="include\CMath\Matrix.h" />
+    <ClInclude Include="include\CMath\Quaternion.h" />
+    <ClInclude Include="include\CMath\Random.h" />
+    <ClInclude Include="include\CMath\Transform.h" />
+    <ClInclude Include="include\CCore\Types.h" />
+    <ClInclude Include="include\CMath\Vector.h" />
+    <ClInclude Include="include\CRTTI\RTTIBaseClass.h" />
     <ClInclude Include="include\CUnitTests\UnitTestBase.h" />
-    <ClInclude Include="include\CUtilities\Assert.hpp" />
-    <ClInclude Include="include\CUtilities\GUID.hpp" />
+    <ClInclude Include="include\CUtilities\Assert.h" />
+    <ClInclude Include="include\CUtilities\GUID.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

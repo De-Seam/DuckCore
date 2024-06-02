@@ -1,5 +1,5 @@
 #pragma once
-#include <CCore/Types.hpp>
+#include <CCore/Types.h>
 
 class String
 {
