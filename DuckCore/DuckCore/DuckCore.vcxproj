@@ -98,6 +98,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CAllocators\HeapAllocator.cpp" />
+    <ClCompile Include="src\CContainers\Array.cpp" />
     <ClCompile Include="src\CContainers\HashMap.cpp" />
     <ClCompile Include="src\CContainers\String.cpp" />
     <ClCompile Include="src\CMath\Math.cpp" />
@@ -105,6 +107,9 @@
     <ClCompile Include="src\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\CAllocators\AllocatorBase.h" />
+    <ClInclude Include="include\CAllocators\HeapAllocator.h" />
+    <ClInclude Include="include\CContainers\Array.h" />
     <ClInclude Include="include\CContainers\HashMap.h" />
     <ClInclude Include="include\CContainers\Pair.h" />
     <ClInclude Include="include\CContainers\String.h" />

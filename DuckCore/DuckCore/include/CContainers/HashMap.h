@@ -23,7 +23,11 @@ private:
 		bool mOccupied = false;
 		taKeyType mKey;
 		uint64 mHash;
-		taValueType mValue;
+		Array<taValueType> mValues;
+	};
+	struct HashNode
+	{
+		Aray<DataEntry> mData;
 	};
 
 	DataEntry* mData = nullptr;
