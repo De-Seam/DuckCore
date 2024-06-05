@@ -13,31 +13,31 @@ struct Transform2D
 		mHalfSize(32.f),
 		mRotation(0.f) {}
 
-	Transform2D(const Vec2& position, const Vec2& size, float rotation) :
-		mPosition(position),
-		mHalfSize(size),
-		mRotation(rotation) {}
+	Transform2D(const Vec2& inPosition, const Vec2& inSize, float inRotation) :
+		mPosition(inPosition),
+		mHalfSize(inSize),
+		mRotation(inRotation) {}
 
 	Transform2D(const Transform2D& i) = default;
-	Transform2D& operator=(const Transform2D& i) = default;
+	Transform2D& operator=(const Transform2D& inOther) = default;
 
-	Transform2D operator+(const Transform2D& i) const
+	Transform2D operator+(const Transform2D& inOther) const
 	{
 		return
 		{
-			mPosition + i.mPosition,
-			mHalfSize + i.mHalfSize,
-			mRotation + i.mRotation
+			mPosition + inOther.mPosition,
+			mHalfSize + inOther.mHalfSize,
+			mRotation + inOther.mRotation
 		};
 	}
 
-	Transform2D operator-(const Transform2D& i) const
+	Transform2D operator-(const Transform2D& inOther) const
 	{
 		return
 		{
-			mPosition - i.mPosition,
-			mHalfSize - i.mHalfSize,
-			mRotation - i.mRotation
+			mPosition - inOther.mPosition,
+			mHalfSize - inOther.mHalfSize,
+			mRotation - inOther.mRotation
 		};
 	}
 };

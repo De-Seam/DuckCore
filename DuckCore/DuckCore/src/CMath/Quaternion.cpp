@@ -1,42 +1,42 @@
 #include <CMath/Quaternion.h>
 #include <CMath/HelperFunctions.h>
 
-Vec3 Quat::rotate(const Vec3& v) const
+Vec3 Quat::Rotate(const Vec3& v) const
 {
-	Quat p(v.x, v.y, v.z, 0);
-	Quat q_inv(-x, -y, -z, w);
+	Quat p(v.mX, v.mY, v.mZ, 0);
+	Quat q_inv(-mX, -mY, -mZ, mW);
 	Quat result = (*this) * p * q_inv;
 
-	return Vec3(result.x, result.y, result.z);
+	return Vec3(result.mX, result.mY, result.mZ);
 }
 
-Vec3 Quat::get_euler() const
+Vec3 Quat::GetEuler() const
 {
 	Vec3 angles;
 
 	// yaw (z-axis rotation)
 	{
-		float siny_cosp = 2.f * (y * z + w * x);
-		float cosy_cosp = w * w - x * x - y * y + z * z;
+		float siny_cosp = 2.f * (mY * mZ + mW * mX);
+		float cosy_cosp = mW * mW - mX * mX - mY * mY + mZ * mZ;
 
-		angles.x = std::atan2(siny_cosp, cosy_cosp);
+		angles.mX = std::atan2(siny_cosp, cosy_cosp);
 	}
 
 	// pitch (y-axis rotation)
 	{
-		float sinp = 2.f * (w * y - z * x);
+		float sinp = 2.f * (mW * mY - mZ * mX);
 		if (std::abs(sinp) >= 1.f)
-			angles.y = std::copysign(Pi() / 2.f, sinp); // use 90 degrees if out of range
+			angles.mY = std::copysign(Pi() / 2.f, sinp); // use 90 degrees if out of range
 		else
-			angles.y = std::asin(sinp);
+			angles.mY = std::asin(sinp);
 	}
 
 	// roll (x-axis rotation)
 	{
-		float t_y = 2.f * (x * y + w * z);
-		float t_x = w * w + x * x - y * y - z * z;
+		float t_y = 2.f * (mX * mY + mW * mZ);
+		float t_x = mW * mW + mX * mX - mY * mY - mZ * mZ;
 
-		angles.z = std::atan2(t_y, t_x);
+		angles.mZ = std::atan2(t_y, t_x);
 	}
 
 	return angles;

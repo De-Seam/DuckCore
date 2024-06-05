@@ -3,7 +3,7 @@
 
 Mat4 gTranslate(Mat4 matrix, Vec3 vector)
 {
-	matrix.w = matrix.x * vector.x + matrix.y * vector.y + matrix.z * vector.z + matrix.w;
+	matrix.w = matrix.x * vector.mX + matrix.y * vector.mY + matrix.z * vector.mZ + matrix.w;
 	return matrix;
 }
 
@@ -63,24 +63,24 @@ Mat4 GetPerspective(float fovy, float aspect, float znear, float zfar)
 Mat4 gLookAt(const Vec3& eye, const Vec3& target, const Vec3& up)
 {
 	Vec3 zaxis = gNormalize(eye - target);
-	Vec3 xaxis = gNormalize(up.cross(zaxis));
-	Vec3 yaxis = zaxis.cross(xaxis);
+	Vec3 xaxis = gNormalize(up.Cross(zaxis));
+	Vec3 yaxis = zaxis.Cross(xaxis);
 
 	Mat4 view;
-	view[0][0] = xaxis.x;
-	view[1][0] = xaxis.y;
-	view[2][0] = xaxis.z;
-	view[3][0] = -xaxis.dot(eye);
+	view[0][0] = xaxis.mX;
+	view[1][0] = xaxis.mY;
+	view[2][0] = xaxis.mZ;
+	view[3][0] = -xaxis.Dot(eye);
 
-	view[0][1] = yaxis.x;
-	view[1][1] = yaxis.y;
-	view[2][1] = yaxis.z;
-	view[3][1] = -yaxis.dot(eye);
+	view[0][1] = yaxis.mX;
+	view[1][1] = yaxis.mY;
+	view[2][1] = yaxis.mZ;
+	view[3][1] = -yaxis.Dot(eye);
 
-	view[0][2] = zaxis.x;
-	view[1][2] = zaxis.y;
-	view[2][2] = zaxis.z;
-	view[3][2] = -zaxis.dot(eye);
+	view[0][2] = zaxis.mX;
+	view[1][2] = zaxis.mY;
+	view[2][2] = zaxis.mZ;
+	view[3][2] = -zaxis.Dot(eye);
 
 	return view;
 }
@@ -88,15 +88,15 @@ Mat4 gLookAt(const Vec3& eye, const Vec3& target, const Vec3& up)
 Mat3 gToMat3(const Quat& q)
 {
 	Mat3 result(1.f);
-	float qxx(q.x * q.x);
-	float qyy(q.y * q.y);
-	float qzz(q.z * q.z);
-	float qxz(q.x * q.z);
-	float qxy(q.x * q.y);
-	float qyz(q.y * q.z);
-	float qwx(q.w * q.x);
-	float qwy(q.w * q.y);
-	float qwz(q.w * q.z);
+	float qxx(q.mX * q.mX);
+	float qyy(q.mY * q.mY);
+	float qzz(q.mZ * q.mZ);
+	float qxz(q.mX * q.mZ);
+	float qxy(q.mX * q.mY);
+	float qyz(q.mY * q.mZ);
+	float qwx(q.mW * q.mX);
+	float qwy(q.mW * q.mY);
+	float qwz(q.mW * q.mZ);
 
 	result[0][0] = 1.f - 2.f * (qyy + qzz);
 	result[0][1] = 2.f * (qxy + qwz);

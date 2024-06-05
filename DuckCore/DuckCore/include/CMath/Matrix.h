@@ -123,25 +123,25 @@ struct Mat4
 		}
 
 #else
-		result.x.x = x.x * i.x.x + x.y * i.y.x + x.z * i.z.x + x.w * i.w.x;
-		result.x.y = x.x * i.x.y + x.y * i.y.y + x.z * i.z.y + x.w * i.w.y;
-		result.x.z = x.x * i.x.z + x.y * i.y.z + x.z * i.z.z + x.w * i.w.z;
-		result.x.w = x.x * i.x.w + x.y * i.y.w + x.z * i.z.w + x.w * i.w.w;
+		result.x.mX = x.mX * i.x.mX + x.mY * i.y.mX + x.mZ * i.z.mX + x.mW * i.w.mX;
+		result.x.mY = x.mX * i.x.mY + x.mY * i.y.mY + x.mZ * i.z.mY + x.mW * i.w.mY;
+		result.x.mZ = x.mX * i.x.mZ + x.mY * i.y.mZ + x.mZ * i.z.mZ + x.mW * i.w.mZ;
+		result.x.mW = x.mX * i.x.mW + x.mY * i.y.mW + x.mZ * i.z.mW + x.mW * i.w.mW;
 
-		result.y.x = y.x * i.x.x + y.y * i.y.x + y.z * i.z.x + y.w * i.w.x;
-		result.y.y = y.x * i.x.y + y.y * i.y.y + y.z * i.z.y + y.w * i.w.y;
-		result.y.z = y.x * i.x.z + y.y * i.y.z + y.z * i.z.z + y.w * i.w.z;
-		result.y.w = y.x * i.x.w + y.y * i.y.w + y.z * i.z.w + y.w * i.w.w;
+		result.y.mX = y.mX * i.x.mX + y.mY * i.y.mX + y.mZ * i.z.mX + y.mW * i.w.mX;
+		result.y.mY = y.mX * i.x.mY + y.mY * i.y.mY + y.mZ * i.z.mY + y.mW * i.w.mY;
+		result.y.mZ = y.mX * i.x.mZ + y.mY * i.y.mZ + y.mZ * i.z.mZ + y.mW * i.w.mZ;
+		result.y.mW = y.mX * i.x.mW + y.mY * i.y.mW + y.mZ * i.z.mW + y.mW * i.w.mW;
 
-		result.z.x = z.x * i.x.x + z.y * i.y.x + z.z * i.z.x + z.w * i.w.x;
-		result.z.y = z.x * i.x.y + z.y * i.y.y + z.z * i.z.y + z.w * i.w.y;
-		result.z.z = z.x * i.x.z + z.y * i.y.z + z.z * i.z.z + z.w * i.w.z;
-		result.z.w = z.x * i.x.w + z.y * i.y.w + z.z * i.z.w + z.w * i.w.w;
+		result.z.mX = z.mX * i.x.mX + z.mY * i.y.mX + z.mZ * i.z.mX + z.mW * i.w.mX;
+		result.z.mY = z.mX * i.x.mY + z.mY * i.y.mY + z.mZ * i.z.mY + z.mW * i.w.mY;
+		result.z.mZ = z.mX * i.x.mZ + z.mY * i.y.mZ + z.mZ * i.z.mZ + z.mW * i.w.mZ;
+		result.z.mW = z.mX * i.x.mW + z.mY * i.y.mW + z.mZ * i.z.mW + z.mW * i.w.mW;
 
-		result.w.x = w.x * i.x.x + w.y * i.y.x + w.z * i.z.x + w.w * i.w.x;
-		result.w.y = w.x * i.x.y + w.y * i.y.y + w.z * i.z.y + w.w * i.w.y;
-		result.w.z = w.x * i.x.z + w.y * i.y.z + w.z * i.z.z + w.w * i.w.z;
-		result.w.w = w.x * i.x.w + w.y * i.y.w + w.z * i.z.w + w.w * i.w.w;
+		result.w.mX = w.mX * i.x.mX + w.mY * i.y.mX + w.mZ * i.z.mX + w.mW * i.w.mX;
+		result.w.mY = w.mX * i.x.mY + w.mY * i.y.mY + w.mZ * i.z.mY + w.mW * i.w.mY;
+		result.w.mZ = w.mX * i.x.mZ + w.mY * i.y.mZ + w.mZ * i.z.mZ + w.mW * i.w.mZ;
+		result.w.mW = w.mX * i.x.mW + w.mY * i.y.mW + w.mZ * i.z.mW + w.mW * i.w.mW;
 #endif
 		return result;
 	}
@@ -150,14 +150,14 @@ struct Mat4
 
 	std::string to_string()
 	{
-		return std::to_string(x.x) + " : " + std::to_string(x.y) + " : " + std::to_string(x.z) + " : " +
-			std::to_string(x.w) + "\n" +
-			std::to_string(y.x) + " : " + std::to_string(y.y) + " : " + std::to_string(y.z) + " : " +
-			std::to_string(y.w) + "\n" +
-			std::to_string(z.x) + " : " + std::to_string(z.y) + " : " + std::to_string(z.z) + " : " +
-			std::to_string(z.w) + "\n" +
-			std::to_string(w.x) + " : " + std::to_string(w.y) + " : " + std::to_string(w.z) + " : " +
-			std::to_string(w.w) + "\n";
+		return std::to_string(x.mX) + " : " + std::to_string(x.mY) + " : " + std::to_string(x.mZ) + " : " +
+			std::to_string(x.mW) + "\n" +
+			std::to_string(y.mX) + " : " + std::to_string(y.mY) + " : " + std::to_string(y.mZ) + " : " +
+			std::to_string(y.mW) + "\n" +
+			std::to_string(z.mX) + " : " + std::to_string(z.mY) + " : " + std::to_string(z.mZ) + " : " +
+			std::to_string(z.mW) + "\n" +
+			std::to_string(w.mX) + " : " + std::to_string(w.mY) + " : " + std::to_string(w.mZ) + " : " +
+			std::to_string(w.mW) + "\n";
 	}
 };
 
