@@ -26,7 +26,7 @@ Vec3 Quat::GetEuler() const
 	{
 		float sinp = 2.f * (mW * mY - mZ * mX);
 		if (std::abs(sinp) >= 1.f)
-			angles.mY = std::copysign(Pi() / 2.f, sinp); // use 90 degrees if out of range
+			angles.mY = std::copysign(gPi() / 2.f, sinp); // use 90 degrees if out of range
 		else
 			angles.mY = std::asin(sinp);
 	}
