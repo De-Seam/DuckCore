@@ -1,4 +1,5 @@
 #pragma once
+#include <CContainers/Array.h>
 #include <CContainers/Pair.h>
 #include <CCore/Types.h>
 
@@ -27,7 +28,7 @@ private:
 	};
 	struct HashNode
 	{
-		Aray<DataEntry> mData;
+		Array<DataEntry> mData;
 	};
 
 	DataEntry* mData = nullptr;

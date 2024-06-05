@@ -103,6 +103,8 @@
     <ClCompile Include="src\CContainers\HashMap.cpp" />
     <ClCompile Include="src\CContainers\String.cpp" />
     <ClCompile Include="src\CMath\Math.cpp" />
+    <ClCompile Include="src\CMath\Matrix.cpp" />
+    <ClCompile Include="src\CMath\Quaternion.cpp" />
     <ClCompile Include="src\CUtilities\GUID.cpp" />
     <ClCompile Include="src\Source.cpp" />
   </ItemGroup>

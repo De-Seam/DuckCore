@@ -67,7 +67,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/DuckCore/Build/Out/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)DuckCore/Build/Out/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
       <AdditionalDependencies>DuckCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
@@ -94,7 +94,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/DuckCore/Build/Out/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)DuckCore/Build/Out/$(Platform)_$(Configuration)/</AdditionalLibraryDirectories>
       <AdditionalDependencies>DuckCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>

@@ -16,7 +16,7 @@ GUID::GUID(const String& inGUIDString)
 	if (sscanf_s(*inGUIDString, "%4x-%4x-%4x-%4x", &parts[0], &parts[1], &parts[2], &parts[3]) != 4)
 	{
 		//gLog(ELogType::Error, "Invalid GUID format!");
-		gAssert(false, "Invalid GUID format!");
+		gAssert(false && "Invalid GUID format!");
 		return;
 	}
 

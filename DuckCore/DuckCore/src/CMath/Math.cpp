@@ -1,1 +1,1 @@
-#include <CMath/Math.hpp>
+#include <CMath/Math.h>

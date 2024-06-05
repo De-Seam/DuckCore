@@ -19,7 +19,7 @@ taValueType* HashMap<taKeyType, taValueType>::Find(const taKeyType& inKey)
 	uint64 hash = gHash(inKey);
 	uint32 initial_index = hash % mCapacity;
 	uint32 index = initial_index;
-	DataEntry& entry = mData[index]
+	DataEntry& entry = mData[index];
 	while (entry.mOccupied && entry.mHash != hash && entry.mHash % mCapacity == initial_index)
 	{
 		index = (index + 1) % mCapacity;
@@ -41,15 +41,10 @@ taValueType* HashMap<taKeyType, taValueType>::Find(const taKeyType& inKey)
 template<typename taKeyType, typename taValueType>
 void HashMap<taKeyType, taValueType>::Add(const taKeyType& inKey, const taValueType& inValue)
 {
-	if (mSize == mCapacity)
-	{
-		Expand();
-	}
-
 	uint64 hash = gHash(inKey);
 	uint32 initial_index = hash % mCapacity;
 	uint32 index = initial_index;
-	DataEntry& entry = mData[index]
+	DataEntry& entry = mData[index];
 	while (entry.mOccupied && entry.mHash != hash && entry.mHash % mCapacity == initial_index)
 	{
 		index = (index + 1) % mCapacity;
@@ -93,5 +88,5 @@ void HashMap<taKeyType, taValueType>::Resize(uint32 inNewSize)
 
 	// Set new data
 	mData = new_data;
-	mSize = inNewSize;
+	mCapacity = inNewSize;
 }
