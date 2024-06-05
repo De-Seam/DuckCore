@@ -5,7 +5,7 @@ template<typename taType>
 class AllocatorBase
 {
 public:
-	virtual taType* Allocate() = 0;
+	virtual taType* Allocate(uint32 inCount = 0) = 0;
 	virtual void Free(taType* inPtr) = 0;
 
 protected:

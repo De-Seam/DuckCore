@@ -9,19 +9,19 @@
 #pragma warning (disable : 4201) //to avoid nameless struct / union warning.
 
 template<typename taType>
-taType gMin(taType a, taType b)
+inline taType gMin(taType a, taType b)
 {
 	return ((a) < (b) ? (a) : (b));
 }
 
 template<typename taType>
-taType gMax(taType a, taType b)
+inline taType gMax(taType a, taType b)
 {
 	return ((a) > (b) ? (a) : (b));
 }
 
 template<typename taType>
-taType clamp(taType x, taType a, taType b)
+inline taType gClamp(taType x, taType a, taType b)
 {
 	return gMax(gMin(x, b), a);
 }
@@ -219,18 +219,18 @@ struct Vec3
 
 	[[nodiscard]] uint32 get_argb() const
 	{
-		const float t_r = clamp<float>(x, 0, 1);
-		const float t_g = clamp<float>(y, 0, 1);
-		const float t_b = clamp<float>(z, 0, 1);
+		const float t_r = gClamp<float>(x, 0, 1);
+		const float t_g = gClamp<float>(y, 0, 1);
+		const float t_b = gClamp<float>(z, 0, 1);
 		return (uint32)255 | (static_cast<uint8_t>(t_r * 255) << 16) | (static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<
 			uint8_t>(t_b * 255));
 	}
 
 	[[nodiscard]] uint32_t get_rgba() const
 	{
-		const float t_r = clamp<float>(x, 0, 1);
-		const float t_g = clamp<float>(y, 0, 1);
-		const float t_b = clamp<float>(z, 0, 1);
+		const float t_r = gClamp<float>(x, 0, 1);
+		const float t_g = gClamp<float>(y, 0, 1);
+		const float t_b = gClamp<float>(z, 0, 1);
 		return static_cast<uint32_t>((static_cast<uint8_t>(t_r * 255) << 24) | (static_cast<uint8_t>(t_g * 255) << 16) |
 			(static_cast<uint8_t>(t_b * 255) << 8) | 255);
 	}
@@ -305,20 +305,20 @@ struct alignas(4 * sizeof(float)) Vec4
 
 	[[nodiscard]] uint32_t get_argb() const
 	{
-		const float t_a = clamp<float>(w, 0, 1);
-		const float t_r = clamp<float>(x, 0, 1);
-		const float t_g = clamp<float>(y, 0, 1);
-		const float t_b = clamp<float>(z, 0, 1);
+		const float t_a = gClamp<float>(w, 0, 1);
+		const float t_r = gClamp<float>(x, 0, 1);
+		const float t_g = gClamp<float>(y, 0, 1);
+		const float t_b = gClamp<float>(z, 0, 1);
 		return static_cast<uint32_t>((static_cast<uint8_t>(t_a * 255) << 24) | (static_cast<uint8_t>(t_r * 255) << 16) |
 			(static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<uint8_t>(t_b * 255)));
 	}
 
 	[[nodiscard]] uint32_t get_rgba() const
 	{
-		const float t_a = clamp<float>(w, 0, 1);
-		const float t_r = clamp<float>(x, 0, 1);
-		const float t_g = clamp<float>(y, 0, 1);
-		const float t_b = clamp<float>(z, 0, 1);
+		const float t_a = gClamp<float>(w, 0, 1);
+		const float t_r = gClamp<float>(x, 0, 1);
+		const float t_g = gClamp<float>(y, 0, 1);
+		const float t_b = gClamp<float>(z, 0, 1);
 		return static_cast<uint32_t>((static_cast<uint8_t>(t_r * 255) << 24) | (static_cast<uint8_t>(t_g * 255) << 16) |
 			(static_cast<uint8_t>(t_b * 255) << 8) | (static_cast<uint8_t>(t_a * 255)));
 	}
@@ -379,7 +379,7 @@ struct alignas(4 * sizeof(float)) IVec4
 	const IVec4& operator /=(const int32 i) { return *this = *this / i; }
 };
 
-Vec2 gNormalize(const Vec2& i)
+inline Vec2 gNormalize(const Vec2& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y);
 	assert(mag != 0.f && "Try using normalize_safe instead");
@@ -387,7 +387,7 @@ Vec2 gNormalize(const Vec2& i)
 	return {i.x * inv, i.y * inv};
 }
 
-Vec2 gNormalizeSafe(const Vec2& i)
+inline Vec2 gNormalizeSafe(const Vec2& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y);
 	if (mag == 0.f)
@@ -396,7 +396,7 @@ Vec2 gNormalizeSafe(const Vec2& i)
 	return {i.x * inv, i.y * inv};
 }
 
-Vec3 gNormalize(const Vec3& i)
+inline Vec3 gNormalize(const Vec3& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	assert(mag != 0.f && "Try using normalize_safe instead");
@@ -404,7 +404,7 @@ Vec3 gNormalize(const Vec3& i)
 	return {i.x * inv, i.y * inv, i.z * inv};
 }
 
-Vec3 gNormalizeSafe(const Vec3& i)
+inline Vec3 gNormalizeSafe(const Vec3& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	if (mag == 0.f)
@@ -413,7 +413,7 @@ Vec3 gNormalizeSafe(const Vec3& i)
 	return {i.x * inv, i.y * inv, i.z * inv};
 }
 
-Vec4 gNormalize(const Vec4& i)
+inline Vec4 gNormalize(const Vec4& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	assert(mag != 0.f && "Try using normalize_safe instead");
@@ -421,7 +421,7 @@ Vec4 gNormalize(const Vec4& i)
 	return {i.x * inv, i.y * inv, i.z * inv, i.w * inv};
 }
 
-Vec4 gNormalizeSafe(const Vec4& i)
+inline Vec4 gNormalizeSafe(const Vec4& i)
 {
 	float mag = std::sqrt(i.x * i.x + i.y * i.y + i.z * i.z);
 	if (mag == 0.f)
@@ -430,25 +430,25 @@ Vec4 gNormalizeSafe(const Vec4& i)
 	return {i.x * inv, i.y * inv, i.z * inv, i.w * inv};
 }
 
-Vec2 gClamp2(Vec2 x, Vec2 a, Vec2 b)
+inline Vec2 gClamp2(Vec2 x, Vec2 a, Vec2 b)
 {
 	return
 	{
-		clamp(x.x, a.x, b.x),
-		clamp(x.y, a.y, b.y)
+		gClamp(x.x, a.x, b.x),
+		gClamp(x.y, a.y, b.y)
 	};
 }
 
-IVec2 gClamp2(IVec2 x, IVec2 a, IVec2 b)
+inline IVec2 gClamp2(IVec2 x, IVec2 a, IVec2 b)
 {
 	return
 	{
-		clamp(x.x, a.x, b.x),
-		clamp(x.y, a.y, b.y)
+		gClamp(x.x, a.x, b.x),
+		gClamp(x.y, a.y, b.y)
 	};
 }
 
-Vec2 gMax2(Vec2 a, Vec2 b)
+inline Vec2 gMax2(Vec2 a, Vec2 b)
 {
 	return
 	{
@@ -457,7 +457,7 @@ Vec2 gMax2(Vec2 a, Vec2 b)
 	};
 }
 
-Vec2 gMin2(Vec2 a, Vec2 b)
+inline Vec2 gMin2(Vec2 a, Vec2 b)
 {
 	return
 	{
@@ -466,12 +466,12 @@ Vec2 gMin2(Vec2 a, Vec2 b)
 	};
 }
 
-Vec2 gLerp2(Vec2 a, Vec2 b, float t)
+inline Vec2 gLerp2(Vec2 a, Vec2 b, float t)
 {
 	return a + (b - a) * t;
 }
 
-Vec3 gLerp3(Vec3 a, Vec3 b, float t)
+inline Vec3 gLerp3(Vec3 a, Vec3 b, float t)
 {
 	return a + (b - a) * t;
 }
