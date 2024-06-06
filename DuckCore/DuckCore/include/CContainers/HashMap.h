@@ -15,21 +15,17 @@ public:
 
 private:
 	void Expand();
-	void Resize(uint32 inNewSize);
+	void Resize(uint32 inNewCapacity);
 
 	uint32 mCapacity = 0;
 
-	struct DataEntry
-	{
-		bool mOccupied = false;
-		taKeyType mKey;
-		uint64 mHash;
-		Array<taValueType> mValues;
-	};
 	struct HashNode
 	{
-		Array<DataEntry> mData;
+		HashNode* mNext = nullptr;
+		taKeyType mKey;
+		uint64 mHash = 0; ///< 0 means empty
+		taValueType mValue;
 	};
 
-	DataEntry* mData = nullptr;
+	HashNode* mData = nullptr;
 };

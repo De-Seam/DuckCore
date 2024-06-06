@@ -5,8 +5,8 @@ HashMap<taKeyType, taValueType>::~HashMap()
 {
 	for (uint64 i = 0; i < mCapacity; i++)
 	{
-		DataEntry& data_entry = mData[i];
-		if (data_entry.mOccupied)
+		HashNode& data_entry = mData[i];
+		if (data_entry.mHash != 0)
 			~data_entry();
 	}
 
@@ -17,43 +17,40 @@ template<typename taKeyType, typename taValueType>
 taValueType* HashMap<taKeyType, taValueType>::Find(const taKeyType& inKey)
 {
 	uint64 hash = gHash(inKey);
-	uint32 initial_index = hash % mCapacity;
-	uint32 index = initial_index;
-	DataEntry& entry = mData[index];
-	while (entry.mOccupied && entry.mHash != hash && entry.mHash % mCapacity == initial_index)
+	uint32 index = hash % mCapacity;
+	HashNode& entry = mData[index];
+
+	while (entry.mHash != 0)
 	{
-		index = (index + 1) % mCapacity;
-		if (index >= mCapacity)
-			return nullptr;
-		entry = mData[index];
+		if (entry.mHash == hash)
+		{
+			gAssert(entry.mKey == inKey && "Hash Collision");
+			return &entry.mValue;
+		}
+		if (entry.mNext == nullptr)
+			break;
+
+		entry = *entry.mNext;
 	}
 
-	if (mData[index].first == inKey)
-	{
-		return &entry.mValue;
-	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 template<typename taKeyType, typename taValueType>
 void HashMap<taKeyType, taValueType>::Add(const taKeyType& inKey, const taValueType& inValue)
 {
 	uint64 hash = gHash(inKey);
-	uint32 initial_index = hash % mCapacity;
-	uint32 index = initial_index;
+	uint32 index = hash % mCapacity;
 	DataEntry& entry = mData[index];
-	while (entry.mOccupied && entry.mHash != hash && entry.mHash % mCapacity == initial_index)
+	while (entry.mHash != 0)
 	{
-		index = (index + 1) % mCapacity;
-		entry = mData[index];
+		if (entry.mNext == nullptr)
+			entry.mNext = new HashNode;
+		entry = *entry.mNext;
 	}
 
-	entry.mOccupied = true;
-	entry.mHash = hash;
 	entry.mKey = inKey;
+	entry.mHash = hash;
 	entry.mValue = inValue;
 }
 
@@ -64,20 +61,28 @@ void HashMap<taKeyType, taValueType>::Expand()
 }
 
 template<typename taKeyType, typename taValueType>
-void HashMap<taKeyType, taValueType>::Resize(uint32 inNewSize)
+void HashMap<taKeyType, taValueType>::Resize(uint32 inNewCapacity)
 {
 	// Create new data array
-	DataEntry* new_data = new DataEntry[inNewSize];
+	HashNode* new_data = new HashNode[inNewCapacity];
 
 	// Copy old data to new data
 	for (uint32 i = 0; i < mCapacity; i++)
 	{
+		HashNode& entry = mData[i];
+		if (entry.mHash == 0)
+			continue;
+
+		uint32 new_index = entry.mHash % inNewCapacity;
+		new_data[new_index] = entry;
+		new_data[new_index].mNext = nullptr;
+
 		if (!mData[i].mOccupied)
 		{
-			uint32 new_index = mData[i].mHash % inNewSize;
+			uint32 new_index = mData[i].mHash % inNewCapacity;
 			while (new_data[new_index].mKey != 0)
 			{
-				new_index = (new_index + 1) % inNewSize;
+				new_index = (new_index + 1) % inNewCapacity;
 			}
 			new_data[new_index] = mData[i];
 		}
@@ -88,5 +93,5 @@ void HashMap<taKeyType, taValueType>::Resize(uint32 inNewSize)
 
 	// Set new data
 	mData = new_data;
-	mCapacity = inNewSize;
+	mCapacity = inNewCapacity;
 }
