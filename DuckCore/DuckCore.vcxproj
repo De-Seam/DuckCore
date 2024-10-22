@@ -13,8 +13,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{b7b385ad-a2e7-48eb-9cf5-e403a559777a}</ProjectGuid>
-    <RootNamespace>Template</RootNamespace>
+    <ProjectGuid>{6c71fbd1-56db-493b-ada0-e66065190275}</ProjectGuid>
+    <RootNamespace>DuckCore</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -44,12 +44,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(ProjectDir)Build/Out/$(Platform)_$(Configuration)/</OutDir>
-    <IntDir>$(ProjectDir)Build/Int/$(Platform)_$(Configuration)/</IntDir>
+    <OutDir>$(SolutionDir)Build/Out/$(ProjectName)/$(Platform)_$(Configuration)/</OutDir>
+    <IntDir>$(SolutionDir)Build/Int/$(ProjectName)/$(Platform)_$(Configuration)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(ProjectDir)Build/Out/$(Platform)_$(Configuration)/</OutDir>
-    <IntDir>$(ProjectDir)Build/Int/$(Platform)_$(Configuration)/</IntDir>
+    <OutDir>$(SolutionDir)Build/Out/$(ProjectName)/$(Platform)_$(Configuration)/</OutDir>
+    <IntDir>$(SolutionDir)Build/Int/$(ProjectName)/$(Platform)_$(Configuration)/</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -59,7 +59,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
@@ -69,13 +69,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build/Out/$(Platform)_$(Configuration)</AdditionalLibraryDirectories>
     </Lib>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -87,7 +82,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
@@ -99,19 +94,40 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build/Out/$(Platform)_$(Configuration)</AdditionalLibraryDirectories>
     </Lib>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\Example\Example.h" />
+    <ClCompile Include="src\CAllocators\HeapAllocator.cpp" />
+    <ClCompile Include="src\CContainers\Array.cpp" />
+    <ClCompile Include="src\CContainers\HashMap.cpp" />
+    <ClCompile Include="src\CContainers\String.cpp" />
+    <ClCompile Include="src\CMath\Math.cpp" />
+    <ClCompile Include="src\CMath\Matrix.cpp" />
+    <ClCompile Include="src\CMath\Quaternion.cpp" />
+    <ClCompile Include="src\CUtilities\GUID.cpp" />
+    <ClCompile Include="src\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Example\Example.cpp" />
+    <ClInclude Include="Core\Assert.h" />
+    <ClInclude Include="include\CAllocators\AllocatorBase.h" />
+    <ClInclude Include="include\CAllocators\HeapAllocator.h" />
+    <ClInclude Include="include\CContainers\Array.h" />
+    <ClInclude Include="include\CContainers\HashMap.h" />
+    <ClInclude Include="include\CContainers\Pair.h" />
+    <ClInclude Include="include\CContainers\String.h" />
+    <ClInclude Include="include\CMath\HelperFunctions.h" />
+    <ClInclude Include="include\CMath\Math.h" />
+    <ClInclude Include="include\CMath\Matrix.h" />
+    <ClInclude Include="include\CMath\Quaternion.h" />
+    <ClInclude Include="include\CMath\Random.h" />
+    <ClInclude Include="include\CMath\Transform.h" />
+    <ClInclude Include="include\CCore\Types.h" />
+    <ClInclude Include="include\CMath\Vector.h" />
+    <ClInclude Include="include\CRTTI\RTTIBaseClass.h" />
+    <ClInclude Include="include\CUnitTests\UnitTestBase.h" />
+    <ClInclude Include="include\CUtilities\Assert.h" />
+    <ClInclude Include="include\CUtilities\GUID.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -98,5 +98,8 @@
     <ClInclude Include="include\CAllocators\HeapAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Assert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

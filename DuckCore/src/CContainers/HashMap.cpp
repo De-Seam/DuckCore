@@ -41,7 +41,7 @@ void HashMap<taKeyType, taValueType>::Add(const taKeyType& inKey, const taValueT
 {
 	uint64 hash = gHash(inKey);
 	uint32 index = hash % mCapacity;
-	DataEntry& entry = mData[index];
+	HashNode& entry = mData[index];
 	while (entry.mHash != 0)
 	{
 		if (entry.mNext == nullptr)
