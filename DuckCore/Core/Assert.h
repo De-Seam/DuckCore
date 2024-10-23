@@ -8,6 +8,8 @@
 
 void gLog(const char* inMessage) {}
 
+#ifdef _ASSERTS
+
 // Alteratively we could use the same "default" message for both "WITH_MSG" and "NO_MSG" and
 // provide support for custom formatting by concatenating the formatting string instead of having the format inside the default message
 #define INTERNAL_ASSERT_IMPL(check, msg, ...) do { if(!(check)) { gLog(msg); BREAKPOINT(); } } while(false)
@@ -19,3 +21,9 @@ void gLog(const char* inMessage) {}
 
 // Currently accepts at least the condition and one additional parameter (the message) being optional
 #define gAssert(...) EXPAND_MACRO( INTERNAL_ASSERT_GET_MACRO(__VA_ARGS__)(__VA_ARGS__) )
+
+#else
+
+#define gAssert(...)
+
+#endif
