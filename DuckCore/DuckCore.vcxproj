@@ -98,13 +98,15 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Containers\Array.cpp" />
+    <ClCompile Include="Containers\String.cpp" />
     <ClCompile Include="Core.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
     <ClInclude Include="Containers\Array.h" />
+    <ClInclude Include="Containers\String.h" />
     <ClInclude Include="Core\Assert.h" />
+    <ClInclude Include="Core\Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
