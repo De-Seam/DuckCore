@@ -21,9 +21,11 @@ void gLog(const char* inMessage) {}
 
 // Currently accepts at least the condition and one additional parameter (the message) being optional
 #define gAssert(...) EXPAND_MACRO( INTERNAL_ASSERT_GET_MACRO(__VA_ARGS__)(__VA_ARGS__) )
+#define gVerify(x) gAssert(x)
 
 #else
 
 #define gAssert(...)
+#define gVerify(x) x
 
 #endif

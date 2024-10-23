@@ -1,6 +1,7 @@
 #pragma once
 // Core includes
 #include <DuckCore/Config.h>
+#include <DuckCore/Core/Assert.h>
 #include <DuckCore/Core/Types.h>
 
 // Std includes
@@ -17,7 +18,6 @@ public:
 	String(const char* inString) : mString(inString) {}
 	String(const std::string& inString) : mString(inString) {}
 
-	operator std::string&() { return mString; }
 	operator const std::string& () const { return mString; }
 
 	bool operator==(const String& inOther) const { return mString == inOther.mString; }
@@ -39,7 +39,8 @@ inline String String::sFormatted(const char* inFormat, ...)
 	va_start(args, inFormat);
 
 	char buffer[1024];
-	vsnprintf(buffer, sizeof(buffer), inFormat, args);
+	int num_chars = vsnprintf(buffer, sizeof(buffer), inFormat, args);
+    gAssert(num_chars >= 0 && num_chars <= sizeof(buffer));
 
 	va_end(args);
 
