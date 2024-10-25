@@ -41,5 +41,14 @@
     <ClInclude Include="Containers\HashMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Containers\UniquePtr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\NoCopy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
