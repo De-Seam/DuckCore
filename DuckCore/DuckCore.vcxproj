@@ -102,6 +102,7 @@
   <ItemGroup>
     <ClCompile Include="Containers\String.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Math\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
@@ -110,6 +111,13 @@
     <ClInclude Include="Containers\String.h" />
     <ClInclude Include="Containers\UniquePtr.h" />
     <ClInclude Include="Core\Assert.h" />
+    <ClInclude Include="Math\AABB.h" />
+    <ClInclude Include="Math\HelperFunctions.h" />
+    <ClInclude Include="Math\Random.h" />
+    <ClInclude Include="Math\Rect.h" />
+    <ClInclude Include="Math\Transform.h" />
+    <ClInclude Include="Math\Vector.h" />
+    <ClInclude Include="Utilities\Json.h" />
     <ClInclude Include="Utilities\NoCopy.h" />
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Utilities\Utilities.h" />
