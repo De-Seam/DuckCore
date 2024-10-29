@@ -11,33 +11,37 @@
 
 namespace DC
 {
+template<typename taType>
+struct Vec2;
+template<typename taType>
+struct Vec3;
+template<typename taType>
+struct Vec4;
+}
+
+// Vec2
+using DVec2 = DC::Vec2<double>;
+using FVec2 = DC::Vec2<float>;
+using IVec2 = DC::Vec2<int32>;
+using UVec2 = DC::Vec2<uint32>;
+
+// Vec3
+using DVec3 = DC::Vec3<double>;
+using FVec3 = DC::Vec3<float>;
+using IVec3 = DC::Vec3<int32>;
+using UVec3 = DC::Vec3<uint32>;
+
+// Vec4
+using DVec4 = DC::Vec4<double>;
+using FVec4 = DC::Vec4<float>;
+using IVec4 = DC::Vec4<int32>;
+using UVec4 = DC::Vec4<uint32>;
+
+namespace DC
+{
 
 #pragma warning (push)
 #pragma warning (disable : 4201) //to avoid nameless struct / union warning.
-
-template<typename taType>
-struct Vec2;
-
-using DVec2 = Vec2<double>;
-using FVec2 = Vec2<float>;
-using IVec2 = Vec2<int32>;
-using UVec2 = Vec2<uint32>;
-
-template<typename taType>
-struct Vec3;
-
-using DVec3 = Vec3<double>;
-using FVec3 = Vec3<float>;
-using IVec3 = Vec3<int32>;
-using UVec3 = Vec3<uint32>;
-
-template<typename taType>
-struct Vec4;
-
-using DVec4 = Vec4<double>;
-using FVec4 = Vec4<float>;
-using IVec4 = Vec4<int32>;
-using UVec4 = Vec4<uint32>;
 
 template<typename taType>
 struct Vec2
