@@ -6,7 +6,7 @@
 
 #define STRINGIFY_MACRO(x) #x
 
-void gLog(const char* inMessage) {}
+inline void gLog(const char* inMessage) {}
 
 #ifdef _ASSERTS
 
