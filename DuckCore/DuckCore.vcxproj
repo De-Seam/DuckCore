@@ -102,6 +102,7 @@
   <ItemGroup>
     <ClCompile Include="Containers\String.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Core\Types.cpp" />
     <ClCompile Include="Math\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -117,9 +118,12 @@
     <ClInclude Include="Math\Rect.h" />
     <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="Math\Vector.h" />
+    <ClInclude Include="RTTI\RTTI.h" />
+    <ClInclude Include="Threads\Atomic.h" />
     <ClInclude Include="Utilities\Json.h" />
     <ClInclude Include="Utilities\NoCopy.h" />
     <ClInclude Include="Core\Types.h" />
+    <ClInclude Include="Utilities\TypeID.h" />
     <ClInclude Include="Utilities\Utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
