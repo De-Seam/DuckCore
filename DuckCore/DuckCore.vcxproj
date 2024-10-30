@@ -106,6 +106,7 @@
     <ClCompile Include="Math\Transform.cpp" />
     <ClCompile Include="RTTI\RTTI.cpp" />
     <ClCompile Include="RTTI\RTTIClass.cpp" />
+    <ClCompile Include="Threads\Mutex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
@@ -125,6 +126,7 @@
     <ClInclude Include="RTTI\RTTIClass.h" />
     <ClInclude Include="RTTI\RTTIRefClass.h" />
     <ClInclude Include="Threads\Atomic.h" />
+    <ClInclude Include="Threads\Mutex.h" />
     <ClInclude Include="Utilities\Json.h" />
     <ClInclude Include="Utilities\NoCopy.h" />
     <ClInclude Include="Core\Types.h" />
