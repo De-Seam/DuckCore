@@ -110,7 +110,8 @@ class process {
         static_cast<Target *>(this)->aborted();
     }
 
-    void next(...) const noexcept {}
+    template<typename... Args>
+    void next(Args &&...) const noexcept {}
 
 protected:
     /**
@@ -165,8 +166,29 @@ public:
     /*! @brief Type used to provide elapsed time. */
     using delta_type = Delta;
 
+    /*! @brief Default constructor. */
+    constexpr process() = default;
+
+    /*! @brief Default copy constructor. */
+    process(const process &) = default;
+
+    /*! @brief Default move constructor. */
+    process(process &&) noexcept = default;
+
+    /**
+     * @brief Default copy assignment operator.
+     * @return This process.
+     */
+    process &operator=(const process &) = default;
+
+    /**
+     * @brief Default move assignment operator.
+     * @return This process.
+     */
+    process &operator=(process &&) noexcept = default;
+
     /*! @brief Default destructor. */
-    virtual ~process() noexcept {
+    virtual ~process() {
         static_assert(std::is_base_of_v<process, Derived>, "Incorrect use of the class template");
     }
 
