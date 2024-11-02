@@ -55,7 +55,7 @@ public:
 	// Construct a ref from self
 	Ref(taType* inSelf)
 	{
-		static_assert(std::is_base_of_v<RTTIRefObject, taType>);
+		static_assert(std::is_base_of_v<RTTIRefClass, taType>);
 		mPtr = inSelf;
 		if (mPtr != nullptr)
 			mPtr->mRefCount++;
@@ -137,7 +137,7 @@ public:
 	WeakRef(taType* inPtr = nullptr)
 	{
 		mPtr = inPtr;
-		mWeakRefCounter = mPtr != nullptr ? mPtr->mWeakRefCounter : &RTTIRefObject::sInvalidWeakRefCounter;
+		mWeakRefCounter = mPtr != nullptr ? mPtr->mWeakRefCounter : &RTTIRefClass::sInvalidWeakRefCounter;
 		mWeakRefCounter->mRefCount++;
 	}
 

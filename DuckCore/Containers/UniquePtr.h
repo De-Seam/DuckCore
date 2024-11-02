@@ -2,6 +2,9 @@
 // Core includes
 #include "DuckCore/Utilities/NoCopy.h"
 
+// Std includes
+#include <utility>
+
 namespace DC
 {
 
@@ -20,6 +23,8 @@ public:
 
 	template<typename... taArgs>
 	static UniquePtr<taType> sMakeUnique(taArgs&&... inArgs);
+
+	void Delete() { delete mPtr; mPtr = nullptr; }
 
 	taType* Get() { return mPtr; }
 	const taType* Get() const { return mPtr; }
