@@ -47,6 +47,7 @@ template<typename taType>
 inline UniquePtr<taType>::~UniquePtr()
 {
     delete mPtr;
+	mPtr = nullptr;
 }
 
 // Move constructor
