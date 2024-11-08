@@ -1,7 +1,6 @@
 #pragma once
 // Core includes
 #include <DuckCore/Config.h>
-#include <DuckCore/Core/Assert.h>
 #include <DuckCore/Core/Types.h>
 
 // Std includes
@@ -22,6 +21,13 @@ public:
 
 	bool operator==(const String& inOther) const { return mString == inOther.mString; }
 
+	String operator+(const String& inOther) const { return {mString + inOther.mString}; }
+	String operator+(const char* inOther) const { return {mString + inOther}; }
+	String operator+(const std::string& inOther) const { return {mString + inOther}; }
+
+	template<typename taType>
+	String& operator+=(const taType& inOther) { *this = *this + inOther; return *this; }
+
 	uint64 Hash() const;
 
 	const char* operator*() const { return mString.c_str(); }
@@ -33,19 +39,10 @@ private:
 	std::string mString;
 };
 
-inline String String::sFormatted(const char* inFormat, ...)
-{
-	va_list args;
-	va_start(args, inFormat);
-
-	char buffer[1024];
-	int num_chars = vsnprintf(buffer, sizeof(buffer), inFormat, args);
-    gAssert(num_chars >= 0 && num_chars <= sizeof(buffer));
-
-	va_end(args);
-
-	return String(buffer);
-}
+String gToString(int inValue);
+String gToString(uint32 inValue);
+String gToString(float inValue);
+String gToString(double inValue);
 
 }
 

@@ -102,6 +102,7 @@
   <ItemGroup>
     <ClCompile Include="Containers\String.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Core\Log.cpp" />
     <ClCompile Include="Core\Types.cpp" />
     <ClCompile Include="Math\Transform.cpp" />
     <ClCompile Include="RTTI\RTTI.cpp" />
@@ -116,12 +117,14 @@
     <ClInclude Include="Containers\String.h" />
     <ClInclude Include="Containers\UniquePtr.h" />
     <ClInclude Include="Core\Assert.h" />
+    <ClInclude Include="Core\Log.h" />
     <ClInclude Include="Math\AABB.h" />
     <ClInclude Include="Math\HelperFunctions.h" />
     <ClInclude Include="Math\Random.h" />
     <ClInclude Include="Math\Rect.h" />
     <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="Math\Vector.h" />
+    <ClInclude Include="Net\NetSocket.h" />
     <ClInclude Include="RTTI\Ref.h" />
     <ClInclude Include="RTTI\RTTI.h" />
     <ClInclude Include="RTTI\RTTIClass.h" />

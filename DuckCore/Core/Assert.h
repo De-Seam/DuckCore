@@ -1,4 +1,10 @@
 #pragma once
+// DuckCore includes
+#include <DuckCore/Containers/String.h>
+#include <DuckCore/Core/Log.h>
+
+// Std includes
+#include <filesystem>
 
 #define EXPAND_MACRO(x) x
 
@@ -6,15 +12,16 @@
 
 #define STRINGIFY_MACRO(x) #x
 
-inline void gLog(const char* inMessage) {}
-
 #ifdef _ASSERTS
 
 // Alteratively we could use the same "default" message for both "WITH_MSG" and "NO_MSG" and
 // provide support for custom formatting by concatenating the formatting string instead of having the format inside the default message
-#define INTERNAL_ASSERT_IMPL(check, msg, ...) do { if(!(check)) { gLog(msg); BREAKPOINT(); } } while(false)
-#define INTERNAL_ASSERT_WITH_MSG(check, ...) INTERNAL_ASSERT_IMPL(check, "Assertion '%s' failed at %s:%s", STRINGIFY_MACRO(check), std::filesystem::path(__FILE__).filename().string(), __LINE__, __VA_ARGS__)
-#define INTERNAL_ASSERT_NO_MSG(check) INTERNAL_ASSERT_IMPL(check, "Assertion '%s' failed at %s:%s", STRINGIFY_MACRO(check), std::filesystem::path(__FILE__).filename().string(), __LINE__)
+#define INTERNAL_ASSERT_IMPL(inCheck, inMsg, ...) do { if(!(inCheck)) { DC::gLog(DC::LogLevel::Error, inMsg); BREAKPOINT(); } } while(false)
+//#define INTERNAL_ASSERT_WITH_MSG(inCheck, ...) INTERNAL_ASSERT_IMPL(inCheck, "Assertion '%s' failed at %s:%s", STRINGIFY_MACRO(inCheck), std::filesystem::path(__FILE__).filename().string().c_str(), __LINE__, __VA_ARGS__)
+//#define INTERNAL_ASSERT_NO_MSG(inCheck) INTERNAL_ASSERT_IMPL(inCheck, "Assertion '%s' failed at %s:%s", STRINGIFY_MACRO(inCheck), std::filesystem::path(__FILE__).filename().string().c_str(), __LINE__)
+
+#define INTERNAL_ASSERT_WITH_MSG(inCheck, ...) INTERNAL_ASSERT_IMPL(inCheck, DC::String("Assertion '") + DC::String(STRINGIFY_MACRO(inCheck)) + "' failed at " + DC::String(std::filesystem::path(__FILE__).filename().string()) + ":" + DC::gToString((uint32)__LINE__) + ": " + __VA_ARGS__)
+#define INTERNAL_ASSERT_NO_MSG(inCheck) INTERNAL_ASSERT_IMPL(inCheck, DC::String("Assertion '") + DC::String(STRINGIFY_MACRO(inCheck)) + "' failed at " + DC::String(std::filesystem::path(__FILE__).filename().string()) + ":" + DC::gToString((uint32)__LINE__))
 
 #define INTERNAL_ASSERT_GET_MACRO_NAME(arg1, arg2, macro, ...) macro
 #define INTERNAL_ASSERT_GET_MACRO(...) EXPAND_MACRO( INTERNAL_ASSERT_GET_MACRO_NAME(__VA_ARGS__, INTERNAL_ASSERT_WITH_MSG, INTERNAL_ASSERT_NO_MSG) )
