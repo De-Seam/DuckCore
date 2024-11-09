@@ -53,5 +53,12 @@ public:
     static constexpr bool value = type::value;
 };
 
+template<typename T>
+typename std::enable_if<has_serialize<T, Json()>::value>::type
+to_json(Json& j, const T* obj) 
+{
+	j = obj->Serialize();
+}
+
 #define JSON_SAVE(ioJson, inValue) (ioJson)[#inValue] = inValue
 #define JSON_LOAD(inJson, outValue) if (inJson.contains(#outValue)) outValue = (inJson)[#outValue]

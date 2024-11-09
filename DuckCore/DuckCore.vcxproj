@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClInclude Include="Config.h" />
     <ClInclude Include="Containers\Array.h" />
+    <ClInclude Include="Containers\Handle.h" />
     <ClInclude Include="Containers\HashMap.h" />
     <ClInclude Include="Containers\SharedPtr.h" />
     <ClInclude Include="Containers\String.h" />
@@ -124,7 +125,6 @@
     <ClInclude Include="Math\Rect.h" />
     <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="Math\Vector.h" />
-    <ClInclude Include="Net\NetSocket.h" />
     <ClInclude Include="RTTI\Ref.h" />
     <ClInclude Include="RTTI\RTTI.h" />
     <ClInclude Include="RTTI\RTTIClass.h" />

@@ -113,10 +113,10 @@
     <ClInclude Include="Containers\SharedPtr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Net\NetSocket.h">
+    <ClInclude Include="Core\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Log.h">
+    <ClInclude Include="Containers\Handle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

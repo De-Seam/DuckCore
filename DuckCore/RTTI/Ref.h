@@ -1,10 +1,52 @@
 #pragma once
 // Core includes
 #include <DuckCore/Core/Assert.h>
-#include <DuckCore/RTTI/RTTIRefClass.h>
+#include <DuckCore/Threads/Atomic.h>
+#include <DuckCore/Utilities/Json.h>
+#include <DuckCore/Utilities/NoCopy.h>
 
 namespace DC
 {
+
+class RTTIClass;
+
+class RefClass : public NoCopy, public NoMove
+{
+public:
+	RefClass()
+	{
+		mWeakRefCounter = new WeakRefCounter();
+	}
+
+	virtual ~RefClass()
+	{
+		mWeakRefCounter->mIsAlive = false;
+		if (mWeakRefCounter->mRefCount <= 0)
+			delete mWeakRefCounter;
+	}
+
+	int32 GetRefCount() const { return mRefCount; }
+	int32 GetWeakRefCount() const { return mWeakRefCounter != nullptr ? static_cast<int32>(mWeakRefCounter->mRefCount) : 0; }
+
+private:
+	struct WeakRefCounter
+	{
+		bool mIsAlive = true;
+		Atomic<int32> mRefCount = 0;
+	};
+	Atomic<int32> mRefCount = 0;
+
+	WeakRefCounter* mWeakRefCounter = nullptr;
+
+	// This is an invalid weak ref counter to be used when nullptr is passed. It always keeps 1 reference to itself to prevent it's destruction
+	inline static WeakRefCounter sInvalidWeakRefCounter = { false, 1 };
+
+	template<typename taRefClassType>
+	friend class Ref;
+
+	template<typename taRefClassType>
+	friend class WeakRef;
+};
 
 template<typename taType>
 class WeakRef;
@@ -55,7 +97,7 @@ public:
 	// Construct a ref from self
 	Ref(taType* inSelf)
 	{
-		static_assert(std::is_base_of_v<RTTIRefClass, taType>);
+		static_assert(std::is_base_of_v<RefClass, taType>);
 		mPtr = inSelf;
 		if (mPtr != nullptr)
 			mPtr->mRefCount++;
@@ -93,14 +135,6 @@ public:
 	bool operator!=(const Ref<taType>& inOther) const { return mPtr != inOther.mPtr; }
 	bool operator!=(const taType* inOther) const { return mPtr != inOther; }
 
-	template<typename taCastType>
-	taCastType* Cast() const
-	{
-		if (mPtr == nullptr)
-			return nullptr;
-		return mPtr->As<taCastType>();
-	}
-
 	bool IsValid() const { return mPtr != nullptr; }
 
 private:
@@ -123,13 +157,6 @@ private:
 	friend class WeakRef;
 };
 
-template<typename T>
-typename std::enable_if<has_serialize<T, Json()>::value>::type
-to_json(Json& j, const Ref<T>& obj) 
-{
-	j = obj->Serialize();
-}
-
 template<typename taType>
 class WeakRef
 {
@@ -137,7 +164,7 @@ public:
 	WeakRef(taType* inPtr = nullptr)
 	{
 		mPtr = inPtr;
-		mWeakRefCounter = mPtr != nullptr ? mPtr->mWeakRefCounter : &RTTIRefClass::sInvalidWeakRefCounter;
+		mWeakRefCounter = mPtr != nullptr ? mPtr->mWeakRefCounter : &RefClass::sInvalidWeakRefCounter;
 		mWeakRefCounter->mRefCount++;
 	}
 
@@ -197,7 +224,7 @@ public:
 
 private:
 	taType* mPtr = nullptr;
-	RTTIRefClass::WeakRefCounter* mWeakRefCounter = nullptr;
+	RefClass::WeakRefCounter* mWeakRefCounter = nullptr;
 
 	template<typename taRefClassType>
 	friend class Ref;
