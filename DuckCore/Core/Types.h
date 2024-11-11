@@ -12,6 +12,7 @@ using uint16 = uint16_t;
 using uint32 = uint32_t;
 using uint64 = uint64_t;
 
+using uint = unsigned int;
 using byte = uint8_t;
 
 float gFloatMax(); // 3.402823466e+38F
@@ -42,3 +43,8 @@ uint32 gUInt32Min(); // 0
 uint64 gUInt64Max(); // 18446744073709551615
 uint64 gUInt64Min(); // 0
 
+template<typename taCastType>
+taCastType gStaticCast(auto& inItem)
+{
+	return static_cast<taCastType>(inItem);
+}

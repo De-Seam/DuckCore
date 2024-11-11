@@ -115,6 +115,7 @@
     <ClInclude Include="Containers\Handle.h" />
     <ClInclude Include="Containers\HashMap.h" />
     <ClInclude Include="Containers\SharedPtr.h" />
+    <ClInclude Include="Containers\StaticArray.h" />
     <ClInclude Include="Containers\String.h" />
     <ClInclude Include="Containers\UniquePtr.h" />
     <ClInclude Include="Core\Assert.h" />
