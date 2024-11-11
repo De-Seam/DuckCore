@@ -18,6 +18,8 @@ public:
 
 	bool Remove(const taKey& inKey) { return mMap.erase(inKey); }
 
+	void Clear() { mMap.clear(); }
+
 	bool IsEmpty() const { return mMap.empty(); }
 	bool Contains(const taKey& inKey) const { return mMap.contains(inKey); }
 

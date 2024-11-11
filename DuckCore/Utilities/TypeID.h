@@ -29,6 +29,8 @@ public:
 
 	bool operator==(const TypeID& inOther) const { return mID == inOther.mID; }
 
+	friend size_t hash_value(const TypeID& inTypeID) { return inTypeID.Get(); }
+
 	int16 Get() const { return mID; }
 	operator int16() const { return mID; }
 
