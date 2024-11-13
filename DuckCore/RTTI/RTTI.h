@@ -1,9 +1,9 @@
 #pragma once
 // Core includes
 #include <DuckCore/Config.h>
+#include <DuckCore/Core/Assert.h>
 #include <DuckCore/Utilities/Json.h>
 #include <DuckCore/Utilities/TypeID.h>
-#include <DuckCore/Core/Assert.h>
 
 // Std includes
 #include <functional>
@@ -22,7 +22,7 @@ public:
 	RTTI(
 		const char* inClassName,
 		const char* inBaseClassName,
-		std::function<RTTIClass*()> inConstructorFunction
+		const std::optional<std::function<RTTIClass*()>>& inConstructorFunction = std::nullopt
 	);
 
 	// We don't want people to copy this class. Just use a pointer or refernece to it
@@ -33,14 +33,15 @@ public:
 
 	const char* GetClassName() const { return mClassName; }
 	const char* GetBaseClassName() const { return mBaseClassName; }
-	RTTIClass* NewInstance() const { return mConstructorFunction(); }
+	bool IsNewInstanceAllowed() const { return mConstructorFunction.has_value(); }
+	RTTIClass* NewInstance() const { gAssert(mConstructorFunction.has_value()); const std::function<RTTIClass*()>& function = mConstructorFunction.value(); return function(); }
 
 	const RTTITypeID& GetTypeID() const { return mTypeID; }
 
 private:
 	const char* mClassName = nullptr;
 	const char* mBaseClassName = nullptr;
-	std::function<RTTIClass*()> mConstructorFunction;
+	std::optional<std::function<RTTIClass*()>> mConstructorFunction;
 
 	RTTITypeID mTypeID;
 };
