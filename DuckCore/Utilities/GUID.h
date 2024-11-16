@@ -14,6 +14,7 @@ public:
 	GUID(const String& inGUIDString);
 	GUID(const char* inGUIDChars);
 	GUID(const GUID& inOther) = default;
+	GUID(uint64 inGUID) : mGUID(inGUID) {}
 
 	GUID& operator=(const GUID& inOther) = default;
 
