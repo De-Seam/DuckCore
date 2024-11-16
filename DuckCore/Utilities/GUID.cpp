@@ -31,6 +31,17 @@ GUID::GUID(const char* inChars)
 	mGUID |= (static_cast<uint64>(parts[3]));
 }
 
+String GUID::ToString() const
+{
+	char buffer[20]; // 16 hex digits + 3 dashes + 1 null terminator
+	std::snprintf(buffer, sizeof(buffer), "%04x-%04x-%04x-%04x",
+		(unsigned)((mGUID >> 48) & 0xFFFF),
+		(unsigned)((mGUID >> 32) & 0xFFFF),
+		(unsigned)((mGUID >> 16) & 0xFFFF),
+		(unsigned)(mGUID & 0xFFFF));
+	return {buffer};
+}
+
 GUID GUID::sCreate()
 {
 	GUID guid;
@@ -45,13 +56,15 @@ GUID GUID::sCombine(const GUID& inA, const GUID& inB, int inSalt)
 	return guid;
 }
 
-String GUID::ToString() const
+Json GUID::Serialize() const
 {
-	char buffer[20]; // 16 hex digits + 3 dashes + 1 null terminator
-	std::snprintf(buffer, sizeof(buffer), "%04x-%04x-%04x-%04x",
-		(unsigned)((mGUID >> 48) & 0xFFFF),
-		(unsigned)((mGUID >> 32) & 0xFFFF),
-		(unsigned)((mGUID >> 16) & 0xFFFF),
-		(unsigned)(mGUID & 0xFFFF));
-	return {buffer};
+	Json json;
+	json["GUID"] = ToString();
+	return json;
+}
+
+void GUID::Deserialize(const Json& inJson)
+{
+	std::string guid_string = inJson["GUID"];
+	*this = GUID(guid_string);
 }

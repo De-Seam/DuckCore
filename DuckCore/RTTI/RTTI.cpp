@@ -4,8 +4,7 @@
 
 using namespace DC;
 
-RTTI::RTTI(const char* inClassName, const char* inBaseClassName, const std::optional<std::function<RTTIClass*()>>& inConstructorFunction) :
+RTTI::RTTI(const char* inClassName, const char* inBaseClassName) :
 	mClassName(inClassName),
-	mBaseClassName(inBaseClassName),
-	mConstructorFunction(inConstructorFunction),
+	mBaseClassName(inBaseClassName)
 {}

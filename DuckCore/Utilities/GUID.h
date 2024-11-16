@@ -1,6 +1,7 @@
 #pragma once
 // Core includes
 #include <DuckCore/Core/Types.h>
+#include <DuckCore/Utilities/Json.h>
 
 namespace DC
 {
@@ -28,6 +29,9 @@ public:
 
 	static GUID sCreate();
 	static GUID sCombine(const GUID& inA, const GUID& inB, int inSalt = 0);
+
+	virtual Json Serialize() const;
+	virtual void Deserialize(const Json& inJson);
 
 private:
 	uint64 mGUID = 0;

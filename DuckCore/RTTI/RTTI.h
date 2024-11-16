@@ -21,8 +21,7 @@ class RTTI
 public:
 	RTTI(
 		const char* inClassName,
-		const char* inBaseClassName,
-		const std::optional<std::function<RTTIClass*()>>& inConstructorFunction = std::nullopt
+		const char* inBaseClassName
 	);
 
 	// We don't want people to copy this class. Just use a pointer or refernece to it
@@ -33,15 +32,12 @@ public:
 
 	const char* GetClassName() const { return mClassName; }
 	const char* GetBaseClassName() const { return mBaseClassName; }
-	bool IsNewInstanceAllowed() const { return mConstructorFunction.has_value(); }
-	RTTIClass* NewInstance() const { gAssert(mConstructorFunction.has_value()); const std::function<RTTIClass*()>& function = mConstructorFunction.value(); return function(); }
 
 	const RTTITypeID& GetTypeID() const { return mTypeID; }
 
 private:
 	const char* mClassName = nullptr;
 	const char* mBaseClassName = nullptr;
-	std::optional<std::function<RTTIClass*()>> mConstructorFunction;
 
 	RTTITypeID mTypeID;
 };

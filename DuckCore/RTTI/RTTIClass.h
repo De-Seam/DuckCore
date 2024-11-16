@@ -25,8 +25,7 @@ public:
 private:
 	inline static RTTI sRTTI = RTTI(
 		"RTTIClass", // Class Name
-		"NONE", // Base Class Name
-		[]() { return reinterpret_cast<RTTIClass*>(sNewInstance()); }
+		"NONE" // Base Class Name
 	);
 };
 
@@ -92,16 +91,8 @@ public: \
 private: \
 	inline static DC::RTTI sRTTI = DC::RTTI( \
 		#inClassName, \
-		#inBaseClassName, \
-		[]() { return reinterpret_cast<RTTIClass*>(sNewInstance()); } \
+		#inBaseClassName \
 	);
 
-#define RTTI_VIRTUAL_CLASS(inClassName, inBaseClassName) \
-public: \
-	static inClassName* sNewInstance() { gAssert(false); return nullptr; } \
-RTTI_CLASS_DECLARATION_BASE(inClassName, inBaseClassName) 
-
 #define RTTI_CLASS(inClassName, inBaseClassName) \
-public: \
-	static inClassName* sNewInstance() { return new inClassName; } \
-RTTI_CLASS_DECLARATION_BASE(inClassName, inBaseClassName) 
+RTTI_CLASS_DECLARATION_BASE(inClassName, inBaseClassName)

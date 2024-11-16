@@ -7,6 +7,8 @@
 #include <cstdarg>
 #include <string>
 
+#include <DuckCore/Utilities/Json.h>
+
 namespace DC
 {
 
@@ -34,6 +36,9 @@ public:
 	const char* CStr() const { return mString.c_str(); }
 
 	static String sFormatted(const char* inFormat, ...);
+
+	virtual Json Serialize() const;
+	virtual void Deserialize(const Json& inJson);
 
 private:
 	std::string mString;

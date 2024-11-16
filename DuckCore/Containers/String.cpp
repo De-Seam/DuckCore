@@ -25,6 +25,16 @@ String String::sFormatted(const char* inFormat, ...)
 	return String(buffer);
 }
 
+Json String::Serialize() const
+{
+	return mString;
+}
+
+void String::Deserialize(const Json& inJson)
+{
+	mString = inJson.get<std::string>();
+}
+
 String DC::gToString(int inValue)
 {
 	return std::to_string(inValue);

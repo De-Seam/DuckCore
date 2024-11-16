@@ -13,32 +13,26 @@ class RTTIClass;
 class RefClass : public NoCopy, public NoMove
 {
 public:
-	RefClass()
-	{
-		mWeakRefCounter = new WeakRefCounter();
-	}
-
 	virtual ~RefClass()
 	{
-		mWeakRefCounter->mIsAlive = false;
-		if (mWeakRefCounter->mRefCount <= 0)
-			delete mWeakRefCounter;
+		if (mWeakRefCounter != nullptr)
+			mWeakRefCounter->mIsAlive = false;
 	}
 
 	int32 GetRefCount() const { return mRefCount; }
 	int32 GetWeakRefCount() const { return mWeakRefCounter != nullptr ? static_cast<int32>(mWeakRefCounter->mRefCount) : 0; }
 
 private:
+	Atomic<int32> mRefCount = 0;
+
 	struct WeakRefCounter
 	{
 		bool mIsAlive = true;
 		Atomic<int32> mRefCount = 0;
 	};
-	Atomic<int32> mRefCount = 0;
-
 	WeakRefCounter* mWeakRefCounter = nullptr;
 
-	// This is an invalid weak ref counter to be used when nullptr is passed. It always keeps 1 reference to itself to prevent it's destruction
+	// This is an invalid weak ref counter to be used when nullptr is passed. It always keeps 1 reference to itself to prevent its destruction
 	inline static WeakRefCounter sInvalidWeakRefCounter = { false, 1 };
 
 	template<typename taRefClassType>
@@ -165,13 +159,27 @@ public:
 	{
 		mPtr = inPtr;
 		mWeakRefCounter = mPtr != nullptr ? mPtr->mWeakRefCounter : &RefClass::sInvalidWeakRefCounter;
+
+		if (mWeakRefCounter == nullptr)
+		{
+			mPtr->mWeakRefCounter = mWeakRefCounter;
+			mWeakRefCounter = new RefClass::WeakRefCounter();
+		}
+
 		mWeakRefCounter->mRefCount++;
 	}
 
 	WeakRef(const Ref<taType>& inRef)
 	{
 		mPtr = inRef.mPtr;
-		mWeakRefCounter = mPtr->mWeakRefCounter;
+		mWeakRefCounter = mPtr != nullptr ? mPtr->mWeakRefCounter : &RefClass::sInvalidWeakRefCounter;
+
+		if (mWeakRefCounter == nullptr)
+		{
+			mPtr->mWeakRefCounter = mWeakRefCounter;
+			mWeakRefCounter = new RefClass::WeakRefCounter();
+		}
+
 		mWeakRefCounter->mRefCount++;
 	}
 
@@ -179,6 +187,7 @@ public:
 	{
 		mPtr = inWeakRef.mPtr;
 		mWeakRefCounter = inWeakRef.mWeakRefCounter;
+
 		mWeakRefCounter->mRefCount++;
 	}
 
@@ -186,7 +195,7 @@ public:
 	{
 		if (mWeakRefCounter != inOther.mWeakRefCounter)
 		{
-			if (mWeakRefCounter != nullptr && --mWeakRefCounter->mRefCount <= 0 && !mWeakRefCounter->mIsAlive)
+			if (--mWeakRefCounter->mRefCount <= 0 && !mWeakRefCounter->mIsAlive)
 			{
 				delete mWeakRefCounter;
 			}
