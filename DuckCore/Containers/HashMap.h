@@ -21,34 +21,38 @@ public:
 	void Clear() { mMap.clear(); }
 
 	bool IsEmpty() const { return mMap.empty(); }
+	int Length() const { return static_cast<int>(mMap.size()); }
 	bool Contains(const taKey& inKey) const { return mMap.contains(inKey); }
 
-	taValue* Find(const taKey& inKey);
-	const taValue* Find(const taKey& inKey) const;
+	std::optional<taValue> Find(const taKey& inKey);
+	std::optional<const taValue> Find(const taKey& inKey) const;
 
 	template<typename taLambda>
 	void ForEach(taLambda&& inLambda);
+
+	template<typename taPredicate>
+	int RemoveIf(taPredicate&& inPredicate); // Returns amount removed
 
 private:
 	phmap::flat_hash_map<taKey, taValue> mMap;
 };
 
 template <typename taKey, typename taValue>
-taValue* HashMap<taKey, taValue>::Find(const taKey& inKey)
+std::optional<taValue> HashMap<taKey, taValue>::Find(const taKey& inKey)
 {
 	auto it = mMap.find(inKey);
 	if (it != mMap.end())
-		return &it->second;
-	return nullptr;
+		return it->second;
+	return std::nullopt;
 }
 
 template <typename taKey, typename taValue>
-const taValue* HashMap<taKey, taValue>::Find(const taKey& inKey) const
+std::optional<const taValue> HashMap<taKey, taValue>::Find(const taKey& inKey) const
 {
 	auto it = mMap.find(inKey);
 	if (it != mMap.end())
-		return &it->second;
-	return nullptr;
+		return it->second;
+	return std::nullopt;
 }
 
 template<typename taKey, typename taValue>
@@ -59,4 +63,23 @@ void HashMap<taKey, taValue>::ForEach(taLambda&& inLambda)
 		inLambda(key, value);
 }
 
+template<typename taKey, typename taValue>
+template<typename taPredicate>
+int HashMap<taKey, taValue>::RemoveIf(taPredicate&& inPredicate)
+{
+	int removed_count = 0;
+	for (auto it = mMap.begin(); it != mMap.end();) 
+	{
+		if (inPredicate(it->first, it->second))
+		{
+			removed_count++;
+			mMap.erase(it->first);
+		}
+		else
+		{
+			it++;
+		}
+	}
+	return removed_count;
+}
 }
