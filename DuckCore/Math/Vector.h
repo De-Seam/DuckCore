@@ -17,7 +17,6 @@ template<typename taType>
 struct Vec3;
 template<typename taType>
 struct Vec4;
-}
 
 // Vec2
 using DVec2 = DC::Vec2<double>;
@@ -36,9 +35,6 @@ using DVec4 = DC::Vec4<double>;
 using FVec4 = DC::Vec4<float>;
 using IVec4 = DC::Vec4<int32>;
 using UVec4 = DC::Vec4<uint32>;
-
-namespace DC
-{
 
 #pragma warning (push)
 #pragma warning (disable : 4201) //to avoid nameless struct / union warning.
