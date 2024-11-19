@@ -1,6 +1,7 @@
 #pragma once
 // Core includes
-#include "DuckCore/Utilities/NoCopy.h"
+#include <DuckCore/Utilities/NoCopy.h>
+#include <DuckCore/Utilities/Utilities.h>
 
 // Std includes
 #include <utility>
@@ -16,10 +17,13 @@ public:
 	~UniquePtr();
 
 	// Move operators
+	template<typename taParentType>
+	UniquePtr(UniquePtr<taParentType>&& inOther) noexcept;
+	template<typename taParentType>
+	UniquePtr& operator=(UniquePtr<taParentType>&& inOther) noexcept;
+
 	template<typename taChildType>
-	UniquePtr(UniquePtr<taChildType>&& inOther) noexcept;
-	template<typename taChildType>
-	UniquePtr& operator=(UniquePtr<taChildType>&& inOther) noexcept;
+	UniquePtr<taChildType> StaticCast() noexcept;
 
 	template<typename... taArgs>
 	static UniquePtr<taType> sMakeUnique(taArgs&&... inArgs);
@@ -61,8 +65,8 @@ inline UniquePtr<taType>::~UniquePtr()
 
 // Move constructor
 template<typename taType>
-template<typename taChildType>
-inline UniquePtr<taType>::UniquePtr(UniquePtr<taChildType>&& inOther) noexcept
+template<typename taParentType>
+inline UniquePtr<taType>::UniquePtr(UniquePtr<taParentType>&& inOther) noexcept
 {
 	mPtr = inOther.Get();
 	inOther.Internal_SetDataPtr(nullptr);
@@ -70,8 +74,8 @@ inline UniquePtr<taType>::UniquePtr(UniquePtr<taChildType>&& inOther) noexcept
 
 // Move assignment
 template<typename taType>
-template<typename taChildType>
-inline UniquePtr<taType>& UniquePtr<taType>::operator=(UniquePtr<taChildType>&& inOther) noexcept
+template<typename taParentType>
+inline UniquePtr<taType>& UniquePtr<taType>::operator=(UniquePtr<taParentType>&& inOther) noexcept
 {
 	if (this->Get() != inOther.Get())
 	{
@@ -83,10 +87,19 @@ inline UniquePtr<taType>& UniquePtr<taType>::operator=(UniquePtr<taChildType>&& 
 }
 
 template<typename taType>
+template<typename taChildType>
+UniquePtr<taChildType> UniquePtr<taType>::StaticCast() noexcept
+{
+	UniquePtr<taChildType> new_unique_ptr;
+	new_unique_ptr.Internal_SetDataPtr(static_cast<taChildType*>(mPtr));
+	mPtr = nullptr;
+	return gMove(new_unique_ptr);
+}
+
+template<typename taType>
 template<typename... taArgs>
 inline UniquePtr<taType> UniquePtr<taType>::sMakeUnique(taArgs&&... inArgs)
 {
 	return UniquePtr<taType>(new taType(std::forward<taArgs>(inArgs)...));
 }
-
 }

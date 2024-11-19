@@ -24,8 +24,8 @@ public:
 	int Length() const { return static_cast<int>(mMap.size()); }
 	bool Contains(const taKey& inKey) const { return mMap.contains(inKey); }
 
-	std::optional<taValue> Find(const taKey& inKey);
-	std::optional<const taValue> Find(const taKey& inKey) const;
+	taValue* Find(const taKey& inKey);
+	const taValue* Find(const taKey& inKey) const;
 
 	template<typename taLambda>
 	void ForEach(taLambda&& inLambda);
@@ -38,21 +38,21 @@ private:
 };
 
 template <typename taKey, typename taValue>
-std::optional<taValue> HashMap<taKey, taValue>::Find(const taKey& inKey)
+taValue* HashMap<taKey, taValue>::Find(const taKey& inKey)
 {
 	auto it = mMap.find(inKey);
 	if (it != mMap.end())
-		return it->second;
-	return std::nullopt;
+		return &it->second;
+	return nullptr;
 }
 
 template <typename taKey, typename taValue>
-std::optional<const taValue> HashMap<taKey, taValue>::Find(const taKey& inKey) const
+const taValue* HashMap<taKey, taValue>::Find(const taKey& inKey) const
 {
 	auto it = mMap.find(inKey);
 	if (it != mMap.end())
-		return it->second;
-	return std::nullopt;
+		return &it->second;
+	return nullptr;
 }
 
 template<typename taKey, typename taValue>

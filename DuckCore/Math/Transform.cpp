@@ -20,7 +20,7 @@ Transform2D Transform2D::operator*(const Transform2D& inOther) const
 
 AABB<TransformType> Transform2D::GetBounds() const
 {
-	TransformType rotation = gToRadians(mRotation);
+	TransformType rotation = gToRadiansF(mRotation);
 	TransformType sin_r = std::abs(std::sin(rotation));
 	TransformType cos_r = std::abs(std::cos(rotation));
 

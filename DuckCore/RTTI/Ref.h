@@ -48,6 +48,7 @@ class WeakRef;
 template<typename taType>
 class Ref
 {
+	using NonConstType = std::remove_const_t<taType>;
 public:
 	Ref() = default;
 
@@ -57,7 +58,7 @@ public:
 		{
 			gAssert(inOther.mPtr->mRefCount > 0 && "Ref object is already destroyed!");
 			mPtr = inOther.mPtr;
-			mPtr->mRefCount++;
+			const_cast<NonConstType*>(mPtr)->mRefCount++;
 		}
 	}
 
@@ -65,14 +66,14 @@ public:
 	{
 		mPtr = inOther.mPtr;
 		if (mPtr != nullptr)
-			mPtr->mRefCount++; ///< Increment ref count because it will be decremented later.
+			const_cast<NonConstType*>(mPtr)->mRefCount++; ///< Increment ref count because it will be decremented later.
 	}
 
 	Ref<taType>& operator=(const Ref<taType>& inOther)
 	{
 		if (mPtr != nullptr)
 		{
-			mPtr->mRefCount--;
+			const_cast<NonConstType*>(mPtr)->mRefCount--;
 			if (mPtr->mRefCount <= 0)
 				delete mPtr;
 		}
@@ -81,7 +82,7 @@ public:
 		if (mPtr != nullptr)
 		{
 			gAssert(mPtr->mRefCount > 0 && "Ref object is already destroyed!");
-			mPtr->mRefCount++;
+			const_cast<NonConstType*>(mPtr)->mRefCount++;
 		}
 		return *this;
 	}
@@ -94,7 +95,7 @@ public:
 		static_assert(std::is_base_of_v<RefClass, taType>);
 		mPtr = inSelf;
 		if (mPtr != nullptr)
-			mPtr->mRefCount++;
+			const_cast<NonConstType*>(mPtr)->mRefCount++;
 	}
 
 	template<typename taParentClass>
@@ -105,7 +106,7 @@ public:
 		{
 			gAssert(inOther.mPtr->mRefCount > 0 && "Ref object is already destroyed!");
 			mPtr = static_cast<taType*>(inOther.mPtr);
-			mPtr->mRefCount++;
+			const_cast<NonConstType*>(mPtr)->mRefCount++;
 		}
 	}
 
@@ -113,7 +114,7 @@ public:
 	{
 		if (mPtr != nullptr)
 		{
-			mPtr->mRefCount--;
+			const_cast<NonConstType*>(mPtr)->mRefCount--;
 
 			if (mPtr->mRefCount <= 0)
 				delete mPtr;
