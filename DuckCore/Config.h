@@ -8,5 +8,5 @@ using TransformType = float;
 #define _ASSERTS
 #define IF_ASSERTS(x) x
 #else
-#deifne IF_ASSERTS(x)
+#define IF_ASSERTS(x)
 #endif
