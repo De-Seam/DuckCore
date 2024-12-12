@@ -29,6 +29,8 @@ public:
 
 	template<typename taLambda>
 	void ForEach(taLambda&& inLambda);
+	template<typename taLambda>
+	void ForEach(taLambda&& inLambda) const;
 
 	template<typename taPredicate>
 	int RemoveIf(taPredicate&& inPredicate); // Returns amount removed
@@ -60,6 +62,14 @@ template<typename taLambda>
 void HashMap<taKey, taValue>::ForEach(taLambda&& inLambda)
 {
 	for (auto& [key, value] : mMap)
+		inLambda(key, value);
+}
+
+template<typename taKey, typename taValue>
+template<typename taLambda>
+void HashMap<taKey, taValue>::ForEach(taLambda&& inLambda) const
+{
+	for (const auto& [key, value] : mMap)
 		inLambda(key, value);
 }
 
