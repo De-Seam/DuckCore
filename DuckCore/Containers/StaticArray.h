@@ -30,13 +30,13 @@ public:
 
 	bool Contains(const taType& inValue) const { return Find(inValue) != -1; }
 
-	taType& Front() { return mData.front(); }
-	const taType& Front() const { return mData.front(); }
-	taType& Back() { return mData.back(); }
-	const taType& Back() const { return mData.back(); }
+	taType& Front() { return mData[0]; }
+	const taType& Front() const { return mData[0]; }
+	taType& Back() { return mData[taLength-1]; }
+	const taType& Back() const { return mData[taLength-1]; }
 
-	taType* Data() { return mData.data(); }
-	const taType* Data() const { return mData.data(); }
+	taType* Data() { return mData; }
+	const taType* Data() const { return mData; }
 
 	// Iterator support
     taType* begin() { return mData; }
