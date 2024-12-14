@@ -18,8 +18,8 @@ public:
 
 	taType& operator[](int inIndex) { return At(inIndex); }
 	const taType& operator[](int inIndex) const { return At(inIndex); }
-	taType& At(int inIndex) { return mData[inIndex]; }
-	const taType& At(int inIndex) const { return mData[inIndex]; }
+	taType& At(int inIndex) { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
+	const taType& At(int inIndex) const { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
 
 	int Length() const { return taLength; }
 	int IsValidIndex(int inIndex) const { return inIndex >= 0 && inIndex < Length(); }

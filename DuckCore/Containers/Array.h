@@ -1,9 +1,8 @@
 #pragma once
 // Core includes
 #include <DuckCore/Config.h>
-
-// Std includes
-#include <vector>
+#include <DuckCore/Core/Assert.h>
+#include <DuckCore/Utilities/Utilities.h>
 
 namespace DC
 {
@@ -12,28 +11,31 @@ template<typename taType>
 class Array
 {
 public:
-	Array() = default;
+	Array();
 
 	taType& operator[](int inIndex) { return At(inIndex); }
 	const taType& operator[](int inIndex) const { return At(inIndex); }
-	taType& At(int inIndex) { return mArray[inIndex]; }
-	const taType& At(int inIndex) const { return mArray[inIndex]; }
+	taType& At(int inIndex) { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
+	const taType& At(int inIndex) const { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
 
-	void Resize(int inSize) { mArray.resize(inSize); }
-	void Reserve(int inSize) { mArray.reserve(inSize); }
-	int Length() const { return static_cast<int>(mArray.size()); }
+	void Resize(int inLength); // Resize, calling the new operator on new elements.
+	void Reserve(int inCapacity); // Reserve capacity. This will not change the length of the array.
+	void ShrinkToFit();
+
+	int Length() const { return mLength; }
 	bool IsEmpty() const { return Length() == 0; }
 
-	void Clear() { mArray.clear(); }
-	void Add(const taType& inValue) { mArray.push_back(std::move(inValue)); }
-    void Add(taType&& inValue) { mArray.push_back(std::move(inValue)); }
-	template<typename... taArgs>
-	void Emplace(taArgs&&... inArgs) { mArray.emplace_back(std::forward<taArgs>(inArgs)...); }
+	bool IsValidIndex(int inIndex) const { return inIndex >= 0 && inIndex < Length(); }
 
-	void PopBack() { mArray.pop_back(); }
+	void Clear();
+	void Add(taType inValue);
+	template<typename... taArgs>
+	void Emplace(taArgs&&... inArgs);
+
+	void PopBack();
 
 	void Remove(int inIndex);
-	void SwapRemove(int inIndex) { std::swap(mArray[inIndex], mArray.back()); PopBack(); }
+	void SwapRemove(int inIndex);
 	template<typename taPredicate>
 	int RemoveIf(taPredicate&& inPredicate); // Returns amount removed
 	template<typename taPredicate>
@@ -53,32 +55,150 @@ public:
 
 	bool Contains(const taType& inValue) const { return Find(inValue) != -1; }
 
-	taType& Front() { return mArray.front(); }
-	const taType& Front() const { return mArray.front(); }
-	taType& Back() { return mArray.back(); }
-	const taType& Back() const { return mArray.back(); }
+	taType& Front() { gAssert(!IsEmpty()); return mData[0]; }
+	const taType& Front() const { gAssert(!IsEmpty()); return mData[0]; }
+	taType& Back() { gAssert(!IsEmpty()); return mData[mLength-1]; }
+	const taType& Back() const { gAssert(!IsEmpty()); return mData[mLength-1]; }
 
-	taType* Data() { return mArray.data(); }
-	const taType* Data() const { return mArray.data(); }
+	taType* Data() { return mData; }
+	const taType* Data() const { return mData; }
 
-	// Custom iterator support
-    typename std::vector<taType>::iterator begin() { return mArray.begin(); }
-    typename std::vector<taType>::iterator end() { return mArray.end(); }
-
-    typename std::vector<taType>::const_iterator begin() const { return mArray.begin(); }
-    typename std::vector<taType>::const_iterator end() const { return mArray.end(); }
-
-    typename std::vector<taType>::const_iterator cbegin() const { return mArray.cbegin(); }
-    typename std::vector<taType>::const_iterator cend() const { return mArray.cend(); }
+	// Iterator support
+    taType* begin() { return mData; }
+    taType* end() { return mData + mLength; }
+    const taType* begin() const { return mData; }
+    const taType* end() const { return mData + mLength; }
+    const taType* cbegin() const { return mData; }
+    const taType* cend() const { return mData + mLength; }
 
 private:
-	std::vector<taType> mArray;
+	taType* mData = nullptr; // This will never be nullptr after the constructor.
+	int mLength = 0;
+	int mCapacity = 12; // Default capacity is 12. Capacity is not initialized with new.
 };
+
+template<typename taType>
+Array<taType>::Array()
+{
+	mData = gStaticCast<taType*>(malloc(mCapacity * sizeof(taType)));
+}
+
+template<typename taType>
+void Array<taType>::Resize(int inLength)
+{
+	if (inLength > mLength)
+	{
+		// Reserve length if needed. Reserve already checks internally if the capacity is already enough.
+		Reserve(inLength);
+
+		// Call new operators on new elements.
+		for (int i = mLength; i < inLength; i++)
+			new (&mData[i]) taType();
+	}
+	else
+	{
+		// Call destructors on elements that are being removed. We keep the capacity.
+		for (int i = inLength; i < mLength; i++)
+			mData[i].~taType();
+	}
+	mLength = inLength;
+}
+
+template<typename taType>
+void Array<taType>::Reserve(int inCapacity)
+{
+	gAssert(inCapacity > 0, "Arrays need to have a capacity of 1 or higher.");
+
+	// Early out if we're already at or above the requested capacity.
+	if (inCapacity <= mCapacity)
+		return;
+
+	taType* new_data = gStaticCast<taType*>(malloc(inCapacity * sizeof(taType)));
+
+	for (int i = 0; i < mLength; i++)
+		new_data[i] = gMove(mData[i]);
+
+	free(mData);
+
+	mData = new_data;
+}
+
+template<typename taType>
+void Array<taType>::ShrinkToFit()
+{
+	if (mLength == mCapacity)
+		return;
+
+	taType* new_data = gStaticCast<taType*>(malloc(mLength * sizeof(taType)));
+
+	for (int i = 0; i < mLength; i++)
+		new_data[i] = gMove(mData[i]);
+
+	free(mData);
+	mData = new_data;
+
+	mCapacity = mLength;
+}
+
+template<typename taType>
+void Array<taType>::Clear()
+{
+	for (int i = 0; i < mLength; i++)
+		mData[i].~taType();
+
+	// Set the length to 0, but keep the capacity.
+	mLength = 0;
+}
+
+template<typename taType>
+void Array<taType>::Add(taType inValue)
+{
+	if (mLength == mCapacity)
+		Reserve(mCapacity * 2);
+
+	new (&mData[mLength]) taType(gMove(inValue));
+	mLength++;
+}
+
+template<typename taType>
+template<typename ... taArgs>
+void Array<taType>::Emplace(taArgs&&... inArgs)
+{
+	if (mLength == mCapacity)
+		Reserve(mCapacity * 2);
+
+	new (&mData[mLength]) taType(std::forward<taArgs>(inArgs)...);
+	mLength++;
+}
+
+template<typename taType>
+void Array<taType>::PopBack()
+{
+	gAssert(!IsEmpty());
+
+	mLength--;
+	mData[mLength].~taType();
+}
 
 template<typename taType>
 inline void Array<taType>::Remove(int inIndex)
 {
-	mArray.erase(mArray.begin() + inIndex);
+	gAssert(IsValidIndex(inIndex));
+
+	mData[inIndex].~taType();
+
+	for (int i = inIndex; i < mLength - 1; i++)
+		mData[i] = gMove(mData[i + 1]);
+
+	mLength--;
+}
+
+template<typename taType>
+void Array<taType>::SwapRemove(int inIndex)
+{
+	gAssert(IsValidIndex(inIndex));
+	gSwap(mData[inIndex], Back());
+	PopBack();
 }
 
 template<typename taType>

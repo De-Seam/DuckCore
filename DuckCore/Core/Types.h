@@ -44,7 +44,7 @@ uint64 gUInt64Max(); // 18446744073709551615
 uint64 gUInt64Min(); // 0
 
 template<typename taCastType>
-taCastType gStaticCast(auto& inItem)
+taCastType gStaticCast(auto&& inItem)
 {
 	return static_cast<taCastType>(inItem);
 }
