@@ -59,7 +59,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../;$(ProjectDir)../External/</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
@@ -83,7 +83,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir)../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../;$(ProjectDir)../External/</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
