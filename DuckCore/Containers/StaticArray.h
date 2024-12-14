@@ -7,19 +7,22 @@
 
 namespace DC
 {
-template<typename taType, int taSize>
+template<typename taType, int taLength>
 class StaticArray
 {
+	static_assert(taLength >= 1, "Length must be 1 or higher.");
+
 public:
 	StaticArray() = default;
 	StaticArray(std::initializer_list<taType> inList);
 
 	taType& operator[](int inIndex) { return At(inIndex); }
 	const taType& operator[](int inIndex) const { return At(inIndex); }
-	taType& At(int inIndex) { return mArray[inIndex]; }
-	const taType& At(int inIndex) const { return mArray[inIndex]; }
+	taType& At(int inIndex) { return mData[inIndex]; }
+	const taType& At(int inIndex) const { return mData[inIndex]; }
 
-	int Length() const { return static_cast<int>(mArray.size()); }
+	int Length() const { return taLength; }
+	int IsValidIndex(int inIndex) const { return inIndex >= 0 && inIndex < Length(); }
 
 	int Find(const taType& inValue) const;
 	template<typename taPredicate>
@@ -27,26 +30,24 @@ public:
 
 	bool Contains(const taType& inValue) const { return Find(inValue) != -1; }
 
-	taType& Front() { return mArray.front(); }
-	const taType& Front() const { return mArray.front(); }
-	taType& Back() { return mArray.back(); }
-	const taType& Back() const { return mArray.back(); }
+	taType& Front() { return mData.front(); }
+	const taType& Front() const { return mData.front(); }
+	taType& Back() { return mData.back(); }
+	const taType& Back() const { return mData.back(); }
 
-	taType* Data() { return mArray.data(); }
-	const taType* Data() const { return mArray.data(); }
+	taType* Data() { return mData.data(); }
+	const taType* Data() const { return mData.data(); }
 
-	// Custom iterator support
-    typename std::array<taType, taSize>::iterator begin() { return mArray.begin(); }
-    typename std::array<taType, taSize>::iterator end() { return mArray.end(); }
-
-    typename std::array<taType, taSize>::const_iterator begin() const { return mArray.begin(); }
-    typename std::array<taType, taSize>::const_iterator end() const { return mArray.end(); }
-
-    typename std::array<taType, taSize>::const_iterator cbegin() const { return mArray.cbegin(); }
-    typename std::array<taType, taSize>::const_iterator cend() const { return mArray.cend(); }
+	// Iterator support
+    taType* begin() { return mData; }
+    taType* end() { return mData + taLength; }
+    const taType* begin() const { return mData; }
+    const taType* end() const { return mData + taLength; }
+    const taType* cbegin() const { return mData; }
+    const taType* cend() const { return mData + taLength; }
 
 private:
-	std::array<taType, taSize> mArray;
+	taType mData[taLength];
 };
 
 template<typename taType, int taSize>
@@ -54,7 +55,7 @@ StaticArray<taType, taSize>::StaticArray(std::initializer_list<taType> inList)
 {
 	gAssert(inList.size() == Length(), "Initializer list should be of the same length as the static array. Otherwise it should not be used, to prevent uninitialized memory.");
 	for (int i = 0; i < Length(); i++)
-		mArray[i] = *(inList.begin() + i);
+		mData[i] = *(inList.begin() + i);
 }
 
 template<typename taType, int taSize>
