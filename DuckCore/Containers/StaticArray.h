@@ -12,7 +12,6 @@ class StaticArray
 {
 public:
 	StaticArray() = default;
-	StaticArray(const taType& inValue) { mArray.fill(inValue); }
 	StaticArray(std::initializer_list<taType> inList);
 
 	taType& operator[](int inIndex) { return At(inIndex); }
@@ -53,6 +52,7 @@ private:
 template<typename taType, int taSize>
 StaticArray<taType, taSize>::StaticArray(std::initializer_list<taType> inList)
 {
+	gAssert(inList.size() == Length(), "Initializer list should be of the same length as the static array. Otherwise it should not be used, to prevent uninitialized memory.");
 	for (int i = 0; i < Length(); i++)
 		mArray[i] = *(inList.begin() + i);
 }
