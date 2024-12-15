@@ -37,6 +37,10 @@ public:
 
 	static String sFormatted(const char* inFormat, ...);
 
+	String SubStr(int inStart,int inEnd) const { return mString.substr(inStart,inEnd); }
+
+	int Length() const { return mString.length(); }
+
 	virtual Json Serialize() const;
 	virtual void Deserialize(const Json& inJson);
 
