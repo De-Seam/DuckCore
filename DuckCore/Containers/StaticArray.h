@@ -2,9 +2,6 @@
 // Core includes
 #include <DuckCore/Core/Types.h>
 
-// Std includes
-#include <array>
-
 namespace DC
 {
 template<typename taType, int taLength>
