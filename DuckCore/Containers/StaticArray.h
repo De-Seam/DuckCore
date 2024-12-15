@@ -18,6 +18,8 @@ public:
 	taType& At(int inIndex) { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
 	const taType& At(int inIndex) const { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
 
+	void Fill(const taType& inValue) { for (int i = 0; i < Length(); i++) mData[i] = inValue; }
+
 	int Length() const { return taLength; }
 	int IsValidIndex(int inIndex) const { return inIndex >= 0 && inIndex < Length(); }
 
