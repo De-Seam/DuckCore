@@ -222,15 +222,21 @@ public:
 		}
 	}
 
-	Ref<taType> Get() const
+	[[deprecated]] // use Ref() instead.
+	Ref<taType> Get()
 	{
-		gAssert(IsAlive() && "Can't make a reference if it isn't alive anymore! Check IsAlive() first");
-		return Ref<taType>(*this);
+		return Ref();
+	}
+
+	Ref<taType> Ref()
+	{
+	    gAssert(IsAlive() && "Can't make a reference if it isn't alive anymore. Check IsAlive() first");
+		return mPtr;
 	}
 
 	bool IsAlive() const { return mWeakRefCounter->mIsAlive; }
 
-	bool operator==(const Ref<taType>& inOther) const { return mPtr == inOther.mPtr; }
+	bool operator==(const WeakRef<taType>& inOther) const { return mPtr == inOther.mPtr; }
 
 private:
 	taType* mPtr = nullptr;

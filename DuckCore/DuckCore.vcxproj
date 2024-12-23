@@ -63,6 +63,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
+      <DisableSpecificWarnings>4127; 4702</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,6 +88,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeaderFile />
+      <DisableSpecificWarnings>4127; 4702</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -100,6 +102,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Containers\File.cpp" />
     <ClCompile Include="Utilities\GUID.cpp" />
     <ClCompile Include="Containers\String.cpp" />
     <ClCompile Include="Core.cpp" />
@@ -113,6 +116,8 @@
   <ItemGroup>
     <ClInclude Include="Config.h" />
     <ClInclude Include="Containers\Array.h" />
+    <ClInclude Include="Containers\File.h" />
+    <ClInclude Include="Containers\HashSet.h" />
     <ClInclude Include="Utilities\GUID.h" />
     <ClInclude Include="Containers\Handle.h" />
     <ClInclude Include="Containers\HashMap.h" />

@@ -8,6 +8,7 @@
 #include <string>
 
 #include <DuckCore/Utilities/Json.h>
+#include <DuckCore/Utilities/Utilities.h>
 
 namespace DC
 {
@@ -17,7 +18,8 @@ class String
 public:
 	String() = default;
 	String(const char* inString) : mString(inString) {}
-	String(const std::string& inString) : mString(inString) {}
+	String(const char* inBegin, const char* inEnd) : mString(inBegin, inEnd) {}
+	String(std::string inString) : mString(gMove(inString)) {}
 
 	operator const std::string& () const { return mString; }
 
@@ -37,9 +39,13 @@ public:
 
 	static String sFormatted(const char* inFormat, ...);
 
-	String SubStr(int inStart,int inEnd) const { return mString.substr(inStart,inEnd); }
+	bool Contains(char inChar) const;
 
-	int Length() const { return mString.length(); }
+	String SubStr(int inStart,int inEnd) const { return mString.substr(inStart,inEnd); }
+	int FindFirstCharOccurence(char inChar) const; // Find the index of the first time this char appeared in the string, or -1 if none
+	int FindLastCharOccurence(char inChar) const; // Find the index of the last time this char appeared in the string, or -1 if none
+
+	int Length() const { return gStaticCast<int>(mString.length()); }
 
 	virtual Json Serialize() const;
 	virtual void Deserialize(const Json& inJson);

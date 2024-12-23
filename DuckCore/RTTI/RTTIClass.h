@@ -19,8 +19,8 @@ public:
 	template<typename taType>
 	taType* As();
 
-	virtual Json Serialize() const;
-	virtual void Deserialize(const Json& inJson);
+	template<typename taType>
+	taType& Cast();
 
 private:
 	inline static RTTI sRTTI = RTTI(
@@ -43,36 +43,13 @@ taType* RTTIClass::As()
 	return nullptr;
 }
 
-// Template function for to_json
-template<typename T>
-typename std::enable_if<has_serialize<T, Json()>::value>::type
-to_json(Json& j, const T& obj) 
+template <typename taType>
+taType& RTTIClass::Cast()
 {
-	j = obj.Serialize();
+	gAssert(this->IsARTTI(taType::sGetRTTI()) && "Invalid cast!");
+	return *gStaticCast<taType*>(this);
 }
 
-// Template function for from_json
-template<typename T>
-typename std::enable_if<has_deserialize<T, void(const Json&)>::value>::type
-from_json(const Json& j, T& obj) 
-{
-	obj.Deserialize(j);
-}
-
-template<typename T>
-typename std::enable_if<has_serialize<T, Json()>::value>::type
-to_json(Json& j, const T* obj) 
-{
-	j = obj->Serialize();
-}
-
-// Template function for from_json
-template<typename T>
-typename std::enable_if<has_deserialize<T, void(const Json&)>::value>::type
-from_json(const Json& j, T* obj) 
-{
-	obj->Deserialize(j);
-}
 }
 
 #define RTTI_CLASS_DECLARATION_BASE(inClassName, inBaseClassName) \

@@ -18,11 +18,41 @@ String String::sFormatted(const char* inFormat, ...)
 
 	char buffer[1024];
 	int num_chars = vsnprintf(buffer, sizeof(buffer), inFormat, args);
-    gAssert(num_chars >= 0 && num_chars <= sizeof(buffer));
+	gAssert(num_chars >= 0 && num_chars <= sizeof(buffer));
 
 	va_end(args);
 
 	return String(buffer);
+}
+
+bool String::Contains(char inChar) const
+{
+	for (const char& character : mString)
+		if (inChar == character)
+			return true;
+	return false;
+}
+
+int String::FindFirstCharOccurence(char inChar) const
+{
+	for (int i = 0; i < Length(); i++)
+	{
+		const char& character = mString[i];
+		if (character == inChar)
+			return i;
+	}
+	return -1;
+}
+
+int String::FindLastCharOccurence(char inChar) const
+{
+	for (int i = Length()-1; i >= 0; i--)
+	{
+		const char& character = mString[i];
+		if (character == inChar)
+			return i;
+	}
+	return -1;
 }
 
 Json String::Serialize() const

@@ -31,6 +31,8 @@ public:
 	static GUID sCreate();
 	static GUID sCombine(const GUID& inA, const GUID& inB, int inSalt = 0);
 
+	static GUID sNone() { return GUID(); }
+
 	virtual Json Serialize() const;
 	virtual void Deserialize(const Json& inJson);
 
