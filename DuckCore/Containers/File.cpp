@@ -25,7 +25,11 @@ void File::Load()
 
 void File::WriteToDisk()
 {
-	std::ofstream file(*mPath);
+	// Ensure the directory exists
+	std::filesystem::path filePath(*mPath);
+	std::filesystem::create_directories(filePath.parent_path());
+
+	std::ofstream file(mPath.CStr());
 	if (!file.is_open())
 	{
 		gAssert(false);

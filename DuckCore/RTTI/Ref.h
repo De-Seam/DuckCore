@@ -163,8 +163,8 @@ public:
 
 		if (mWeakRefCounter == nullptr)
 		{
-			mPtr->mWeakRefCounter = mWeakRefCounter;
 			mWeakRefCounter = new RefClass::WeakRefCounter();
+			mPtr->mWeakRefCounter = mWeakRefCounter;
 		}
 
 		mWeakRefCounter->mRefCount++;
@@ -177,8 +177,8 @@ public:
 
 		if (mWeakRefCounter == nullptr)
 		{
-			mPtr->mWeakRefCounter = mWeakRefCounter;
 			mWeakRefCounter = new RefClass::WeakRefCounter();
+			mPtr->mWeakRefCounter = mWeakRefCounter;
 		}
 
 		mWeakRefCounter->mRefCount++;
