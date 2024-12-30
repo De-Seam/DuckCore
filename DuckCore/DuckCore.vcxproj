@@ -118,6 +118,7 @@
     <ClInclude Include="Containers\Array.h" />
     <ClInclude Include="Containers\File.h" />
     <ClInclude Include="Containers\HashSet.h" />
+    <ClInclude Include="Containers\Pair.h" />
     <ClInclude Include="Utilities\GUID.h" />
     <ClInclude Include="Containers\Handle.h" />
     <ClInclude Include="Containers\HashMap.h" />
