@@ -21,15 +21,13 @@ void File::Load()
 	}
 
 	mContents = std::string(std::istreambuf_iterator<char>(file), {});
+
+	file.close();
 }
 
 void File::WriteToDisk()
 {
-	// Ensure the directory exists
-	std::filesystem::path filePath(*mPath);
-	std::filesystem::create_directories(filePath.parent_path());
-
-	std::ofstream file(mPath.CStr());
+	std::ofstream file(*mPath);
 	if (!file.is_open())
 	{
 		gAssert(false);
