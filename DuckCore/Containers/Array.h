@@ -64,17 +64,17 @@ public:
 	const taType* Data() const { return mData; }
 
 	// Iterator support
-    taType* begin() { return mData; }
-    taType* end() { return mData + mLength; }
-    const taType* begin() const { return mData; }
-    const taType* end() const { return mData + mLength; }
-    const taType* cbegin() const { return mData; }
-    const taType* cend() const { return mData + mLength; }
+	taType* begin() { return mData; }
+	taType* end() { return mData + mLength; }
+	const taType* begin() const { return mData; }
+	const taType* end() const { return mData + mLength; }
+	const taType* cbegin() const { return mData; }
+	const taType* cend() const { return mData + mLength; }
 
 private:
-	taType* mData = nullptr; // This will never be nullptr after the constructor.
 	int mLength = 0;
 	int mCapacity = 12; // Default capacity is 12. Capacity is not initialized with new.
+	taType* mData = nullptr; // This will never be nullptr after the constructor.
 };
 
 template<typename taType>
@@ -114,6 +114,7 @@ void Array<taType>::Reserve(int inCapacity)
 		return;
 
 	taType* new_data = gStaticCast<taType*>(malloc(inCapacity * sizeof(taType)));
+	memset(new_data, 0, inCapacity * sizeof(taType));
 
 	for (int i = 0; i < mLength; i++)
 		new_data[i] = gMove(mData[i]);

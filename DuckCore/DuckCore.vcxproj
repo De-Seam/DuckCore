@@ -146,6 +146,9 @@
     <ClInclude Include="Utilities\TypeID.h" />
     <ClInclude Include="Utilities\Utilities.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="DuckCore.natvis" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
