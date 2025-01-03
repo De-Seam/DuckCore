@@ -19,22 +19,34 @@ template<typename taType>
 struct Vec4;
 
 // Vec2
-using DVec2 = DC::Vec2<double>;
-using FVec2 = DC::Vec2<float>;
-using IVec2 = DC::Vec2<int32>;
-using UVec2 = DC::Vec2<uint32>;
+using DVec2 = Vec2<double>;
+using FVec2 = Vec2<float>;
+using IVec2 = Vec2<int32>;
+using UVec2 = Vec2<uint32>;
+extern template struct Vec2<double>;
+extern template struct Vec2<float>;
+extern template struct Vec2<int32>;
+extern template struct Vec2<uint32>;
 
 // Vec3
-using DVec3 = DC::Vec3<double>;
-using FVec3 = DC::Vec3<float>;
-using IVec3 = DC::Vec3<int32>;
-using UVec3 = DC::Vec3<uint32>;
+using DVec3 = Vec3<double>;
+using FVec3 = Vec3<float>;
+using IVec3 = Vec3<int32>;
+using UVec3 = Vec3<uint32>;
+extern template struct Vec3<double>;
+extern template struct Vec3<float>;
+extern template struct Vec3<int32>;
+extern template struct Vec3<uint32>;
 
 // Vec4
-using DVec4 = DC::Vec4<double>;
-using FVec4 = DC::Vec4<float>;
-using IVec4 = DC::Vec4<int32>;
-using UVec4 = DC::Vec4<uint32>;
+using DVec4 = Vec4<double>;
+using FVec4 = Vec4<float>;
+using IVec4 = Vec4<int32>;
+using UVec4 = Vec4<uint32>;
+extern template struct Vec4<double>;
+extern template struct Vec4<float>;
+extern template struct Vec4<int32>;
+extern template struct Vec4<uint32>;
 
 #pragma warning (push)
 #pragma warning (disable : 4201) //to avoid nameless struct / union warning.
@@ -52,10 +64,9 @@ struct Vec2
 	Vec2& operator=(const Vec2& inOther) = default;
 
 	Vec2(Vec2&&) = default;
-    Vec2& operator=(Vec2&& inOther) = default;
+	Vec2& operator=(Vec2&& inOther) = default;
 
 	~Vec2() = default;
-
 
 	taType& operator[](int inIndex)
 	{
@@ -70,16 +81,18 @@ struct Vec2
 	}
 
 	template<typename taOtherType>
-    Vec2<taOtherType> As() const
+	Vec2<taOtherType> As() const
 	{
-	    return
-	    {
-	        static_cast<taOtherType>(mX),
-	        static_cast<taOtherType>(mY)
-	    };
+		return
+		{
+			static_cast<taOtherType>(mX),
+			static_cast<taOtherType>(mY)
+		};
 	}
 
+	template <typename taSameType = taType, std::enable_if_t<std::is_signed_v<taSameType>>>
 	Vec2 operator -() const { return {-mX, -mY}; }
+
 	Vec2 operator +(const Vec2& inOther) const { return {mX + inOther.mX, mY + inOther.mY}; }
 	Vec2 operator -(const Vec2& inOther) const { return {mX - inOther.mX, mY - inOther.mY}; }
 	Vec2 operator *(const Vec2& inOther) const { return {mX * inOther.mX, mY * inOther.mY}; }
@@ -178,7 +191,9 @@ struct Vec3
 	    };
 	}
 
+	template <typename taSameType = taType, std::enable_if_t<std::is_signed_v<taSameType>>>
 	Vec3 operator -() const { return {-mX, -mY, -mZ}; }
+
 	Vec3 operator +(const Vec3& i) const { return {mX + i.mX, mY + i.mY, mZ + i.mZ}; }
 	Vec3 operator -(const Vec3& i) const { return {mX - i.mX, mY - i.mY, mZ - i.mZ}; }
 	Vec3 operator *(const Vec3& i) const { return {mX * i.mX, mY * i.mY, mZ * i.mZ}; }
@@ -194,6 +209,7 @@ struct Vec3
 
 	bool operator==(const Vec3& inOther) { return mX == inOther.mX && mY == inOther.mY && mZ == inOther.mZ; }
 
+	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
 	[[nodiscard]] uint32 GetARGB() const
 	{
         static_assert(std::is_floating_point_v<taType>);
@@ -205,6 +221,7 @@ struct Vec3
 			uint8_t>(t_b * 255));
 	}
 
+	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
 	[[nodiscard]] uint32_t GetRGBA() const
 	{
         static_assert(std::is_floating_point_v<taType>);
@@ -271,7 +288,9 @@ struct alignas(4 * sizeof(taType)) Vec4
 	    };
 	}
 
+	template <typename taSameType = taType, std::enable_if_t<std::is_signed_v<taSameType>>>
 	Vec4 operator -() const { return {-mX, -mY, -mZ, -mW}; }
+
 	Vec4 operator +(const Vec4& i) const { return {mX + i.mX, mY + i.mY, mZ + i.mZ, mW + i.mW}; }
 	Vec4 operator -(const Vec4& i) const { return {mX - i.mX, mY - i.mY, mZ - i.mZ, mW - i.mW}; }
 	Vec4 operator *(const Vec4& i) const { return {mX * i.mX, mY * i.mY, mZ * i.mZ, mW * i.mW}; }
@@ -285,27 +304,25 @@ struct alignas(4 * sizeof(taType)) Vec4
 	const Vec4& operator /=(const Vec4& i) { return *this = *this / i; }
 	const Vec4& operator /=(const taType i) { return *this = *this / i; }
 
-	[[nodiscard]] uint32_t GetARGB() const
+	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
+	[[nodiscard]] uint32 GetARGB() const
 	{
-        static_assert(std::is_floating_point_v<taType>);
-
 		const taType t_a = gClamp<taType>(mW, 0, 1);
 		const taType t_r = gClamp<taType>(mX, 0, 1);
 		const taType t_g = gClamp<taType>(mY, 0, 1);
 		const taType t_b = gClamp<taType>(mZ, 0, 1);
-		return static_cast<uint32_t>((static_cast<uint8_t>(t_a * 255) << 24) | (static_cast<uint8_t>(t_r * 255) << 16) |
+		return static_cast<uint32>((static_cast<uint8_t>(t_a * 255) << 24) | (static_cast<uint8_t>(t_r * 255) << 16) |
 			(static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<uint8_t>(t_b * 255)));
 	}
 
-	[[nodiscard]] uint32_t GetRGBA() const
+	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
+	[[nodiscard]] uint32 GetRGBA() const
 	{
-        static_assert(std::is_floating_point_v<taType>);
-
 		const taType t_a = gClamp<taType>(mW, 0, 1);
 		const taType t_r = gClamp<taType>(mX, 0, 1);
 		const taType t_g = gClamp<taType>(mY, 0, 1);
 		const taType t_b = gClamp<taType>(mZ, 0, 1);
-		return static_cast<uint32_t>((static_cast<uint8_t>(t_r * 255) << 24) | (static_cast<uint8_t>(t_g * 255) << 16) |
+		return static_cast<uint32>((static_cast<uint8_t>(t_r * 255) << 24) | (static_cast<uint8_t>(t_g * 255) << 16) |
 			(static_cast<uint8_t>(t_b * 255) << 8) | (static_cast<uint8_t>(t_a * 255)));
 	}
 };

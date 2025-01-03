@@ -103,6 +103,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Containers\File.cpp" />
+    <ClCompile Include="Math\AABB.cpp" />
+    <ClCompile Include="Math\Random.cpp" />
+    <ClCompile Include="Math\Rect.cpp" />
+    <ClCompile Include="Math\Vector.cpp" />
     <ClCompile Include="Utilities\GUID.cpp" />
     <ClCompile Include="Containers\String.cpp" />
     <ClCompile Include="Core.cpp" />
