@@ -10,7 +10,7 @@ class StaticArray
 	static_assert(taLength >= 1, "Length must be 1 or higher.");
 
 public:
-	StaticArray();
+	StaticArray() = default;
 	StaticArray(std::initializer_list<taType> inList);
 
 	taType& operator[](int inIndex) { return At(inIndex); }
@@ -48,14 +48,6 @@ public:
 private:
 	taType mData[taLength];
 };
-
-template<typename taType, int taLength>
-StaticArray<taType, taLength>::StaticArray()
-{
-	// Default initialize all elements.
-	for (int i = 0; i < Length(); i++)
-		mData[i] = taType();
-}
 
 template<typename taType, int taSize>
 StaticArray<taType, taSize>::StaticArray(std::initializer_list<taType> inList)

@@ -2,6 +2,7 @@
 // Core includes
 #include <DuckCore/Config.h>
 #include <DuckCore/Core/Assert.h>
+#include <DuckCore/Math/HelperFunctions.h>
 #include <DuckCore/Utilities/Utilities.h>
 
 namespace DC
@@ -11,7 +12,10 @@ template<typename taType>
 class Array
 {
 public:
-	Array();
+	static constexpr int cBaseCapacity = 12; // The capacity the Array will consume during its first allocation.
+
+	Array() = default;
+	~Array();
 
 	taType& operator[](int inIndex) { return At(inIndex); }
 	const taType& operator[](int inIndex) const { return At(inIndex); }
@@ -73,14 +77,21 @@ public:
 
 private:
 	int mLength = 0;
-	int mCapacity = 12; // Default capacity is 12. Capacity is not initialized with new.
-	taType* mData = nullptr; // This will never be nullptr after the constructor.
+	int mCapacity = 0;
+	taType* mData = nullptr;
 };
 
-template<typename taType>
-Array<taType>::Array()
+template <typename taType>
+Array<taType>::~Array()
 {
-	mData = gStaticCast<taType*>(malloc(mCapacity * sizeof(taType)));
+	if (mData != nullptr)
+	{
+		gAssert(mCapacity > 0);
+		Clear();
+		free(mData);
+		mData = nullptr;
+		mCapacity = 0;
+	}
 }
 
 template<typename taType>
@@ -114,14 +125,19 @@ void Array<taType>::Reserve(int inCapacity)
 		return;
 
 	taType* new_data = gStaticCast<taType*>(malloc(inCapacity * sizeof(taType)));
-	memset(new_data, 0, inCapacity * sizeof(taType));
+	gAssert(new_data != nullptr);
 
+	// Move-construct existing elements into new memory
 	for (int i = 0; i < mLength; i++)
-		new_data[i] = gMove(mData[i]);
+	{
+		new (&new_data[i]) taType(gMove(mData[i]));
+		mData[i].~taType(); // Destroy old element
+	}
 
-	free(mData);
-
+	if (mData != nullptr)
+		free(mData);
 	mData = new_data;
+	mCapacity = inCapacity;
 }
 
 template<typename taType>
@@ -130,10 +146,23 @@ void Array<taType>::ShrinkToFit()
 	if (mLength == mCapacity)
 		return;
 
+	if (mLength == 0)
+	{
+		free(mData);
+		mData = nullptr;
+		mCapacity = 0;
+
+		return;
+	}
+
 	taType* new_data = gStaticCast<taType*>(malloc(mLength * sizeof(taType)));
 
+	// Move-construct existing elements into new memory
 	for (int i = 0; i < mLength; i++)
-		new_data[i] = gMove(mData[i]);
+	{
+		new (&new_data[i]) taType(std::move(mData[i]));
+		mData[i].~taType(); // Destroy old element
+	}
 
 	free(mData);
 	mData = new_data;
@@ -155,7 +184,7 @@ template<typename taType>
 void Array<taType>::Add(taType inValue)
 {
 	if (mLength == mCapacity)
-		Reserve(mCapacity * 2);
+		Reserve(gMax(mCapacity * 2, cBaseCapacity));
 
 	new (&mData[mLength]) taType(gMove(inValue));
 	mLength++;
@@ -166,7 +195,7 @@ template<typename ... taArgs>
 void Array<taType>::Emplace(taArgs&&... inArgs)
 {
 	if (mLength == mCapacity)
-		Reserve(mCapacity * 2);
+		Reserve(gMax(mCapacity * 2, cBaseCapacity));
 
 	new (&mData[mLength]) taType(std::forward<taArgs>(inArgs)...);
 	mLength++;
