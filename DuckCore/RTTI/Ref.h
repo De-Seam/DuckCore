@@ -121,9 +121,12 @@ public:
 		}
 	}
 
-	taType* Get() const { return mPtr; }
-	taType* operator->() const { return mPtr; }
-	operator taType*() const { return mPtr; }
+	const taType* Get() const { return mPtr; }
+	taType* Get() { return mPtr; }
+	const taType* operator->() const { return mPtr; }
+	taType* operator->() { return mPtr; }
+	operator const taType*() const { return mPtr; }
+	operator taType*() { return mPtr; }
 
 	bool operator==(const Ref<taType>& inOther) const { return mPtr == inOther.mPtr; }
 	bool operator==(const taType* inOther) const { return mPtr == inOther; }
