@@ -54,10 +54,14 @@ public:
 	bool ReverseSwapRemoveFirstIf(taPredicate&& inPredicate); // Returns whether any were removed
 
 	int Find(const taType& inValue) const;
+	template<typename taOtherType>
+	int Find(const taOtherType& inValue) const;
 	template<typename taPredicate>
 	int FindIf(taPredicate&& inPredicate) const; // Returns index where the predicate evaluated to true
 
 	bool Contains(const taType& inValue) const { return Find(inValue) != -1; }
+	template<typename taOtherType>
+	bool Contains(const taOtherType& inValue) const { return Find(inValue) != -1; }
 
 	taType& Front() { gAssert(!IsEmpty()); return mData[0]; }
 	const taType& Front() const { gAssert(!IsEmpty()); return mData[0]; }
@@ -327,6 +331,18 @@ bool Array<taType>::ReverseSwapRemoveFirstIf(taPredicate&& inPredicate)
 
 template<typename taType>
 inline int Array<taType>::Find(const taType& inValue) const 
+{
+	for (int i = 0; i < Length(); i++)
+	{
+		if (inValue == At(i))
+			return i;
+	}
+	return -1;
+}
+
+template <typename taType>
+template <typename taOtherType>
+int Array<taType>::Find(const taOtherType& inValue) const
 {
 	for (int i = 0; i < Length(); i++)
 	{
