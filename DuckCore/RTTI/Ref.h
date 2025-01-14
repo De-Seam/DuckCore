@@ -16,7 +16,11 @@ public:
 	virtual ~RefClass()
 	{
 		if (mWeakRefCounter != nullptr)
+		{
 			mWeakRefCounter->mIsAlive = false;
+			if (mWeakRefCounter->mRefCount <= 0)
+				delete mWeakRefCounter;
+		}
 	}
 
 	int32 GetRefCount() const { return mRefCount; }

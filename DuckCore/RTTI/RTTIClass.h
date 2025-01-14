@@ -1,5 +1,5 @@
 #pragma once
-#include "RTTI.h"
+#include <DuckCore/RTTI/RTTI.h>
 
 namespace DC
 {

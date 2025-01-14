@@ -1,12 +1,7 @@
 #pragma once
 // Core includes
 #include <DuckCore/Config.h>
-#include <DuckCore/Core/Assert.h>
-#include <DuckCore/Utilities/Json.h>
 #include <DuckCore/Utilities/TypeID.h>
-
-// Std includes
-#include <functional>
 
 namespace DC
 {
@@ -41,5 +36,7 @@ private:
 
 	RTTITypeID mTypeID;
 };
+
+#define REGISTER_RTTI(inClassName) inClassName::sGetRTTI()
 
 }

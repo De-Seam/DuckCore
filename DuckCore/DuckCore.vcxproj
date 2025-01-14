@@ -107,9 +107,10 @@
     <ClCompile Include="Math\Random.cpp" />
     <ClCompile Include="Math\Rect.cpp" />
     <ClCompile Include="Math\Vector.cpp" />
+    <ClCompile Include="RTTI\RTTIRegistry.cpp" />
     <ClCompile Include="Utilities\GUID.cpp" />
     <ClCompile Include="Containers\String.cpp" />
-    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Core\Core.cpp" />
     <ClCompile Include="Core\Log.cpp" />
     <ClCompile Include="Core\Types.cpp" />
     <ClCompile Include="Math\Transform.cpp" />
@@ -123,6 +124,8 @@
     <ClInclude Include="Containers\File.h" />
     <ClInclude Include="Containers\HashSet.h" />
     <ClInclude Include="Containers\Pair.h" />
+    <ClInclude Include="Core\Core.h" />
+    <ClInclude Include="RTTI\RTTIRegistry.h" />
     <ClInclude Include="Utilities\GUID.h" />
     <ClInclude Include="Containers\Handle.h" />
     <ClInclude Include="Containers\HashMap.h" />
