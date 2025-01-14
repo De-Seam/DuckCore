@@ -9,7 +9,8 @@ public:
 	virtual ~RTTIClass() = default;
 
 	virtual const RTTI& GetRTTI() const { return sRTTI; }
-	static const RTTI& sGetRTTI() { return sRTTI; }
+	virtual RTTI& GetRTTI() { return sRTTI; }
+	static RTTI& sGetRTTI() { return sRTTI; }
 	static RTTIClass* sNewInstance() { return new RTTIClass; }
 
 	template<typename taType>
@@ -58,7 +59,8 @@ private: \
 \
 public: \
 	virtual const DC::RTTI& GetRTTI() const override { return sRTTI; } \
-	static const DC::RTTI& sGetRTTI() { return sRTTI; } \
+	virtual DC::RTTI& GetRTTI() override { return sRTTI; } \
+	static DC::RTTI& sGetRTTI() { return sRTTI; } \
 	virtual bool IsARTTI(const DC::RTTI& inRTTI) const \
 	{ \
 		if (sGetRTTI().GetTypeID() == inRTTI.GetTypeID()) \

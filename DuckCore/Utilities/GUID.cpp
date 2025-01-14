@@ -56,14 +56,14 @@ GUID GUID::sCombine(const GUID& inA, const GUID& inB, int inSalt)
 	return guid;
 }
 
-Json GUID::Serialize() const
+Json GUID::ToJson() const
 {
 	Json json;
 	json["GUID"] = ToString();
 	return json;
 }
 
-void GUID::Deserialize(const Json& inJson)
+void GUID::FromJson(const Json& inJson)
 {
 	std::string guid_string = inJson["GUID"];
 	*this = GUID(guid_string);

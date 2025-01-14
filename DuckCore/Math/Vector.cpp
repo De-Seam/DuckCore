@@ -1,6 +1,7 @@
 #include <DuckCore/Math/Vector.h>
 
-using namespace DC;
+namespace DC
+{
 
 // Vec2
 template struct Vec2<double>;
@@ -19,3 +20,5 @@ template struct Vec4<double>;
 template struct Vec4<float>;
 template struct Vec4<int32>;
 template struct Vec4<uint32>;
+
+}

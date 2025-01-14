@@ -48,3 +48,21 @@ taCastType gStaticCast(auto&& inItem)
 {
 	return static_cast<taCastType>(inItem);
 }
+
+template<typename taCastType>
+taCastType gSCast(auto&& inItem)
+{
+	return static_cast<taCastType>(inItem);
+}
+
+template<typename taCastType>
+taCastType gReinterpretCast(auto&& inItem)
+{
+	return reinterpret_cast<taCastType>(inItem);
+}
+
+template<typename taCastType>
+taCastType gRCast(auto&& inItem)
+{
+	return reinterpret_cast<taCastType>(inItem);
+}

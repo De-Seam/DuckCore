@@ -38,8 +38,8 @@ public:
 	template<typename taPredicate>
 	int RemoveIf(taPredicate&& inPredicate); // Returns amount removed
 
-	Json Serialize() const;
-	void Deserialize(const Json& inJson);
+	Json ToJson() const;
+	void FromJson(const Json& inJson);
 
 private:
 	phmap::flat_hash_map<taKey, taValue> mMap;
@@ -127,7 +127,7 @@ int HashMap<taKey, taValue>::RemoveIf(taPredicate&& inPredicate)
 }
 
 template <typename taKey, typename taValue>
-Json HashMap<taKey, taValue>::Serialize() const
+Json HashMap<taKey, taValue>::ToJson() const
 {
 	Json json;
 	ForEach([&json](const taKey& inKey, const taValue& inValue)
@@ -138,7 +138,7 @@ Json HashMap<taKey, taValue>::Serialize() const
 }
 
 template <typename taKey, typename taValue>
-void HashMap<taKey, taValue>::Deserialize(const Json& inJson)
+void HashMap<taKey, taValue>::FromJson(const Json& inJson)
 {
 	gAssert(inJson.is_array());
 

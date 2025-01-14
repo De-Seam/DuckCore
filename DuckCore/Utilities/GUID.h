@@ -33,8 +33,8 @@ public:
 
 	static GUID sNone() { return GUID(); }
 
-	virtual Json Serialize() const;
-	virtual void Deserialize(const Json& inJson);
+	virtual Json ToJson() const;
+	virtual void FromJson(const Json& inJson);
 
 private:
 	uint64 mGUID = 0;

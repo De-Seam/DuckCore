@@ -14,7 +14,8 @@ void RTTIRegistry::GetChildClassesOf(const RTTI& inRTTI, Array<RTTI*>& outChildC
 	RTTIContainer* container = FindRTTIContainer(inRTTI);
 	gAssert(container != nullptr);
 
-	sGatherChildClassesRecursive(*container, outChildClasses);
+	for (RTTIContainer& child_container : container->mChildRTTIContainers)
+		sGatherChildClassesRecursive(child_container, outChildClasses);
 }
 
 void RTTIRegistry::RegisterRTTI(RTTI& inRTTI)

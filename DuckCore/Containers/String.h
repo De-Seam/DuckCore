@@ -49,8 +49,8 @@ public:
 
 	int Length() const { return gStaticCast<int>(mString.length()); }
 
-	virtual Json Serialize() const;
-	virtual void Deserialize(const Json& inJson);
+	virtual Json ToJson() const;
+	virtual void FromJson(const Json& inJson);
 
 private:
 	std::string mString;

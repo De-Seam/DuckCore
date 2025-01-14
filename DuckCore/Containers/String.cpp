@@ -55,12 +55,12 @@ int String::FindLastCharOccurence(char inChar) const
 	return -1;
 }
 
-Json String::Serialize() const
+Json String::ToJson() const
 {
 	return mString;
 }
 
-void String::Deserialize(const Json& inJson)
+void String::FromJson(const Json& inJson)
 {
 	mString = inJson.get<std::string>();
 }
