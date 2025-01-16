@@ -2,7 +2,6 @@
 // Core includes
 #include <DuckCore/Core/Assert.h>
 #include <DuckCore/Threads/Atomic.h>
-#include <DuckCore/Utilities/Json.h>
 #include <DuckCore/Utilities/NoCopy.h>
 
 namespace DC
@@ -252,4 +251,13 @@ private:
 	template<typename taRefClassType>
 	friend class Ref;
 };
+
+template<typename T>
+typename std::enable_if<HasToJson<T, Json()>::value>::type
+to_json(Json& outJson, const Ref<T>& inObject) 
+{
+	if (inObject != nullptr)
+		outJson = inObject->ToJson();
+}
+
 }

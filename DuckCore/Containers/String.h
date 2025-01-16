@@ -1,14 +1,12 @@
 #pragma once
-// Core includes
 #include <DuckCore/Config.h>
 #include <DuckCore/Core/Types.h>
+#include <DuckCore/Utilities/Json.h>
+#include <DuckCore/Utilities/Utilities.h>
 
-// Std includes
 #include <cstdarg>
 #include <string>
 
-#include <DuckCore/Utilities/Json.h>
-#include <DuckCore/Utilities/Utilities.h>
 
 namespace DC
 {
@@ -49,8 +47,8 @@ public:
 
 	int Length() const { return gStaticCast<int>(mString.length()); }
 
-	virtual Json ToJson() const;
-	virtual void FromJson(const Json& inJson);
+	Json ToJson() const;
+	void FromJson(const Json& inJson);
 
 private:
 	std::string mString;

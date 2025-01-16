@@ -1,7 +1,7 @@
 #pragma once
 // DuckCore includes
-#include <DuckCore/Containers/String.h>
 #include <DuckCore/Core/Log.h>
+#include <DuckCore/Containers/String.h>
 
 // Std includes
 #include <filesystem>

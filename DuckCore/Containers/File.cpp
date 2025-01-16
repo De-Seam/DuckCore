@@ -1,9 +1,10 @@
 #include <DuckCore/Containers/File.h>
 
+#include <DuckCore/Core/Log.h>
 #include <DuckCore/Utilities/Utilities.h>
 
-// Std includes
 #include <fstream>
+#include <DuckCore/Core/Assert.h>
 
 using namespace DC;
 

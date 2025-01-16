@@ -13,6 +13,7 @@ enum class LogLevel : uint8
 	Error
 };
 
+void gLog(LogLevel inLevel, const char* inMessage);
 void gLog(LogLevel inLevel, const String& inMessage);
-void gLog(const String& inMessage);
+void gLog(const DC::String& inMessage);
 }
