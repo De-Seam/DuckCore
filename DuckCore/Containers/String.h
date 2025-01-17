@@ -30,6 +30,9 @@ public:
 	template<typename taType>
 	String& operator+=(const taType& inOther) { *this = *this + inOther; return *this; }
 
+	char& operator[](int inIndex) { return mString[inIndex]; }
+	const char& operator[](int inIndex) const { return mString[inIndex]; }
+
 	bool IsEmpty() const { return mString.empty(); }
 
 	uint64 Hash() const;
