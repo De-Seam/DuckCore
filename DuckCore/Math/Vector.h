@@ -86,17 +86,25 @@ struct Vec2
 
 	[[nodiscard]] taType Length2() const
 	{
-		return mX * mX + mY * mY;
+		return Dot(*this);
 	}
 
-	[[nodiscard]] taType Length() const
+	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
+	[[nodiscard]] float Length() const
+	{
+		return std::sqrtf(Length2());
+	}
+
+	template <typename taSameType = double, typename = std::enable_if_t<std::is_same_v<taSameType, double>>>
+	[[nodiscard]] double Length() const
 	{
 		return std::sqrt(Length2());
 	}
 
+	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
 	[[nodiscard]] Vec2 Normalize() const
 	{
-		taType l = Length();
+		taType l = Length<taType>();
 		return {mX / l, mY / l};
 	}
 };
@@ -208,6 +216,30 @@ struct Vec3
 			mZ * inOther.mX - mX * inOther.mZ,
 			mX * inOther.mY - mY * inOther.mX);
 	}
+
+	[[nodiscard]] taType Length2() const
+	{
+		return Dot(*this);
+	}
+
+	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
+	[[nodiscard]] float Length() const
+	{
+		return std::sqrtf(Length2());
+	}
+
+	template <typename taSameType = double, typename = std::enable_if_t<std::is_same_v<taSameType, double>>>
+	[[nodiscard]] double Length() const
+	{
+		return std::sqrt(Length2());
+	}
+
+	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
+	[[nodiscard]] Vec3 Normalize() const
+	{
+		taType l = Length<taType>();
+		return { mX / l, mY / l };
+	}
 };
 
 template<typename taType>
@@ -287,6 +319,35 @@ struct alignas(4 * sizeof(taType)) Vec4
 		const taType t_b = gClamp<taType>(mZ, 0, 1);
 		return static_cast<uint32>((static_cast<uint8_t>(t_r * 255) << 24) | (static_cast<uint8_t>(t_g * 255) << 16) |
 			(static_cast<uint8_t>(t_b * 255) << 8) | (static_cast<uint8_t>(t_a * 255)));
+	}
+
+	[[nodiscard]] taType Dot(const Vec4& inOther) const
+	{
+		return (mX * inOther.mX + mY * inOther.mY + mZ * inOther.mZ + mW * mW);
+	}
+
+	[[nodiscard]] taType Length2() const
+	{
+		return Dot(*this);
+	}
+
+	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
+	[[nodiscard]] float Length() const
+	{
+		return std::sqrtf(Length2());
+	}
+
+	template <typename taSameType = double, typename = std::enable_if_t<std::is_same_v<taSameType, double>>>
+	[[nodiscard]] double Length() const
+	{
+		return std::sqrt(Length2());
+	}
+
+	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
+	[[nodiscard]] Vec4 Normalize() const
+	{
+		taType l = Length<taType>();
+		return { mX / l, mY / l };
 	}
 };
 
