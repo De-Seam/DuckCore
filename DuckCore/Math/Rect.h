@@ -8,8 +8,18 @@ namespace DC
 template<typename taType>
 struct Rect2D
 {
-	Vec2<taType> mBottomLeft;
-	Vec2<taType> mWidthHeight;
+	union
+	{
+		struct
+		{
+			taType mX, mY, mWidth, mHeight;
+		};
+		struct
+		{
+			Vec2<taType> mBottomLeft;
+			Vec2<taType> mWidthHeight;
+		};
+	};
 
 	Rect2D() = default;
 	Rect2D(const Vec2<taType>& inBottomLeft, const Vec2<taType>& inWidthHeight) :
@@ -38,6 +48,10 @@ struct Rect2D
 	}
 };
 
+using DRect2D = Rect2D<double>;
+using FRect2D = Rect2D<float>;
+using IRect2D = Rect2D<int32>;
+using URect2D = Rect2D<uint32>;
 extern template struct Rect2D<float>;
 extern template struct Rect2D<double>;
 extern template struct Rect2D<int>;

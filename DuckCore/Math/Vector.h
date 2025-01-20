@@ -9,6 +9,8 @@
 // Std includes
 #include <cmath>
 
+#include <DuckCore/Math/RGBA.h>
+
 namespace DC
 {
 #pragma warning (push)
@@ -180,7 +182,7 @@ struct Vec3
 
 	bool operator==(const Vec3& inOther) { return mX == inOther.mX && mY == inOther.mY && mZ == inOther.mZ; }
 
-	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
+	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
 	[[nodiscard]] uint32 GetARGB() const
 	{
         static_assert(std::is_floating_point_v<taType>);
@@ -192,16 +194,10 @@ struct Vec3
 			uint8_t>(t_b * 255));
 	}
 
-	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
-	[[nodiscard]] uint32_t GetRGBA() const
+	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
+	[[nodiscard]] RGBA GetRGBA() const
 	{
-        static_assert(std::is_floating_point_v<taType>);
-
-		const taType t_r = gClamp<taType>(mX, 0, 1);
-		const taType t_g = gClamp<taType>(mY, 0, 1);
-		const taType t_b = gClamp<taType>(mZ, 0, 1);
-		return static_cast<uint32_t>((static_cast<uint8_t>(t_r * 255) << 24) | (static_cast<uint8_t>(t_g * 255) << 16) |
-			(static_cast<uint8_t>(t_b * 255) << 8) | 255);
+		return RGBA(gClamp(mX, 0.0f, 1.0f), gClamp(mY, 0.0f, 1.0f), gClamp(mZ, 0.0f, 1.0f), 1.0f);
 	}
 
 	[[nodiscard]] taType Dot(const Vec3& inOther) const
@@ -299,7 +295,7 @@ struct alignas(4 * sizeof(taType)) Vec4
 	const Vec4& operator /=(const Vec4& i) { return *this = *this / i; }
 	const Vec4& operator /=(const taType i) { return *this = *this / i; }
 
-	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
+	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
 	[[nodiscard]] uint32 GetARGB() const
 	{
 		const taType t_a = gClamp<taType>(mW, 0, 1);
@@ -310,15 +306,10 @@ struct alignas(4 * sizeof(taType)) Vec4
 			(static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<uint8_t>(t_b * 255)));
 	}
 
-	template <typename taSameType = taType, std::enable_if_t<std::is_floating_point_v<taSameType>>>
-	[[nodiscard]] uint32 GetRGBA() const
+	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
+	[[nodiscard]] RGBA GetRGBA() const
 	{
-		const taType t_a = gClamp<taType>(mW, 0, 1);
-		const taType t_r = gClamp<taType>(mX, 0, 1);
-		const taType t_g = gClamp<taType>(mY, 0, 1);
-		const taType t_b = gClamp<taType>(mZ, 0, 1);
-		return static_cast<uint32>((static_cast<uint8_t>(t_r * 255) << 24) | (static_cast<uint8_t>(t_g * 255) << 16) |
-			(static_cast<uint8_t>(t_b * 255) << 8) | (static_cast<uint8_t>(t_a * 255)));
+		return RGBA(gClamp(mX, 0.0f, 1.0f), gClamp(mY, 0.0f, 1.0f), gClamp(mZ, 0.0f, 1.0f), gClamp(mW, 0.0f, 1.0f));
 	}
 
 	[[nodiscard]] taType Dot(const Vec4& inOther) const

@@ -106,6 +106,7 @@
     <ClCompile Include="Math\AABB.cpp" />
     <ClCompile Include="Math\Random.cpp" />
     <ClCompile Include="Math\Rect.cpp" />
+    <ClCompile Include="Math\RGBA.cpp" />
     <ClCompile Include="Math\Vector.cpp" />
     <ClCompile Include="RTTI\RTTIRegistry.cpp" />
     <ClCompile Include="Utilities\GUID.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="Containers\HashSet.h" />
     <ClInclude Include="Containers\Pair.h" />
     <ClInclude Include="Core\Core.h" />
+    <ClInclude Include="Math\RGBA.h" />
     <ClInclude Include="RTTI\RTTIRegistry.h" />
     <ClInclude Include="Utilities\GUID.h" />
     <ClInclude Include="Containers\Handle.h" />
