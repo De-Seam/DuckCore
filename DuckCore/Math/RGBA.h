@@ -1,6 +1,9 @@
 #pragma once
 #include <DuckCore/Core/Types.h>
 
+#pragma warning (push)
+#pragma warning (disable : 4201) //to avoid nameless struct / union warning.
+
 namespace DC
 {
 	struct RGBA
@@ -19,3 +22,5 @@ namespace DC
 		};
 	};
 }
+
+#pragma warning (pop)

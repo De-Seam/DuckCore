@@ -2,6 +2,9 @@
 #include "DuckCore/Math/AABB.h"
 #include "DuckCore/Math/Vector.h"
 
+#pragma warning (push)
+#pragma warning (disable : 4201) //to avoid nameless struct / union warning.
+
 namespace DC
 {
 
@@ -57,3 +60,5 @@ extern template struct Rect2D<double>;
 extern template struct Rect2D<int>;
 extern template struct Rect2D<uint32>;
 }
+
+#pragma warning (pop)
