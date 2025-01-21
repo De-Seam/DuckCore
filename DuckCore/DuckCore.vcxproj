@@ -104,6 +104,7 @@
   <ItemGroup>
     <ClCompile Include="Containers\File.cpp" />
     <ClCompile Include="Math\AABB.cpp" />
+    <ClCompile Include="Math\Intersects.cpp" />
     <ClCompile Include="Math\Random.cpp" />
     <ClCompile Include="Math\Rect.cpp" />
     <ClCompile Include="Math\RGBA.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Containers\HashSet.h" />
     <ClInclude Include="Containers\Pair.h" />
     <ClInclude Include="Core\Core.h" />
+    <ClInclude Include="Math\Intersects.h" />
     <ClInclude Include="Math\RGBA.h" />
     <ClInclude Include="RTTI\RTTIRegistry.h" />
     <ClInclude Include="Utilities\GUID.h" />
