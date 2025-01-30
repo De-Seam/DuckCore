@@ -82,4 +82,4 @@ from_json(const Json& inJson, T& outObject)
 }
 
 #define JSON_SAVE(ioJson, inValue) (ioJson)[#inValue] = inValue
-#define JSON_LOAD(inJson, outValue) if (inJson.contains(#outValue)) outValue = (inJson)[#outValue]
+#define JSON_LOAD(inJson, outValue) if (auto it = inJson.find(#outValue); it != inJson.end()) outValue = it.value();
