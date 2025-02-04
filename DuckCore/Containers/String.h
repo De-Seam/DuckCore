@@ -26,6 +26,7 @@ public:
 	String operator+(const String& inOther) const { return {mString + inOther.mString}; }
 	String operator+(const char* inOther) const { return {mString + inOther}; }
 	String operator+(const std::string& inOther) const { return {mString + inOther}; }
+	String operator+(const char inChar) const { return {mString + inChar}; }
 
 	template<typename taType>
 	String& operator+=(const taType& inOther) { *this = *this + inOther; return *this; }

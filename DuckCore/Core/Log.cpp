@@ -4,23 +4,43 @@
 
 // Std includes
 #include <cstdio>
+#include <DuckCore/Core/Assert.h>
 
 namespace DC
 {
-void gLog(LogLevel inLevel, const char* inMessage)
+static std::function<void(const RTTI&, ELogLevel, const String&)> sOnLogCallback;
+
+static String sGetMessage(ELogLevel inLevel, const String& inMessage)
 {
-	gLog(inLevel, String(inMessage));
+	switch (inLevel)
+	{
+	case ELogLevel::Info:
+		return String("[Info] ") + inMessage;
+	case ELogLevel::Warning:
+		return String("[Warning] ") + inMessage;
+	case ELogLevel::Error:
+		return String("[Error] ") + inMessage;
+	}
+	gAssert(false, "LogLevel not found.");
+	return "ERROR could not create log message! Was the LogLevel memory leaded?";
 }
 
-void gLog(LogLevel inLevel, const String& inMessage)
+void gLog(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const String& inMessage)
 {
+	String message = sGetMessage(inLevel, inMessage) + '\n';
 	printf(inMessage.CStr());
-	printf("\n");
+
+	sOnLogCallback(inLogCategoryRTTI, inLevel, inMessage);
 }
 
-void gLog(const String& inMessage)
+void gSetOnLogCallback(const std::function<void(const RTTI&, ELogLevel, const String&)>& inOnLogCallback)
 {
-	printf(inMessage.CStr());
-	printf("\n");
+	gAssert(!sOnLogCallback, "OnLog callback was already set.");
+	sOnLogCallback = inOnLogCallback;
+}
+
+void gClearOnLogCallback()
+{
+	sOnLogCallback = {};
 }
 }
