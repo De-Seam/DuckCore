@@ -14,9 +14,14 @@
 
 #ifdef _ASSERTS
 
+class LogCategoryAsserts final : public DC::LogCategory
+{
+	RTTI_CLASS(LogCategoryAsserts, LogCategory)
+};
+
 // Alteratively we could use the same "default" message for both "WITH_MSG" and "NO_MSG" and
 // provide support for custom formatting by concatenating the formatting string instead of having the format inside the default message
-#define INTERNAL_ASSERT_IMPL(inCheck, inMsg, ...) do { if(!(inCheck)) { DC::gLog(DC::LogLevel::Error, inMsg); BREAKPOINT(); } } while(false)
+#define INTERNAL_ASSERT_IMPL(inCheck, inMsg, ...) do { if(!(inCheck)) { DC::gLog<LogCategoryAsserts>(DC::ELogLevel::Error, inMsg); BREAKPOINT(); } } while(false)
 
 #define INTERNAL_ASSERT_WITH_MSG(inCheck, ...) INTERNAL_ASSERT_IMPL(inCheck, DC::String("Assertion '") + DC::String(STRINGIFY_MACRO(inCheck)) + "' failed at " + DC::String(std::filesystem::path(__FILE__).filename().string()) + ":" + DC::gToString((uint32)__LINE__) + ": " + __VA_ARGS__)
 #define INTERNAL_ASSERT_NO_MSG(inCheck) INTERNAL_ASSERT_IMPL(inCheck, DC::String("Assertion '") + DC::String(STRINGIFY_MACRO(inCheck)) + "' failed at " + DC::String(std::filesystem::path(__FILE__).filename().string()) + ":" + DC::gToString((uint32)__LINE__))

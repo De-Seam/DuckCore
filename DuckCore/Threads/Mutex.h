@@ -10,23 +10,23 @@ namespace DC
 class Mutex
 {
 public:
-    void Lock();
-    void Unlock();
+	void Lock();
+	void Unlock();
 
 private:
-    std::mutex mMutex;
+	std::mutex mMutex;
 };
 
 class ReadWriteMutex
 {
 public:
-    void WriteLock();
-    void WriteUnlock();
+	void WriteLock();
+	void WriteUnlock();
 
-    void ReadLock();
-    void ReadUnlock();
+	void ReadLock();
+	void ReadUnlock();
 
 private:
-    std::shared_mutex mMutex;
+	std::shared_mutex mMutex;
 };
 }
