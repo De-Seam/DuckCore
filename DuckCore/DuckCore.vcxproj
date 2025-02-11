@@ -127,6 +127,8 @@
     <ClInclude Include="Containers\HashSet.h" />
     <ClInclude Include="Containers\Pair.h" />
     <ClInclude Include="Core\Core.h" />
+    <ClInclude Include="Manager\Manager.h" />
+    <ClInclude Include="Manager\Managers.h" />
     <ClInclude Include="Math\Intersects.h" />
     <ClInclude Include="Math\RGBA.h" />
     <ClInclude Include="RTTI\RTTIRegistry.h" />

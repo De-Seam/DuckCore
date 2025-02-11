@@ -173,6 +173,12 @@
     <ClInclude Include="Math\Intersects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Manager\Managers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\Manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="DuckCore.natvis" />
