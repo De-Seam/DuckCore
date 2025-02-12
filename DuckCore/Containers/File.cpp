@@ -17,7 +17,7 @@ void File::Load()
 	std::ifstream file(mPath.CStr());
 	if (!file.is_open())
 	{
-		gLog(LogLevel::Warning, String::sFormatted("Unable to open file %s for reading. The file will be created instead.", *mPath));
+		gLog<LogCategoryFile>(ELogLevel::Warning, String::sFormatted("Unable to open file %s for reading. The file will be created instead.", *mPath));
 		return;
 	}
 
@@ -32,7 +32,7 @@ void File::WriteToDisk()
 	if (!file.is_open())
 	{
 		gAssert(false);
-		gLog(LogLevel::Error, String::sFormatted("Unable to open file %s for writing", *mPath));
+		gLog<LogCategoryFile>(ELogLevel::Error, String::sFormatted("Unable to open file %s for writing", *mPath));
 		return;
 	}
 

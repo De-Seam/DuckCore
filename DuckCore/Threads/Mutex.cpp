@@ -1,54 +1,56 @@
-#include "Mutex.h"
+#include <DuckCore/Threads/Mutex.h>
 
-// Core includes
+// DuckCore includes
 #include <DuckCore/Containers/Array.h>
+#include <DuckCore/Core/Assert.h>
 
-#include "DuckCore/Core/Assert.h"
-
-using namespace DC;
-
+namespace DC
+{
 #ifdef _ASSERTS
-THREADLOCAL Array<const Mutex*> gLockedMutexes;
-THREADLOCAL Array<const ReadWriteMutex*> gLockedReadWriteMutexes;
 
-void gRegisterLockMutex(const Mutex* inMutex)
+THREADLOCAL Array<const MutexBase*> gLockedMutexes;
+
+void gRegisterLockMutex(const MutexBase* inMutex)
 {
 	gAssert(!gLockedMutexes.Contains(inMutex), "Mutex is already locked by same thread");
 	gLockedMutexes.Add(inMutex);
 }
 
-void gRegisterUnlockMutex(const Mutex* inMutex)
+void gRegisterUnlockMutex(const MutexBase* inMutex)
 {
 	gAssert(gLockedMutexes.Contains(inMutex), "Mutex is not locked by this thread");
 	gLockedMutexes.SwapRemove(gLockedMutexes.Find(inMutex));
 }
 
-void gRegisterLockMutex(const ReadWriteMutex* inMutex)
-{
-    gAssert(!gLockedReadWriteMutexes.Contains(inMutex), "Mutex is already locked by same thread");
-	gLockedReadWriteMutexes.Add(inMutex);
-}
-
-void gRegisterUnlockMutex(const ReadWriteMutex* inMutex)
-{
-	gAssert(gLockedReadWriteMutexes.Contains(inMutex), "Mutex is not locked by this thread");
-	gLockedReadWriteMutexes.SwapRemove(gLockedReadWriteMutexes.Find(inMutex));
+bool MutexBase::IsLockedByCurrentThread() const 
+{ 
+	return gLockedMutexes.Contains(this); 
 }
 
 #endif
 
 void Mutex::Lock()
 {
-    IF_ASSERTS(gRegisterLockMutex(this); )
+	IF_ASSERTS(gRegisterLockMutex(this); )
 
 	mMutex.lock();
+}
+
+bool Mutex::TryLock() 
+{
+	const bool result = mMutex.try_lock();
+#ifdef _ASSERTS
+	if (result)
+		gRegisterLockMutex(this);
+#endif
+	return result;
 }
 
 void Mutex::Unlock()
 {
 	IF_ASSERTS(gRegisterUnlockMutex(this); )
 
-    mMutex.unlock();
+	mMutex.unlock();
 }
 
 void ReadWriteMutex::WriteLock()
@@ -56,6 +58,16 @@ void ReadWriteMutex::WriteLock()
 	IF_ASSERTS(gRegisterLockMutex(this); )
 
 	mMutex.lock();
+}
+
+bool ReadWriteMutex::TryWriteLock() 
+{
+	const bool result = mMutex.try_lock();
+#ifdef _ASSERTS
+	if (result)
+		gRegisterLockMutex(this);
+#endif
+	return result;
 }
 
 void ReadWriteMutex::WriteUnlock()
@@ -72,9 +84,20 @@ void ReadWriteMutex::ReadLock()
 	mMutex.lock_shared();
 }
 
+bool ReadWriteMutex::TryReadLock() 
+{
+	const bool result = mMutex.try_lock_shared();
+#ifdef _ASSERTS
+	if (result)
+		gRegisterLockMutex(this);
+#endif
+	return result;
+}
+
 void ReadWriteMutex::ReadUnlock()
 {
 	IF_ASSERTS(gRegisterUnlockMutex(this); )
 
 	mMutex.unlock_shared();
+}
 }

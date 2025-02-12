@@ -110,6 +110,7 @@
     <ClCompile Include="Math\RGBA.cpp" />
     <ClCompile Include="Math\Vector.cpp" />
     <ClCompile Include="RTTI\RTTIRegistry.cpp" />
+    <ClCompile Include="Threads\ScopedMutex.cpp" />
     <ClCompile Include="Utilities\GUID.cpp" />
     <ClCompile Include="Containers\String.cpp" />
     <ClCompile Include="Core\Core.cpp" />
@@ -132,6 +133,8 @@
     <ClInclude Include="Math\Intersects.h" />
     <ClInclude Include="Math\RGBA.h" />
     <ClInclude Include="RTTI\RTTIRegistry.h" />
+    <ClInclude Include="Threads\MutexProtectedPtr.h" />
+    <ClInclude Include="Threads\ScopedMutex.h" />
     <ClInclude Include="Utilities\GUID.h" />
     <ClInclude Include="Containers\Handle.h" />
     <ClInclude Include="Containers\HashMap.h" />

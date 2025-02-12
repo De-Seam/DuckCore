@@ -5,6 +5,8 @@
 
 namespace DC
 {
+class LogCategoryFile final : public LogCategory {};
+
 class File : public RefClass
 {
 public:
