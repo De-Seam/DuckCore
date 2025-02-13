@@ -22,8 +22,8 @@ void gLogAssert(const char* inMessage);
 // provide support for custom formatting by concatenating the formatting string instead of having the format inside the default message
 #define INTERNAL_ASSERT_IMPL(inCheck, inMsg, ...) do { if(!(inCheck)) { gLogAssert(inMsg); BREAKPOINT(); } } while(false)
 
-#define INTERNAL_ASSERT_WITH_MSG(inCheck, ...) INTERNAL_ASSERT_IMPL(inCheck, "Assertion '" #inCheck "' failed at " __FILE__  ":" TO_STRING(__LINE__) ": " __VA_ARGS__)
-#define INTERNAL_ASSERT_NO_MSG(inCheck) INTERNAL_ASSERT_IMPL(inCheck, "Assertion '" #inCheck "' failed at " __FILE__  ":" TO_STRING(__LINE__))
+#define INTERNAL_ASSERT_WITH_MSG(inCheck, ...) INTERNAL_ASSERT_IMPL(inCheck, "Assertion '" #inCheck "' failed at " __FILE__  " : " TO_STRING(__LINE__) " : " __VA_ARGS__)
+#define INTERNAL_ASSERT_NO_MSG(inCheck) INTERNAL_ASSERT_IMPL(inCheck, "Assertion '" #inCheck "' failed at " __FILE__  " : " TO_STRING(__LINE__))
 
 #define INTERNAL_ASSERT_GET_MACRO_NAME(arg1, arg2, macro, ...) macro
 #define INTERNAL_ASSERT_GET_MACRO(...) EXPAND_MACRO( INTERNAL_ASSERT_GET_MACRO_NAME(__VA_ARGS__, INTERNAL_ASSERT_WITH_MSG, INTERNAL_ASSERT_NO_MSG) )
