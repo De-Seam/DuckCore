@@ -42,7 +42,7 @@
     <ClCompile Include="Utilities\GUID.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Containers\File.cpp">
+    <ClCompile Include="Containers\File\File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Math\Random.cpp">
@@ -70,6 +70,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\Assert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\LogManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,7 +161,7 @@
     <ClInclude Include="Utilities\GUID.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Containers\File.h">
+    <ClInclude Include="Containers\File\File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Containers\HashSet.h">
@@ -192,6 +195,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Threads\MutexProtectedValue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\File\TextFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

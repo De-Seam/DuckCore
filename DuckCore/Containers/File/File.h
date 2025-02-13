@@ -11,7 +11,7 @@ class LogCategoryFile final : public LogCategory {};
 class File : public RefClass
 {
 public:
-	File(String inPath) : mPath(gMove(inPath)) {}
+	explicit File(String inPath) : mPath(gMove(inPath)) {}
 
 	virtual void Load(); // Loads mContents from mPath. This will clear potentially existing content.
 	virtual void WriteToDisk(); // Writes mContents to mPath. Child classes should override this to update mContents before calling this.

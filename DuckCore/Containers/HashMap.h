@@ -17,6 +17,7 @@ public:
 
 	taValue& operator[](const taKey& inKey) { return mMap[inKey]; }
 	const taValue& At(const taKey& inKey) const { return mMap.at(inKey); }
+	taValue& At(const taKey& inKey) { return mMap.at(inKey); }
 
 	void Add(const taKey& inKey, const taValue& inValue);
 	bool Remove(const taKey& inKey) { return mMap.erase(inKey); }

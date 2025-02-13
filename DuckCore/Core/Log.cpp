@@ -4,46 +4,26 @@
 #include <DuckCore/Containers/HashMap.h>
 #include <DuckCore/Containers/String.h>
 #include <DuckCore/Core/Assert.h>
+#include <DuckCore/Core/LogManager.h>
+#include <DuckCore/Manager/Managers.h>
 #include <DuckCore/Threads/ScopedMutex.h>
 
 #include <cstdio>
 
 namespace DC
 {
-Array<LogEntry> gLogEntries;
-Mutex gLogMutex;
-
-static String sGetMessage(ELogLevel inLevel, const String& inMessage)
+void gLogInternal(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const char* inMessage)
 {
-	switch (inLevel)
-	{
-	case ELogLevel::Info:
-		return String("[Info] ") + inMessage;
-	case ELogLevel::Warning:
-		return String("[Warning] ") + inMessage;
-	case ELogLevel::Error:
-		return String("[Error] ") + inMessage;
-	}
-	gAssert(false, "LogLevel not found.");
-	return "ERROR could not create log message! Was the LogLevel memory leaded?";
+	Managers::sGet<LogManager>().Log(inLogCategoryRTTI, inLevel, inMessage);
 }
 
-void gLog(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const String& inMessage)
+void gLog(const char* inMessage)
 {
-	String message = sGetMessage(inLevel, inMessage) + '\n';
-	printf(inMessage.CStr());
-
-	LogEntry entry;
-	entry.mCategory = &inLogCategoryRTTI;
-	entry.mLevel = inLevel;
-	entry.mMessage = message;
-
-	ScopedMutexLock lock(gLogMutex);
-	gLogEntries.Add(gMove(entry));
+	gLog<LogCategoryDefault>(ELogLevel::Info, inMessage);
 }
 
-MutexProtectedPtr<const Array<LogEntry>> gGetLogEntries()
+void gLog(ELogLevel inLevel, const char* inMessage)
 {
-	return MutexProtectedPtr<const Array<LogEntry>>(gLogMutex, &gLogEntries);
+	gLog<LogCategoryDefault>(inLevel, inMessage);
 }
 }

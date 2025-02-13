@@ -102,8 +102,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Containers\File.cpp" />
+    <ClCompile Include="Containers\File\File.cpp" />
     <ClCompile Include="Core\Assert.cpp" />
+    <ClCompile Include="Core\LogManager.cpp" />
     <ClCompile Include="Math\AABB.cpp" />
     <ClCompile Include="Math\Intersects.cpp" />
     <ClCompile Include="Math\Random.cpp" />
@@ -125,10 +126,12 @@
   <ItemGroup>
     <ClInclude Include="Config.h" />
     <ClInclude Include="Containers\Array.h" />
-    <ClInclude Include="Containers\File.h" />
+    <ClInclude Include="Containers\File\File.h" />
+    <ClInclude Include="Containers\File\TextFile.h" />
     <ClInclude Include="Containers\HashSet.h" />
     <ClInclude Include="Containers\Pair.h" />
     <ClInclude Include="Core\Core.h" />
+    <ClInclude Include="Core\LogManager.h" />
     <ClInclude Include="Manager\Manager.h" />
     <ClInclude Include="Manager\Managers.h" />
     <ClInclude Include="Math\Intersects.h" />

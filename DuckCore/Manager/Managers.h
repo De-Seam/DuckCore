@@ -20,7 +20,7 @@ public:
 private:
 	Managers() = default;
 
-	static HashMap<const RTTI*, UniquePtr<Manager>> sManagers;
+	inline static HashMap<const RTTI*, UniquePtr<Manager>> sManagers;
 };
 
 template<typename taManagerType>
@@ -38,7 +38,7 @@ taManagerType& Managers::sGet()
 	const RTTI* rtti = &taManagerType::sGetRTTI();
 	gAssert(sManagers.Contains(rtti));
 
-	return sManagers.At(rtti);
+	return *gStaticCast<taManagerType*>(sManagers.At(rtti).Get());
 }
 
 template<typename taManagerType>
