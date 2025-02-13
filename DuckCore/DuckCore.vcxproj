@@ -103,6 +103,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Containers\File.cpp" />
+    <ClCompile Include="Core\Assert.cpp" />
     <ClCompile Include="Math\AABB.cpp" />
     <ClCompile Include="Math\Intersects.cpp" />
     <ClCompile Include="Math\Random.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Math\RGBA.h" />
     <ClInclude Include="RTTI\RTTIRegistry.h" />
     <ClInclude Include="Threads\MutexProtectedPtr.h" />
+    <ClInclude Include="Threads\MutexProtectedValue.h" />
     <ClInclude Include="Threads\ScopedMutex.h" />
     <ClInclude Include="Utilities\GUID.h" />
     <ClInclude Include="Containers\Handle.h" />

@@ -1,5 +1,6 @@
 #pragma once
 #include <DuckCore/Containers/String.h>
+#include <DuckCore/Core/Log.h>
 #include <DuckCore/RTTI/RTTIRefClass.h>
 #include <DuckCore/Utilities/Utilities.h>
 

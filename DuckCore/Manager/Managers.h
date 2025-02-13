@@ -45,8 +45,6 @@ template<typename taManagerType>
 taManagerType* Managers::sFind() 
 {
 	const RTTI* rtti = &taManagerType::sGetRTTI();
-	if (sManagers.Contains(rtti))
-		return &sManagers.At(rtti);
-	return nullptr;
+	return *sManagers.Find(rtti);
 }
 }

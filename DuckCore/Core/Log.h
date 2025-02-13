@@ -1,8 +1,13 @@
 #pragma once
 // DuckCore includes
 #include <functional>
+
+#include <DuckCore/Containers/Array.h>
+#include <DuckCore/Containers/String.h>
 #include <DuckCore/Core/Types.h>
+#include <DuckCore/Manager/Manager.h>
 #include <DuckCore/RTTI/RTTIClass.h>
+#include <DuckCore/Threads/MutexProtectedPtr.h>
 
 namespace DC
 {
@@ -36,10 +41,6 @@ inline void gLog(const String& inMessage);
 // Internal log function
 void gLog(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const String& inMessage);
 
-// Set the gLog() callback. Only 1 can be set. 
-void gSetOnLogCallback(const std::function<void(const RTTI&, ELogLevel, const String&)>& inOnLogCallback);
-void gClearOnLogCallback();
-
 template <typename taCategory>
 void gLog(ELogLevel inLevel, const char* inMessage)
 {
@@ -58,4 +59,12 @@ inline void gLog(const String& inMessage)
 	gLog<LogCategoryDefault>(ELogLevel::Info, inMessage);
 }
 
+struct LogEntry
+{
+	const RTTI* mCategory;
+	ELogLevel mLevel;
+	String mMessage;
+};
+
+MutexProtectedPtr<const Array<LogEntry>> gGetLogEntries();
 }

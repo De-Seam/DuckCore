@@ -1,14 +1,17 @@
 #include <DuckCore/Core/Log.h>
 
+#include <DuckCore/Containers/Array.h>
+#include <DuckCore/Containers/HashMap.h>
 #include <DuckCore/Containers/String.h>
-
-// Std includes
-#include <cstdio>
 #include <DuckCore/Core/Assert.h>
+#include <DuckCore/Threads/ScopedMutex.h>
+
+#include <cstdio>
 
 namespace DC
 {
-static std::function<void(const RTTI&, ELogLevel, const String&)> sOnLogCallback;
+Array<LogEntry> gLogEntries;
+Mutex gLogMutex;
 
 static String sGetMessage(ELogLevel inLevel, const String& inMessage)
 {
@@ -30,17 +33,17 @@ void gLog(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const String& inMess
 	String message = sGetMessage(inLevel, inMessage) + '\n';
 	printf(inMessage.CStr());
 
-	sOnLogCallback(inLogCategoryRTTI, inLevel, inMessage);
+	LogEntry entry;
+	entry.mCategory = &inLogCategoryRTTI;
+	entry.mLevel = inLevel;
+	entry.mMessage = message;
+
+	ScopedMutexLock lock(gLogMutex);
+	gLogEntries.Add(gMove(entry));
 }
 
-void gSetOnLogCallback(const std::function<void(const RTTI&, ELogLevel, const String&)>& inOnLogCallback)
+MutexProtectedPtr<const Array<LogEntry>> gGetLogEntries()
 {
-	gAssert(!sOnLogCallback, "OnLog callback was already set.");
-	sOnLogCallback = inOnLogCallback;
-}
-
-void gClearOnLogCallback()
-{
-	sOnLogCallback = {};
+	return MutexProtectedPtr<const Array<LogEntry>>(gLogMutex, &gLogEntries);
 }
 }

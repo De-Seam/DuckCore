@@ -5,6 +5,70 @@
 namespace DC
 {
 template<typename taType>
+class MutexProtectedPtr
+{
+public:
+	MutexProtectedPtr(Mutex& inMutex, taType* inPtr, bool inIsAlreadyLocked = false) :
+		mPtr(inPtr), mMutex(&inMutex)
+	{
+		gAssert(!inIsAlreadyLocked || mMutex->IsLockedByCurrentThread(), "The mutex was not locked by the current thread.");
+
+		if (!inIsAlreadyLocked)
+			mMutex->Lock();
+	}
+
+	~MutexProtectedPtr()
+	{
+		if (mMutex != nullptr)
+			mMutex->Unlock();
+	}
+
+	MutexProtectedPtr(const MutexProtectedPtr&) = delete;
+	MutexProtectedPtr& operator=(const MutexProtectedPtr&) = delete;
+
+	// Move constructor
+	MutexProtectedPtr(MutexProtectedPtr&& inOther) noexcept :
+		mPtr(inOther.mPtr), mMutex(inOther.mMutex)
+	{
+		inOther.mMutex = nullptr; // Prevent the destructor of 'other' from unlocking the mutex.
+	}
+
+	// Move assignment operator
+	MutexProtectedPtr& operator=(MutexProtectedPtr&& inOther) noexcept
+	{
+		if (this != &inOther)
+		{
+			// Safely unlock the current mutex if it exists.
+			if (mMutex != nullptr)
+				mMutex->Unlock();
+
+			// Transfer ownership
+			mPtr = inOther.mPtr;
+			mMutex = inOther.mMutex;
+			inOther.mMutex = nullptr; // Prevent the destructor of 'other' from unlocking the mutex.
+		}
+		return *this;
+	}
+
+	taType* operator->() { return Get(); }
+	const taType* operator->() const { return Get(); }
+
+	taType* Get() { gAssert(mMutex != nullptr, "The mutex was unlocked, access to the object denied."); return mPtr; }
+	const taType* Get() const { gAssert(mMutex != nullptr, "The mutex was unlocked, access to the object denied."); return mPtr; }
+
+	void Unlock()
+	{
+		gAssert(mMutex != nullptr, "The mutex was already unlocked.");
+		mMutex->Unlock();
+		mMutex = nullptr;
+	}
+
+private:
+	taType* mPtr = nullptr;
+	Mutex* mMutex = nullptr;
+};
+
+template<typename taType>
 class MutexReadProtectedPtr
 {
 public:
