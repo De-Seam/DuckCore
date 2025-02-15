@@ -12,9 +12,10 @@
 
 namespace DC
 {
-Mutex gMutex;
 Array<LogEntry> gLogEntries;
+Mutex gMutex;
 Ref<TextFile> gLogFile;
+Mutex gLogFileMutex;
 
 void gLogInternal(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const char* inMessage)
 {
@@ -40,8 +41,17 @@ void gLogInternal(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const char* 
 	printf(*entry.mMessage);
 	printf("\n");
 
-	ScopedMutexLock lock(gMutex);
-	gLogEntries.Add(gMove(entry));
+	{
+		ScopedMutexLock lock(gMutex);
+		gLogEntries.Add(gMove(entry));
+	}
+
+	ScopedMutexLock lock;
+
+	if (!gLogFileMutex.TryLock())
+		return;
+
+	lock.SetLockedMutex(gLogFileMutex);
 
 	if (gLogFile == nullptr)
 		gLogFile = new TextFile("Logs/log.txt", (uint8)File::EFlags::KeepOpen);

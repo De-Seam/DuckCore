@@ -13,7 +13,7 @@ void File::Load()
 
 	mContents = "";
 
-	if (mFile.is_open())
+	if (!mFile.is_open())
 		mFile.open(*mPath, std::ios::in | std::ios::out | std::ios::trunc);
 
 	if (!mFile.is_open())
@@ -32,8 +32,8 @@ void File::WriteToDisk()
 {
 	gAssert(!IsReadOnly());
 	
-	if (mFile.is_open())
-		mFile.open(*mPath, std::ios::in | std::ios::out | std::ios::trunc);
+	if (!mFile.is_open())
+		mFile.open(*mPath, std::ios::in | std::ios::out | std::ios::trunc | std::ios::app);
 
 	if (!mFile.is_open())
 	{
