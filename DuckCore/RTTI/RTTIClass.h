@@ -26,7 +26,7 @@ public:
 private:
 	inline static RTTI sRTTI = RTTI(
 		"RTTIClass", // Class Name
-		"NONE" // Base Class Name
+		nullptr // Base Class RTTI
 	);
 };
 
@@ -70,7 +70,7 @@ public: \
 private: \
 	inline static DC::RTTI sRTTI = DC::RTTI( \
 		#inClassName, \
-		#inBaseClassName \
+		&inBaseClassName::sGetRTTI() \
 	);
 
 #define RTTI_CLASS(inClassName, inBaseClassName) \

@@ -32,7 +32,6 @@ bool MutexBase::IsLockedByCurrentThread() const
 void Mutex::Lock()
 {
 	IF_ASSERTS(gRegisterLockMutex(this); )
-
 	mMutex.lock();
 }
 
@@ -49,14 +48,12 @@ bool Mutex::TryLock()
 void Mutex::Unlock()
 {
 	IF_ASSERTS(gRegisterUnlockMutex(this); )
-
 	mMutex.unlock();
 }
 
 void ReadWriteMutex::WriteLock()
 {
 	IF_ASSERTS(gRegisterLockMutex(this); )
-
 	mMutex.lock();
 }
 
@@ -73,14 +70,12 @@ bool ReadWriteMutex::TryWriteLock()
 void ReadWriteMutex::WriteUnlock()
 {
 	IF_ASSERTS(gRegisterUnlockMutex(this); )
-
 	mMutex.unlock();
 }
 
 void ReadWriteMutex::ReadLock()
 {
 	IF_ASSERTS(gRegisterLockMutex(this); )
-
 	mMutex.lock_shared();
 }
 
@@ -97,7 +92,30 @@ bool ReadWriteMutex::TryReadLock()
 void ReadWriteMutex::ReadUnlock()
 {
 	IF_ASSERTS(gRegisterUnlockMutex(this); )
-
 	mMutex.unlock_shared();
 }
+
+void RecursiveMutex::Lock()
+{
+	mMutex.lock();
+}
+
+bool RecursiveMutex::TryLock()
+{
+	return mMutex.try_lock();
+}
+
+void RecursiveMutex::Unlock()
+{
+	mMutex.unlock();
+}
+
+#ifdef _ASSERTS
+bool RecursiveMutex::IsLockedByCurrentThread() const
+{
+	// Invalid for RecursiveMutex. It's not possible to check if it's locked by the current thread (yet).
+	gAssert(false);
+	return false;
+}
+#endif
 }

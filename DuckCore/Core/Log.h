@@ -1,8 +1,10 @@
 #pragma once
 // DuckCore includes
+#include <DuckCore/Containers/Array.h>
 #include <DuckCore/Containers/String.h>
 #include <DuckCore/Core/Types.h>
 #include <DuckCore/RTTI/RTTIClass.h>
+#include <DuckCore/Threads/MutexProtectedPtr.h>
 
 namespace DC
 {
@@ -37,5 +39,14 @@ template<typename taCategory>
 void gLog(ELogLevel inLevel, const String& inMessage) { gLogInternal(taCategory::sGetRTTI(), inLevel, *inMessage); }
 inline void gLog(ELogLevel inLevel, const String& inMessage) { gLog(inLevel, *inMessage); } // Log helper function. Quickly logs something to the default category.
 inline void gLog(const String& inMessage) { gLog(*inMessage); }; // Log helper function. Quickly logs something to the default category with ELogLevel::Info.
+
+struct LogEntry
+{
+	const RTTI* mCategory;
+	ELogLevel mLevel;
+	String mMessage;
+};
+
+MutexProtectedPtr<const Array<LogEntry>> gGetLogArray(); // (Async) returns the array of log entries.
 
 }

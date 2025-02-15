@@ -1,8 +1,9 @@
 #pragma once
 #include <DuckCore/Containers/String.h>
 #include <DuckCore/Core/Log.h>
-#include <DuckCore/RTTI/RTTIRefClass.h>
+#include <DuckCore/RTTI/Ref.h>
 #include <DuckCore/Utilities/Utilities.h>
+#include <fstream>
 
 namespace DC
 {
@@ -11,7 +12,14 @@ class LogCategoryFile final : public LogCategory {};
 class File : public RefClass
 {
 public:
-	explicit File(String inPath) : mPath(gMove(inPath)) {}
+	enum class EFlags : uint8
+	{
+		KeepOpen = 1 << 0, // Keep the file open after loading it.
+		ReadOnly = 1 << 1, // Open the file in read-only mode.
+		WriteOnly = 1 << 2, // Open the file in write-only mode.
+	};
+
+	explicit File(String inPath, uint8 inFlags = 0) : mPath(gMove(inPath)), mFlags(inFlags) {}
 
 	virtual void Load(); // Loads mContents from mPath. This will clear potentially existing content.
 	virtual void WriteToDisk(); // Writes mContents to mPath. Child classes should override this to update mContents before calling this.
@@ -23,12 +31,19 @@ public:
 
 	String& GetContentsForWriting() { return mContents; }
 
+	bool ShouldKeepFileOpen() const { return (uint8)mFlags & (uint8)EFlags::KeepOpen; }
+	bool IsReadOnly() const { return (uint8)mFlags & (uint8)EFlags::ReadOnly; }
+	bool IsWriteOnly() const { return (uint8)mFlags & (uint8)EFlags::WriteOnly; }
+
 protected:
 	String GetFileExtension() const; // Get the file extension of mPath. This is without the dot. So, "png", not ".png".
 
 	String mContents;
 
 private:
+	std::fstream mFile;
+
 	String mPath;
+	uint8 mFlags = 0;
 };
 }

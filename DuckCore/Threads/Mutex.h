@@ -3,6 +3,8 @@
 #include <DuckCore/Config.h>
 
 // Std includes
+#include <DuckCore/Threads/Atomic.h>
+
 #include <mutex>
 #include <shared_mutex>
 
@@ -13,7 +15,7 @@ namespace DC
 class MutexBase
 {
 public:
-	IF_ASSERTS(bool IsLockedByCurrentThread() const;) 
+	IF_ASSERTS(virtual bool IsLockedByCurrentThread() const;) 
 };
 
 class Mutex : public MutexBase
@@ -40,5 +42,18 @@ public:
 
 private:
 	std::shared_mutex mMutex;
+};
+
+class RecursiveMutex : public MutexBase
+{
+public:
+	void Lock();
+	bool TryLock(); // Returns true if locked successfully.
+	void Unlock();
+
+	IF_ASSERTS(virtual bool IsLockedByCurrentThread() const override;) 
+
+private:
+	std::recursive_mutex mMutex;
 };
 }

@@ -34,4 +34,15 @@ ScopedMutexReadLock::~ScopedMutexReadLock()
 {
 	mMutex->ReadUnlock();
 }
+
+ScopedMutexRecursiveLock::ScopedMutexRecursiveLock(RecursiveMutex& inMutex) :
+	mMutex(&inMutex)
+{
+	mMutex->Lock();	
+}
+
+ScopedMutexRecursiveLock::~ScopedMutexRecursiveLock()
+{
+	mMutex->Unlock();
+}
 }

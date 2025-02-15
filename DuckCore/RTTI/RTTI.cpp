@@ -4,9 +4,9 @@
 
 using namespace DC;
 
-RTTI::RTTI(const char* inClassName, const char* inBaseClassName) :
+RTTI::RTTI(const char* inClassName, const RTTI* inBaseClassRTTI) :
 	mClassName(inClassName),
-	mBaseClassName(inBaseClassName)
+	mBaseClassRTTI(inBaseClassRTTI)
 {
 	gRTTIRegistry.RegisterRTTI(*this);
 }

@@ -32,4 +32,14 @@ public:
 private:
 	ReadWriteMutex* mMutex = nullptr;
 };
+
+class ScopedMutexRecursiveLock
+{
+public:
+	ScopedMutexRecursiveLock(RecursiveMutex& inMutex);
+	~ScopedMutexRecursiveLock();
+
+private:
+	RecursiveMutex* mMutex = nullptr;
+};
 }

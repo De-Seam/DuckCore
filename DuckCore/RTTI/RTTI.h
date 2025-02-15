@@ -16,7 +16,7 @@ class RTTI
 public:
 	RTTI(
 		const char* inClassName,
-		const char* inBaseClassName
+		const RTTI* inBaseClassRTTI
 	);
 
 	// We don't want people to copy this class. Just use a pointer or refernece to it
@@ -26,15 +26,17 @@ public:
 	bool operator==(const RTTI& inOther) const { return mTypeID == inOther.mTypeID; }
 
 	const char* GetClassName() const { return mClassName; }
-	const char* GetBaseClassName() const { return mBaseClassName; }
+	const char* GetBaseClassName() const { return mBaseClassRTTI != nullptr ? mBaseClassRTTI->GetClassName() : "None"; }
+
+	const RTTI* GetBaseClassRTTI() const { return mBaseClassRTTI; }
 
 	const RTTITypeID& GetTypeID() const { return mTypeID; }
 
 private:
 	const char* mClassName = nullptr;
-	const char* mBaseClassName = nullptr;
+	const RTTI* mBaseClassRTTI = nullptr;
 
-	RTTITypeID mTypeID;
+	RTTITypeID mTypeID = RTTITypeID::sNew();
 };
 
 #define REGISTER_RTTI(inClassName) inClassName::sGetRTTI()

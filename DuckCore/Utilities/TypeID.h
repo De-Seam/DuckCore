@@ -24,7 +24,6 @@ template<typename taType>
 class TypeID
 {
 public:
-	TypeID();
 	TypeID(const TypeID& inOther) : mID(inOther.mID) {}
 
 	bool operator==(const TypeID& inOther) const { return mID == inOther.mID; }
@@ -34,9 +33,11 @@ public:
 	int16 Get() const { return mID; }
 	operator int16() const { return mID; }
 
-	static int16 sGetNextID() { return sNextID; }
+	static TypeID<taType> sNew() { return TypeID<taType>(); }
 
 private:
+	TypeID();
+
 	int16 mID = -1;
 
 	static inline Atomic<int16> sNextID = 0; 
