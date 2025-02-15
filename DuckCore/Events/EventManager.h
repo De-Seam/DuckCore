@@ -11,6 +11,8 @@ class EventManager;
 
 class EventHandleBase : public NoCopy, public NoMove
 {
+public:
+	virtual ~EventHandleBase() = default;
 protected:
 	virtual void Call(Event& ioEvent) = 0;
 };
@@ -19,7 +21,7 @@ template<typename taEventType>
 class EventHandle final : public EventHandleBase
 {
 public:
-	virtual ~EventHandle();
+	virtual ~EventHandle() override;
 	EventHandle() = delete;
 
 protected:
