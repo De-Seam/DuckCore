@@ -218,6 +218,9 @@
     <ClInclude Include="Threads\Thread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Containers\AsyncQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="DuckCore.natvis" />
