@@ -3,8 +3,8 @@
 #include <DuckCore/Core/Log.h>
 #include <DuckCore/Utilities/Utilities.h>
 
-using namespace DC;
-
+namespace DC
+{
 void File::Load()
 {
 	gAssert(!IsWriteOnly());
@@ -60,4 +60,5 @@ String File::GetFileExtension() const
 		return "";
 
 	return mPath.SubStr(dot_pos + 1, mPath.Length() - 1);
+}
 }

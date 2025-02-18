@@ -3,8 +3,8 @@
 // DuckCore includes
 #include <DuckCore/Core/Assert.h>
 
-using namespace DC;
-
+namespace DC
+{
 uint64 String::Hash() const
 {
 	static std::hash<std::string> sHasher;
@@ -65,22 +65,40 @@ void String::FromJson(const Json& inJson)
 	mString = inJson.get<std::string>();
 }
 
-String DC::gToString(int inValue)
+String gToString(int inValue)
 {
 	return std::to_string(inValue);
 }
 
-String DC::gToString(uint32 inValue)
+String gToString(uint32 inValue)
 {
 	return std::to_string(inValue);
 }
 
-String DC::gToString(float inValue)
+String gToString(float inValue)
 {
 	return std::to_string(inValue);
 }
 
-String DC::gToString(double inValue)
+String gToString(double inValue)
 {
 	return std::to_string(inValue);
+}
+
+String gGetFileExtension(const String& inPath)
+{
+	const int dot_pos = inPath.FindLastCharOccurence('.');
+	if (dot_pos == -1)
+		return "";
+
+	return inPath.SubStr(dot_pos, inPath.Length() - 1);
+}
+
+String gToLowerCase(const String& inString)
+{
+	String result_string = inString;
+	for (char& character : result_string)
+		character = (char)tolower(character);
+	return result_string;
+}
 }
