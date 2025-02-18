@@ -10,7 +10,7 @@ namespace DC
 {
 class LogManager : public Manager
 {
-	RTTI_CLASS(LogManager, Manager)
+	MANAGER_BASE_CLASS(LogManager)
 public:
 	static constexpr const char* cDefaultLogFilePath = "Logs/log.txt";
 

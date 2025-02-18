@@ -191,9 +191,6 @@
     <ClInclude Include="Manager\Managers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Manager\Manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Threads\ScopedMutex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -219,6 +216,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Containers\AsyncQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

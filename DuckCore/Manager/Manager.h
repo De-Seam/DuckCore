@@ -15,7 +15,9 @@ class EventManagerGame : public EventManager
 */
 #define MANAGER_BASE_CLASS(inClassName) \
 	RTTI_CLASS(inClassName, Manager) \
-	inline static const ManagerTypeID sManagerTypeID = ManagerTypeID::sNew(); \
+public:\
+	inline static const DC::ManagerTypeID sManagerTypeID = DC::ManagerTypeID::sNew(); \
+private:
 
 namespace DC
 {

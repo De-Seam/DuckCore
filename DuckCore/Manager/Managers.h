@@ -1,5 +1,5 @@
 #pragma once
-#include <DuckCore/Containers/HashMap.h>
+#include <DuckCore/Containers/Array.h>
 #include <DuckCore/Containers/UniquePtr.h>
 #include <DuckCore/Manager/Manager.h>
 
@@ -20,18 +20,30 @@ public:
 	static taManagerType* sFind();
 
 private:
-	static Array<UniquePtr<Manager>> sManagers; // Array of managers. The index is the type id of the manager.
+	inline static Array<UniquePtr<Manager>> sManagers; // Array of managers. The index is the type id of the manager.
 };
+
+template <typename T, typename = void>
+struct has_myVar : std::false_type {};
+
+template <typename T>
+struct has_myVar<T, std::void_t<decltype(T::sManagerTypeID)>> : std::true_type {};
+
+template <typename T>
+constexpr bool has_myVar_v = has_myVar<T>::value;
 
 template<typename taManagerType>
 void Managers::sAdd(UniquePtr<taManagerType> inManager) 
 {
 	static_assert(std::is_base_of_v<Manager, taManagerType>);
-	static_assert(true == std::is_member_pointer<decltype(&taManagerType::value)>::sTypeID, "Manager needs to have MANAGER_BASE_CLASS()");
+	static_assert(has_myVar_v<taManagerType>, "Manager needs to have MANAGER_BASE_CLASS()");
 
 	TypeID<Manager> type_id = taManagerType::sManagerTypeID;
 
-	sManagers.Resize(gMax(sManagers.Length(), gStaticCast<int>(type_id)));
+	int length = sManagers.Length();
+	int next = gMax(length, gStaticCast<int>(type_id) + 1);
+	int size = gMax(length, next);
+	sManagers.Resize(size);
 	gAssert(sManagers[type_id] == nullptr, "Manager was already added.");
 	sManagers[type_id] = gMove(inManager);
 }
@@ -40,24 +52,27 @@ template<typename taManagerType>
 taManagerType& Managers::sGet() 
 {
 	static_assert(std::is_base_of_v<Manager, taManagerType>);
-	static_assert(true == std::is_member_pointer<decltype(&taManagerType::value)>::sTypeID, "Manager needs to have MANAGER_BASE_CLASS()");
+	static_assert(has_myVar_v<taManagerType>, "Manager needs to have MANAGER_BASE_CLASS()");
 
 	TypeID<Manager> type_id = taManagerType::sManagerTypeID;
-	gAssert(sManagers[type_id] != nullptr, "Manager was not added.");
-	return *sManagers[type_id];
+	Manager* manager = sManagers[type_id];
+	gAssert(manager != nullptr, "Manager was not added.");
+	return manager->Cast<taManagerType>();
 }
 
 template<typename taManagerType>
 taManagerType* Managers::sFind() 
 {
 	static_assert(std::is_base_of_v<Manager, taManagerType>);
-	static_assert(true == std::is_member_pointer<decltype(&taManagerType::value)>::sTypeID, "Manager needs to have MANAGER_BASE_CLASS()");
+	static_assert(has_myVar_v<taManagerType>, "Manager needs to have MANAGER_BASE_CLASS()");
 
+	// Manager needs to have MANAGER_BASE_CLASS().
 	TypeID<Manager> type_id = taManagerType::sManagerTypeID;
 
 	if (!sManagers.IsValidIndex(type_id))
 		return nullptr;
 
-	return *sManagers[type_id];
+	Manager* manager = sManagers[type_id];
+	return gStaticCast<taManagerType*>(manager);
 }
 }

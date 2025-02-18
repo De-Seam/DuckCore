@@ -28,8 +28,10 @@ String String::sFormatted(const char* inFormat, ...)
 bool String::Contains(char inChar) const
 {
 	for (const char& character : mString)
+	{
 		if (inChar == character)
 			return true;
+	}
 	return false;
 }
 
@@ -85,20 +87,20 @@ String gToString(double inValue)
 	return std::to_string(inValue);
 }
 
-String gGetFileExtension(const String& inPath)
+String gGetFileExtension(const String& aPath)
 {
-	const int dot_pos = inPath.FindLastCharOccurence('.');
+	const int dot_pos = aPath.FindLastCharOccurence('.');
 	if (dot_pos == -1)
 		return "";
 
-	return inPath.SubStr(dot_pos, inPath.Length() - 1);
+	return aPath.SubStr(dot_pos, aPath.Length() - 1);
 }
 
-String gToLowerCase(const String& inString)
+String gToLowerCase(const String& aString)
 {
-	String result_string = inString;
-	for (char& character : result_string)
-		character = (char)tolower(character);
+	String result_string = aString;
+	for (int i = 0; i < result_string.Length(); i++)
+		result_string[i] = (char)tolower(result_string[i]);
 	return result_string;
 }
 }

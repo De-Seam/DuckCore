@@ -17,13 +17,13 @@ public:
 	Array() = default;
 	~Array();
 
-	taType& operator[](int inIndex) { return At(inIndex); }
-	const taType& operator[](int inIndex) const { return At(inIndex); }
-	taType& At(int inIndex) { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
-	const taType& At(int inIndex) const { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
+	taType& operator[](int aIndex) { return At(aIndex); }
+	const taType& operator[](int aIndex) const { return At(aIndex); }
+	taType& At(int aIndex) { gAssert(IsValidIndex(aIndex)); return mData[aIndex]; }
+	const taType& At(int aIndex) const { gAssert(IsValidIndex(aIndex)); return mData[aIndex]; }
 
-	void Resize(int inLength); // Resize, calling the new operator on new elements.
-	void Reserve(int inCapacity); // Reserve capacity. This will not change the length of the array.
+	void Resize(int aLength); // Resize, calling the new operator on new elements.
+	void Reserve(int aCapacity); // Reserve capacity. This will not change the length of the array.
 	void ShrinkToFit();
 
 	int Length() const { return mLength; }
@@ -99,36 +99,36 @@ Array<taType>::~Array()
 }
 
 template<typename taType>
-void Array<taType>::Resize(int inLength)
+void Array<taType>::Resize(int aLength)
 {
-	if (inLength > mLength)
+	if (aLength > mLength)
 	{
 		// Reserve length if needed. Reserve already checks internally if the capacity is already enough.
-		Reserve(inLength);
+		Reserve(aLength);
 
 		// Call new operators on new elements.
-		for (int i = mLength; i < inLength; i++)
+		for (int i = mLength; i < aLength; i++)
 			new (&mData[i]) taType();
 	}
 	else
 	{
 		// Call destructors on elements that are being removed. We keep the capacity.
-		for (int i = inLength; i < mLength; i++)
+		for (int i = aLength; i < mLength; i++)
 			mData[i].~taType();
 	}
-	mLength = inLength;
+	mLength = aLength;
 }
 
 template<typename taType>
-void Array<taType>::Reserve(int inCapacity)
+void Array<taType>::Reserve(int aCapacity)
 {
-	gAssert(inCapacity > 0, "Arrays need to have a capacity of 1 or higher.");
+	gAssert(aCapacity > 0, "Arrays need to have a capacity of 1 or higher.");
 
 	// Early out if we're already at or above the requested capacity.
-	if (inCapacity <= mCapacity)
+	if (aCapacity <= mCapacity)
 		return;
 
-	taType* new_data = gStaticCast<taType*>(malloc(inCapacity * sizeof(taType)));
+	taType* new_data = gStaticCast<taType*>(malloc(aCapacity * sizeof(taType)));
 	gAssert(new_data != nullptr);
 
 	// Move-construct existing elements into new memory
@@ -141,7 +141,7 @@ void Array<taType>::Reserve(int inCapacity)
 	if (mData != nullptr)
 		free(mData);
 	mData = new_data;
-	mCapacity = inCapacity;
+	mCapacity = aCapacity;
 }
 
 template<typename taType>

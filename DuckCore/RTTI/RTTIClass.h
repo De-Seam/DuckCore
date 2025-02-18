@@ -1,4 +1,5 @@
 #pragma once
+#include <DuckCore/Core/Assert.h>
 #include <DuckCore/RTTI/RTTI.h>
 
 namespace DC

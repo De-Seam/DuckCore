@@ -63,8 +63,8 @@ String gToString(uint32 inValue);
 String gToString(float inValue);
 String gToString(double inValue);
 
-String gGetFileExtension(const String& inPath); // Get the file extension of a path. This is including the dot, so ".png", not "png".
-String gToLowerCase(const String& inString);
+String gGetFileExtension(const String& aPath); // Get the file extension of a path. This is including the dot, so ".png", not "png".
+String gToLowerCase(const String& aString);
 }
 
 namespace std
