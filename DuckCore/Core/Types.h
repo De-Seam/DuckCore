@@ -1,5 +1,4 @@
 #pragma once
-// Std includes
 #include <cstdint>
 
 using int8 = int8_t;

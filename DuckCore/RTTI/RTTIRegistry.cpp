@@ -1,5 +1,6 @@
-#include <DuckCore/RTTI/RTTI.h>
 #include <DuckCore/RTTI/RTTIRegistry.h>
+
+#include <DuckCore/RTTI/RTTI.h>
 
 namespace DC
 {

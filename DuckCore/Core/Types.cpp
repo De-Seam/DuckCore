@@ -1,6 +1,5 @@
-#include "Types.h"
+#include <DuckCore/Core/Types.h>
 
-// Std includes
 #include <cfloat>
 #include <corecrt_math.h>
 

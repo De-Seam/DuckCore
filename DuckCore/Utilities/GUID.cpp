@@ -1,10 +1,10 @@
 #include <DuckCore/Utilities/GUID.h>
 
 // Core includes
-#include <random>
-
 #include <DuckCore/Containers/String.h>
 #include <DuckCore/Core/Assert.h>
+
+#include <random>
 
 using namespace DC;
 

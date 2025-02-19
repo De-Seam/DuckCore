@@ -1,6 +1,8 @@
 #pragma once
-// Core includes
+#include <DuckCore/Core/Assert.h>
 #include <DuckCore/Core/Types.h>
+
+#include <initializer_list>
 
 namespace DC
 {

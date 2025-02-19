@@ -1,15 +1,14 @@
 #pragma once
 // Core includes
-#include "DuckCore/Config.h"
-#include "DuckCore/Math/HelperFunctions.h"
-#include "DuckCore/Core/Types.h"
-#include "DuckCore/Core/Assert.h"
-#include "DuckCore/Utilities/Json.h"
+#include <DuckCore/Config.h>
+#include <DuckCore/Core/Assert.h>
+#include <DuckCore/Core/Types.h>
+#include <DuckCore/Math/HelperFunctions.h>
+#include <DuckCore/Math/RGBA.h>
+#include <DuckCore/Utilities/Json.h>
 
 // Std includes
 #include <cmath>
-
-#include <DuckCore/Math/RGBA.h>
 
 namespace DC
 {

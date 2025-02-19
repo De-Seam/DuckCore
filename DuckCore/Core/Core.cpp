@@ -1,4 +1,5 @@
 #include <DuckCore/Core/Core.h>
+
 #include <DuckCore/Manager/Manager.h>
 #include <DuckCore/RTTI/RTTI.h>
 #include <DuckCore/RTTI/RTTIRefClass.h>

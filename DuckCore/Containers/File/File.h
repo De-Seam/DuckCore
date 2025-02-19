@@ -3,6 +3,7 @@
 #include <DuckCore/Core/Log.h>
 #include <DuckCore/RTTI/Ref.h>
 #include <DuckCore/Utilities/Utilities.h>
+
 #include <fstream>
 
 namespace DC

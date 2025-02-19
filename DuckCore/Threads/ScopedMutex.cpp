@@ -1,5 +1,6 @@
-#include <DuckCore/Core/Assert.h>
 #include <DuckCore/Threads/ScopedMutex.h>
+
+#include <DuckCore/Core/Assert.h>
 
 namespace DC
 {

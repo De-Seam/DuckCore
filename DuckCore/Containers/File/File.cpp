@@ -1,4 +1,5 @@
 #include <DuckCore/Containers/File/File.h>
+
 #include <DuckCore/Core/Assert.h>
 #include <DuckCore/Core/Log.h>
 #include <DuckCore/Utilities/Utilities.h>

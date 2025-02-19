@@ -1,5 +1,6 @@
-#include <DuckCore/Threads/Atomic.h>
 #include <DuckCore/Threads/Thread.h>
+
+#include <DuckCore/Threads/Atomic.h>
 
 #include <thread>
 
