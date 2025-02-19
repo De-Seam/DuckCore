@@ -1,11 +1,13 @@
 #pragma once
-// Core includes
 #include <DuckCore/Config.h>
-#include <DuckCore/Utilities/Json.h>
 #include <DuckCore/Core/Assert.h>
+#include <DuckCore/Utilities/Json.h>
 
-// External includes
+#pragma warning( push )
+#pragma warning( disable : 4702 )
 #include <External/phmap/phmap.h>
+#pragma warning( pop )
+
 
 namespace DC
 {

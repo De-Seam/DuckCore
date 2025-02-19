@@ -72,6 +72,9 @@
     <ClCompile Include="Core\Assert.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\LogManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Events\EventManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -195,6 +198,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Threads\MutexProtectedValue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\LogManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Containers\File\TextFile.h">
