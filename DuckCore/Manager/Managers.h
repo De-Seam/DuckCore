@@ -11,7 +11,7 @@ public:
 	Managers() = delete;
 
 	template<typename taManagerType>
-	static void sAdd(UniquePtr<taManagerType> inManager);
+	static void sAdd(taManagerType* inManager);
 
 	template<typename taManagerType>
 	static taManagerType& sGet();
@@ -20,7 +20,7 @@ public:
 	static taManagerType* sFind();
 
 private:
-	inline static Array<UniquePtr<Manager>> sManagers; // Array of managers. The index is the type id of the manager.
+	inline static Array<Manager*> sManagers; // Array of managers. The index is the type id of the manager.
 };
 
 template <typename T, typename = void>
@@ -33,7 +33,7 @@ template <typename T>
 constexpr bool has_myVar_v = has_myVar<T>::value;
 
 template<typename taManagerType>
-void Managers::sAdd(UniquePtr<taManagerType> inManager) 
+void Managers::sAdd(taManagerType* inManager) 
 {
 	static_assert(std::is_base_of_v<Manager, taManagerType>);
 	static_assert(has_myVar_v<taManagerType>, "Manager needs to have MANAGER_BASE_CLASS()");
@@ -45,7 +45,7 @@ void Managers::sAdd(UniquePtr<taManagerType> inManager)
 	int size = gMax(length, next);
 	sManagers.Resize(size);
 	gAssert(sManagers[type_id] == nullptr, "Manager was already added.");
-	sManagers[type_id] = gMove(inManager);
+	sManagers[type_id] = inManager;
 }
 
 template<typename taManagerType>
