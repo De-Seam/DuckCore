@@ -55,8 +55,11 @@ taManagerType& Managers::sGet()
 	static_assert(has_myVar_v<taManagerType>, "Manager needs to have MANAGER_BASE_CLASS()");
 
 	TypeID<Manager> type_id = taManagerType::sManagerTypeID;
+	gAssert(sManagers.IsValidIndex(type_id), "Manager was not added.");
+
 	Manager* manager = sManagers[type_id];
 	gAssert(manager != nullptr, "Manager was not added.");
+
 	return manager->Cast<taManagerType>();
 }
 
