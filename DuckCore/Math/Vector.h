@@ -111,13 +111,13 @@ struct Vec2
 };
 
 template<typename taType>
-void gToJson(Json& outJson, const Vec2<taType>& inVariable)
+void ToJson(Json& outJson, const Vec2<taType>& inVariable)
 {
     outJson = { inVariable.mX, inVariable.mY };
 }
 
 template<typename taType>
-void gFromJson(const Json& inJson, Vec2<taType>& outVariable)
+void FromJson(const Json& inJson, Vec2<taType>& outVariable)
 {
     outVariable.mX = inJson[0];
 	outVariable.mY = inJson[1];

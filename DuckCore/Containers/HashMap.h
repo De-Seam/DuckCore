@@ -49,7 +49,7 @@ private:
 };
 
 template<typename taKey, typename taValue>
-inline void gToJson(Json& outJson, const HashMap<taKey, taValue>& inHashMap)
+inline void ToJson(Json& outJson, const HashMap<taKey, taValue>& inHashMap)
 {
 	gAssert(outJson.empty());
 	inHashMap.ForEach([&outJson](const taKey& inKey, const taValue& inValue)
@@ -59,7 +59,7 @@ inline void gToJson(Json& outJson, const HashMap<taKey, taValue>& inHashMap)
 }
 
 template<typename taKey, typename taValue>
-inline void gFromJson(const Json& inJson, HashMap<taKey, taValue>& outHashMap)
+inline void FromJson(const Json& inJson, HashMap<taKey, taValue>& outHashMap)
 {
 	gAssert(inJson.is_array());
 

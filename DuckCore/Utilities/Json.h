@@ -10,24 +10,24 @@ namespace DC
 
 using Json = nlohmann::ordered_json;
 
-template <typename, typename T>
+template <typename, typename taType>
 struct HasToJson {
 	static_assert(
-		std::integral_constant<T, false>::value,
+		std::integral_constant<taType, false>::value,
 		"Second template parameter needs to be of function type.");
 };
 
-template <typename C, typename Ret, typename... Args>
-struct HasToJson<C, Ret(Args...)> {
+template <typename taC, typename taRet, typename... taArgs>
+struct HasToJson<taC, taRet(taArgs...)> {
 private:
-	template <typename T>
-	static constexpr auto check(T*) ->
-		typename std::is_same<decltype(std::declval<T>().ToJson()), Ret>::type;
+	template <typename taType>
+	static constexpr auto check(taType*) ->
+		typename std::is_same<decltype(std::declval<taType>().ToJson()), taRet>::type;
 
 	template <typename>
 	static constexpr std::false_type check(...);
 
-	typedef decltype(check<C>(0)) type;
+	typedef decltype(check<taC>(0)) type;
 
 public:
 	static constexpr bool value = type::value;
@@ -40,17 +40,17 @@ struct HasFromJson {
 		"Second template parameter needs to be of function type.");
 };
 
-template <typename C, typename Ret, typename... Args>
-struct HasFromJson<C, Ret(Args...)> {
+template <typename taC, typename taRet, typename... taArgs>
+struct HasFromJson<taC, taRet(taArgs...)> {
 private:
-	template <typename T>
-	static constexpr auto check(T*) ->
-		typename std::is_same<decltype(std::declval<T>().FromJson(std::declval<Args>()...)), Ret>::type;
+	template <typename taType>
+	static constexpr auto check(taType*) ->
+		typename std::is_same<decltype(std::declval<taType>().FromJson(std::declval<taArgs>()...)), taRet>::type;
 
 	template <typename>
 	static constexpr std::false_type check(...);
 
-	typedef decltype(check<C>(0)) type;
+	typedef decltype(check<taC>(0)) type;
 
 public:
 	static constexpr bool value = type::value;
@@ -58,37 +58,37 @@ public:
 
 // Template function for to_json
 template<typename T>
-typename std::enable_if<HasToJson<T, Json()>::value>::type
-gToJson(Json& outJson, const T* inObject) 
+std::enable_if_t<HasToJson<T, Json()>::value>
+ToJson(Json& outJson, const T* aObject) 
 {
-	if (inObject != nullptr)
-		outJson = inObject->ToJson();
+	if (aObject != nullptr)
+		outJson = aObject->ToJson();
 }
 
 template<typename T>
-typename std::enable_if<HasToJson<T, Json()>::value>::type
-gToJson(Json& outJson, const T& inObject) 
+std::enable_if_t<HasToJson<T, Json()>::value>
+ToJson(Json& outJson, const T& aObject) 
 {
-	outJson = inObject.ToJson();
+	outJson = aObject.ToJson();
 }
 
 template<typename T>
-typename std::enable_if<HasFromJson<T, void(const Json&)>::value>::type
-gFromJson(const Json& inJson, T& outObject) 
+std::enable_if_t<HasFromJson<T, void(const Json&)>::value>
+FromJson(const Json& aJson, T& outObject) 
 {
-	outObject.FromJson(inJson);
+	outObject.FromJson(aJson);
 }
 
 template<typename taType>
-void to_json(Json& aJson, const taType& aObject)
+void to_json(Json& outJson, const taType& aObject)
 {
-	gToJson(aJson, aObject);
+	ToJson(outJson, aObject);
 }
 
 template<typename taType>
-void from_json(const Json& aJson, taType& aObject)
+void from_json(const Json& aJson, taType& outObject)
 {
-	gFromJson(aJson, aObject);
+	FromJson(aJson, outObject);
 }
 
 }

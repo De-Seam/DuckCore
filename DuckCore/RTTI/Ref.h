@@ -253,8 +253,8 @@ private:
 };
 
 template<typename T>
-typename std::enable_if<HasToJson<T, Json()>::value>::type
-gToJson(Json& outJson, const Ref<T>& inObject) 
+std::enable_if_t<HasToJson<T, Json()>::value>
+ToJson(Json& outJson, const Ref<T>& inObject) 
 {
 	if (inObject != nullptr)
 		outJson = inObject->ToJson();
