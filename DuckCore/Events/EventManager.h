@@ -1,5 +1,6 @@
 #pragma once
 #include <DuckCore/Containers/Array.h>
+#include <DuckCore/Containers/HashMap.h>
 #include <DuckCore/Containers/UniquePtr.h>
 #include <DuckCore/Events/Event.h>
 #include <DuckCore/Manager/Manager.h>
@@ -53,7 +54,7 @@ private:
 	template<typename taEventType>
 	void UnregisterEventHandle(const EventHandle<taEventType>& inEventHandle);
 
-	Array<Array<EventHandleBase*>> mEventCallbacks;
+	HashMap<const RTTI*, Array<EventHandleBase*>> mEventCallbacks;
 
 	template<typename taEventType>
 	friend class EventHandle;
@@ -70,11 +71,8 @@ UniquePtr<EventHandle<taEventType>> EventManager::AddEventListener(std::function
 {
 	gAssert(gIsMainThread());
 
-	const EventTypeID& event_type_id = taEventType::sManagerTypeID;
-	if (!mEventCallbacks.IsValidIndex(event_type_id))
-		mEventCallbacks.Resize(event_type_id + 1);
-
-	mEventCallbacks[event_type_id].Add(inFunction);
+	const RTTI* rtti = &taEventType::sGetRTTI();
+	mEventCallbacks[rtti].Add(inFunction);
 
 	UniquePtr<EventHandle<taEventType>> handle = gMakeUnique<EventHandle<taEventType>>();
 	handle->mOnEventFunction = inFunction;
@@ -87,11 +85,10 @@ void EventManager::SendEvent(taEventType& ioEvent)
 {
 	gAssert(gIsMainThread());
 
-	const EventTypeID& event_type_id = taEventType::sManagerTypeID;
-	if (!mEventCallbacks.IsValidIndex(event_type_id))
-		return;
+	const RTTI* rtti = &taEventType::sGetRTTI();
+	Array<EventHandleBase*>& callbacks = mEventCallbacks[rtti];
 
-	for (EventHandleBase* handle : mEventCallbacks[event_type_id])
+	for (EventHandleBase* handle : callbacks)
 		handle->Call(ioEvent);
 }
 
@@ -100,11 +97,13 @@ void EventManager::UnregisterEventHandle(const EventHandle<taEventType>& inEvent
 {
 	gAssert(gIsMainThread());
 
-	const EventTypeID& event_type_id = taEventType::sManagerTypeID;
-	const int index = mEventCallbacks[event_type_id].Find(&inEventHandle);
+	const RTTI* rtti = &taEventType::sGetRTTI();
+	Array<EventHandleBase*>& callbacks = mEventCallbacks[rtti];
+
+	const int index = callbacks.Find(&inEventHandle);
 
 	gAssert(index != -1);
 
-	mEventCallbacks[event_type_id].SwapRemove(index);
+	callbacks.SwapRemove(index);
 }
 }
