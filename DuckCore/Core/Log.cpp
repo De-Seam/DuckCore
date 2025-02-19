@@ -3,8 +3,8 @@
 #include <DuckCore/Containers/Array.h>
 #include <DuckCore/Containers/HashMap.h>
 #include <DuckCore/Containers/String.h>
+#include <DuckCore/Containers/File/TextFile.h>
 #include <DuckCore/Core/Assert.h>
-#include <DuckCore/Core/LogManager.h>
 #include <DuckCore/Manager/Managers.h>
 #include <DuckCore/Threads/ScopedMutex.h>
 

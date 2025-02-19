@@ -27,4 +27,9 @@ class Event : public RTTIClass
 	RTTI_CLASS(Event, RTTIClass)
 public:
 };
+
+class ShutdownEvent : public Event
+{
+	RTTI_EVENT(ShutdownEvent, Event)
+};
 }

@@ -104,7 +104,6 @@
   <ItemGroup>
     <ClCompile Include="Containers\File\File.cpp" />
     <ClCompile Include="Core\Assert.cpp" />
-    <ClCompile Include="Core\LogManager.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />
     <ClCompile Include="Math\AABB.cpp" />
     <ClCompile Include="Math\Intersects.cpp" />
@@ -134,7 +133,6 @@
     <ClInclude Include="Containers\HashSet.h" />
     <ClInclude Include="Containers\Pair.h" />
     <ClInclude Include="Core\Core.h" />
-    <ClInclude Include="Core\LogManager.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\EventManager.h" />
     <ClInclude Include="Manager\Manager.h" />

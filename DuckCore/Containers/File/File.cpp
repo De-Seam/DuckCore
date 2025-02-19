@@ -60,9 +60,9 @@ void File::WriteToDisk()
 		mFile.close();
 }
 
-void File::SetContents(String inContents)
+void File::SetContents(String aContents)
 {
-	mContents = gMove(inContents);
+	mContents = gMove(aContents);
 }
 
 String File::GetFileExtension() const

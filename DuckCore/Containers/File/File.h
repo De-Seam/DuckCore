@@ -19,12 +19,12 @@ public:
 		WriteOnly = 1 << 2, // Open the file in write-only mode.
 	};
 
-	explicit File(String inPath, uint8 inFlags = 0) : mPath(gMove(inPath)), mFlags(inFlags) {}
+	explicit File(String aPath, uint8 aFlags = 0) : mPath(gMove(aPath)), mFlags(aFlags) {}
 
 	virtual void Load(); // Loads mContents from mPath. This will clear potentially existing content.
 	virtual void WriteToDisk(); // Writes mContents to mPath. Child classes should override this to update mContents before calling this.
 
-	void SetContents(String inContents);
+	void SetContents(String aContents);
 
 	const String& GetPath() const { return mPath; }
 	const String& GetContents() const { return mContents; }
