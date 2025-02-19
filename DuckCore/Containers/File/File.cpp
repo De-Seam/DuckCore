@@ -33,7 +33,19 @@ void File::WriteToDisk()
 	gAssert(!IsReadOnly());
 	
 	if (!mFile.is_open())
+	{
 		mFile.open(*mPath, std::fstream::in | std::fstream::out | std::fstream::trunc);
+		if (!mFile.is_open())
+		{
+			// If we failed to create the file, try to create the directory first.
+			std::filesystem::path parent_path = std::filesystem::path(*mPath).parent_path();
+			if (std::filesystem::create_directories(parent_path))
+			{
+				WriteToDisk();
+				mFile.open(*mPath, std::fstream::in | std::fstream::out | std::fstream::trunc);
+			}
+		}
+	}
 
 	if (!mFile.is_open())
 	{
