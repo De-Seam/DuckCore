@@ -1022,6 +1022,10 @@
     <None Include="SFML\System\Vector2.inl" />
     <None Include="SFML\System\Vector3.inl" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="nlohmann_json.natvis" />
+    <Natvis Include="phmap.natvis" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

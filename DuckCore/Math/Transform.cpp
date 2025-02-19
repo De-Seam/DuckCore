@@ -36,14 +36,14 @@ AABB<TransformType> Transform2D::GetBounds() const
 	return aabb;
 }
 
-void to_json(Json& outJson, const Transform2D& inVariable) 
+void gToJson(Json& outJson, const Transform2D& inVariable) 
 {
 	outJson["mPosition"] = inVariable.mPosition;
 	outJson["mHalfSize"] = inVariable.mHalfSize;
 	outJson["mRotation"] = inVariable.mRotation;
 }
 
-void from_json(const Json& inJson, Transform2D& outVariable) 
+void gFromJson(const Json& inJson, Transform2D& outVariable) 
 {
 	outVariable.mPosition = inJson["mPosition"];
 	outVariable.mHalfSize = inJson["mHalfSize"];

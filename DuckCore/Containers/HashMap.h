@@ -48,9 +48,8 @@ private:
 	phmap::flat_hash_map<taKey, taValue> mMap;
 };
 
-/*
 template<typename taKey, typename taValue>
-inline void to_json(Json& outJson, const HashMap<taKey, taValue>& inHashMap)
+inline void gToJson(Json& outJson, const HashMap<taKey, taValue>& inHashMap)
 {
 	gAssert(outJson.empty());
 	inHashMap.ForEach([&outJson](const taKey& inKey, const taValue& inValue)
@@ -60,14 +59,13 @@ inline void to_json(Json& outJson, const HashMap<taKey, taValue>& inHashMap)
 }
 
 template<typename taKey, typename taValue>
-inline void from_json(const Json& inJson, HashMap<taKey, taValue>& outHashMap)
+inline void gFromJson(const Json& inJson, HashMap<taKey, taValue>& outHashMap)
 {
 	gAssert(inJson.is_array());
 
 	for (const auto& element : inJson)
-		outHashMap.emplace(element.at(0).template get<taKey>(), element.at(1).template get<taValue>());
+		outHashMap.Add(element.at(0).template get<taKey>(), element.at(1).template get<taValue>());
 }
-*/
 
 template <typename taKey, typename taValue>
 void HashMap<taKey, taValue>::Add(const taKey& inKey, const taValue& inValue)

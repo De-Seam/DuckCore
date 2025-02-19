@@ -3014,4 +3014,8 @@
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="nlohmann_json.natvis" />
+    <Natvis Include="phmap.natvis" />
+  </ItemGroup>
 </Project>

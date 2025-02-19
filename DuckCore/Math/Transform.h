@@ -25,7 +25,7 @@ struct Transform2D
 	AABB<TransformType> GetBounds() const;
 };
 
-void to_json(Json& outJson, const Transform2D& inVariable);
-void from_json(const Json& inJson, Transform2D& outVariable);
+void gToJson(Json& outJson, const Transform2D& inVariable);
+void gFromJson(const Json& inJson, Transform2D& outVariable);
 
 }

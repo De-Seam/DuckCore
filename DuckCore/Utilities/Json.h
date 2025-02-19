@@ -59,7 +59,7 @@ public:
 // Template function for to_json
 template<typename T>
 typename std::enable_if<HasToJson<T, Json()>::value>::type
-to_json(Json& outJson, const T* inObject) 
+gToJson(Json& outJson, const T* inObject) 
 {
 	if (inObject != nullptr)
 		outJson = inObject->ToJson();
@@ -67,16 +67,28 @@ to_json(Json& outJson, const T* inObject)
 
 template<typename T>
 typename std::enable_if<HasToJson<T, Json()>::value>::type
-to_json(Json& outJson, const T& inObject) 
+gToJson(Json& outJson, const T& inObject) 
 {
 	outJson = inObject.ToJson();
 }
 
 template<typename T>
 typename std::enable_if<HasFromJson<T, void(const Json&)>::value>::type
-from_json(const Json& inJson, T& outObject) 
+gFromJson(const Json& inJson, T& outObject) 
 {
 	outObject.FromJson(inJson);
+}
+
+template<typename taType>
+void to_json(Json& aJson, const taType& aObject)
+{
+	gToJson(aJson, aObject);
+}
+
+template<typename taType>
+void from_json(const Json& aJson, taType& aObject)
+{
+	gFromJson(aJson, aObject);
 }
 
 }
