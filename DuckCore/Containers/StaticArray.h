@@ -13,23 +13,23 @@ class StaticArray
 
 public:
 	StaticArray() = default;
-	StaticArray(std::initializer_list<taType> inList);
+	StaticArray(std::initializer_list<taType> aList);
 
-	taType& operator[](int inIndex) { return At(inIndex); }
-	const taType& operator[](int inIndex) const { return At(inIndex); }
-	taType& At(int inIndex) { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
-	const taType& At(int inIndex) const { gAssert(IsValidIndex(inIndex)); return mData[inIndex]; }
+	taType& operator[](int aIndex) { return At(aIndex); }
+	const taType& operator[](int aIndex) const { return At(aIndex); }
+	taType& At(int aIndex) { gAssert(IsValidIndex(aIndex)); return mData[aIndex]; }
+	const taType& At(int aIndex) const { gAssert(IsValidIndex(aIndex)); return mData[aIndex]; }
 
-	void Fill(const taType& inValue) { for (int i = 0; i < Length(); i++) mData[i] = inValue; }
+	void Fill(const taType& aValue) { for (int i = 0; i < Length(); i++) mData[i] = aValue; }
 
 	int Length() const { return taLength; }
-	int IsValidIndex(int inIndex) const { return inIndex >= 0 && inIndex < Length(); }
+	int IsValidIndex(int aIndex) const { return aIndex >= 0 && aIndex < Length(); }
 
-	int Find(const taType& inValue) const;
+	int Find(const taType& aValue) const;
 	template<typename taPredicate>
-	int FindIf(taPredicate&& inPredicate) const; // Returns index where the predicate evaluated to true
+	int FindIf(taPredicate&& aPredicate) const; // Returns index where the predicate evaluated to true
 
-	bool Contains(const taType& inValue) const { return Find(inValue) != -1; }
+	bool Contains(const taType& aValue) const { return Find(aValue) != -1; }
 
 	taType& Front() { return mData[0]; }
 	const taType& Front() const { return mData[0]; }
@@ -52,19 +52,19 @@ private:
 };
 
 template<typename taType, int taSize>
-StaticArray<taType, taSize>::StaticArray(std::initializer_list<taType> inList)
+StaticArray<taType, taSize>::StaticArray(std::initializer_list<taType> aList)
 {
-	gAssert(inList.size() == Length(), "Initializer list should be of the same length as the static array. Otherwise it should not be used, to prevent uninitialized memory.");
+	gAssert(aList.size() == Length(), "Initializer list should be of the same length as the static array. Otherwise it should not be used, to prevent uninitialized memory.");
 	for (int i = 0; i < Length(); i++)
-		mData[i] = *(inList.begin() + i);
+		mData[i] = *(aList.begin() + i);
 }
 
 template<typename taType, int taSize>
-inline int StaticArray<taType,taSize>::Find(const taType& inValue) const 
+inline int StaticArray<taType,taSize>::Find(const taType& aValue) const 
 {
 	for (int i = 0; i < Length(); i++)
 	{
-		if (inValue == At(i))
+		if (aValue == At(i))
 			return i;
 	}
 	return -1;
@@ -72,11 +72,11 @@ inline int StaticArray<taType,taSize>::Find(const taType& inValue) const
 
 template<typename taType, int taSize>
 template<typename taPredicate>
-inline int StaticArray<taType, taSize>::FindIf(taPredicate&& inPredicate) const
+inline int StaticArray<taType, taSize>::FindIf(taPredicate&& aPredicate) const
 {
 	for (int i = 0; i < Length(); i++)
 	{
-		if (inPredicate(At(i)))
+		if (aPredicate(At(i)))
 			return i;
 	}
 	return -1;
