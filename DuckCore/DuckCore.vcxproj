@@ -102,6 +102,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AccelerationStructures\BVH.cpp" />
     <ClCompile Include="Containers\File\File.cpp" />
     <ClCompile Include="Core\Assert.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />
@@ -126,6 +127,9 @@
     <ClCompile Include="Threads\Mutex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AccelerationStructures\BVH.h" />
+    <ClInclude Include="AccelerationStructures\BVHNode.h" />
+    <ClInclude Include="AccelerationStructures\BVHObject.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Containers\Array.h" />
     <ClInclude Include="Containers\AsyncQueue.h" />
