@@ -134,7 +134,7 @@ void Array<taType>::Reserve(int aCapacity)
 	// Move-construct existing elements into new memory
 	for (int i = 0; i < mLength; i++)
 	{
-		new (&new_data[i]) taType(gMove(mData[i]));
+		new (&new_data[i]) taType(Move(mData[i]));
 		mData[i].~taType(); // Destroy old element
 	}
 
@@ -190,7 +190,7 @@ void Array<taType>::Add(taType inValue)
 	if (mLength == mCapacity)
 		Reserve(gMax(mCapacity * 2, cBaseCapacity));
 
-	new (&mData[mLength]) taType(gMove(inValue));
+	new (&mData[mLength]) taType(Move(inValue));
 	mLength++;
 }
 
@@ -222,7 +222,7 @@ inline void Array<taType>::Remove(int inIndex)
 	mData[inIndex].~taType();
 
 	for (int i = inIndex; i < mLength - 1; i++)
-		mData[i] = gMove(mData[i + 1]);
+		mData[i] = Move(mData[i + 1]);
 
 	mLength--;
 }

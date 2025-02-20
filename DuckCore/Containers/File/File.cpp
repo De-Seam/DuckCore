@@ -63,7 +63,7 @@ void File::WriteToDisk()
 
 void File::SetContents(String aContents)
 {
-	mContents = gMove(aContents);
+	mContents = Move(aContents);
 }
 
 String File::GetFileExtension() const

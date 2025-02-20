@@ -41,7 +41,7 @@ SharedPtr<taType>::SharedPtr(const SharedPtr& inOther) :
 
 template<typename taType>
 SharedPtr<taType>::SharedPtr(SharedPtr&& inOther) noexcept :
-	mPtr(gMove(inOther.mPtr))
+	mPtr(Move(inOther.mPtr))
 {}
 
 template<typename taType>

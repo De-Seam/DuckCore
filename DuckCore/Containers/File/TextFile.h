@@ -7,6 +7,6 @@ namespace DC
 class TextFile final : public File
 {
 public:
-	explicit TextFile(String inPath, uint8 inFlags = 0) : File(gMove(inPath), inFlags) {}
+	explicit TextFile(String inPath, uint8 inFlags = 0) : File(Move(inPath), inFlags) {}
 };
 }

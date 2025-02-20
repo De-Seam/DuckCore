@@ -17,7 +17,7 @@ public:
 	String() = default;
 	String(const char* inString) : mString(inString) {}
 	String(const char* inBegin, const char* inEnd) : mString(inBegin, inEnd) {}
-	String(std::string inString) : mString(gMove(inString)) {}
+	String(std::string inString) : mString(Move(inString)) {}
 
 	operator const std::string& () const { return mString; }
 

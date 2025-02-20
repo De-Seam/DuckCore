@@ -43,7 +43,7 @@ void gLogInternal(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const char* 
 
 	{
 		ScopedMutexLock lock(gMutex);
-		gLogEntries.Add(gMove(entry));
+		gLogEntries.Add(Move(entry));
 	}
 
 	ScopedMutexLock lock;

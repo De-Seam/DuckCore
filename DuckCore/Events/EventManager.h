@@ -32,7 +32,7 @@ protected:
 
 private:
 	EventHandle(std::function<void(taEventType&)> inOnEventFunction, EventManager& inEventManager) :
-		mOnEventFunction(gMove(inOnEventFunction)),
+		mOnEventFunction(Move(inOnEventFunction)),
 		mEventManager(&inEventManager)
 	{}
 
@@ -73,7 +73,7 @@ UniquePtr<EventHandle<taEventType>> EventManager::AddEventListener(std::function
 {
 	gAssert(gIsMainThread());
 
-	UniquePtr<EventHandle<taEventType>> handle = gMakeUnique<EventHandle<taEventType>>();
+	UniquePtr<EventHandle<taEventType>> handle = MakeUnique<EventHandle<taEventType>>();
 	handle->mOnEventFunction = inFunction;
 	handle->mEventManager = this;
 

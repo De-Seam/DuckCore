@@ -46,12 +46,12 @@ private:
 
 	taType* mPtr = nullptr;
 
-	template<typename taType, typename... taArgs>
-	friend UniquePtr<taType> gMakeUnique(taArgs&&... inArgs); // MakeUnique
+	template<typename taOtherType, typename... taArgs>
+	friend UniquePtr<taOtherType> MakeUnique(taArgs&&... inArgs); // MakeUnique
 };
 
 template<typename taType, typename... taArgs>
-UniquePtr<taType> gMakeUnique(taArgs&&... inArgs)
+UniquePtr<taType> MakeUnique(taArgs&&... inArgs)
 {
 	return UniquePtr<taType>(new taType(std::forward<taArgs>(inArgs)...));
 }
@@ -59,7 +59,7 @@ UniquePtr<taType> gMakeUnique(taArgs&&... inArgs)
 template<typename taType>
 inline UniquePtr<taType>::~UniquePtr()
 {
-    delete mPtr;
+	delete mPtr;
 	mPtr = nullptr;
 }
 
@@ -93,7 +93,7 @@ UniquePtr<taChildType> UniquePtr<taType>::StaticCast() noexcept
 	UniquePtr<taChildType> new_unique_ptr;
 	new_unique_ptr.Internal_SetDataPtr(static_cast<taChildType*>(mPtr));
 	mPtr = nullptr;
-	return gMove(new_unique_ptr);
+	return Move(new_unique_ptr);
 }
 
 template<typename taType>
