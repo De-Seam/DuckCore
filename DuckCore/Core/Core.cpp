@@ -6,7 +6,7 @@
 
 namespace DC
 {
-void gRegisterCoreRTTI()
+void RegisterCoreRTTI()
 {
 	REGISTER_RTTI(RTTIClass);
 	REGISTER_RTTI(RTTIRefClass);

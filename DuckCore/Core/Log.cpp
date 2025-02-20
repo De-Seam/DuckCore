@@ -17,26 +17,26 @@ Mutex gMutex;
 Ref<TextFile> gLogFile;
 Mutex gLogFileMutex;
 
-void gLogInternal(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const char* inMessage)
+void LogInternal(const RTTI& aLogCategoryRTTI, ELogLevel aLevel, const char* aMessage)
 {
-	String category_name = inLogCategoryRTTI.GetClassName();
+	String category_name = aLogCategoryRTTI.GetClassName();
 	category_name = category_name.SubStr(11, category_name.Length());
 
 	LogEntry entry;
-	switch (inLevel)
+	switch (aLevel)
 	{
 	case ELogLevel::Info:
-		entry.mMessage = String("[Info] ") + category_name + inMessage;
+		entry.mMessage = String("[Info] ") + category_name + aMessage;
 		break;
 	case ELogLevel::Warning:
-		entry.mMessage = String("[Warning] ") + category_name + inMessage;
+		entry.mMessage = String("[Warning] ") + category_name + aMessage;
 		break;
 	case ELogLevel::Error:
-		entry.mMessage = String("[Error] ") + category_name + inMessage;
+		entry.mMessage = String("[Error] ") + category_name + aMessage;
 		break;
 	}
-	entry.mCategory = &inLogCategoryRTTI;
-	entry.mLevel = inLevel;
+	entry.mCategory = &aLogCategoryRTTI;
+	entry.mLevel = aLevel;
 
 	printf(*entry.mMessage);
 	printf("\n");
@@ -59,17 +59,17 @@ void gLogInternal(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const char* 
 	gLogFile->WriteToDisk();
 }
 
-void gLog(ELogLevel inLevel, const char* inMessage)
+void Log(ELogLevel aLevel, const char* aMessage)
 {
-	gLog<LogCategoryDefault>(inLevel, inMessage);
+	Log<LogCategoryDefault>(aLevel, aMessage);
 }
 
-void gLog(const char* inMessage)
+void Log(const char* aMessage)
 {
-	gLog<LogCategoryDefault>(ELogLevel::Info, inMessage);
+	Log<LogCategoryDefault>(ELogLevel::Info, aMessage);
 }
 
-MutexProtectedPtr<const Array<LogEntry>> gGetLogArray()
+MutexProtectedPtr<const Array<LogEntry>> GetLogArray()
 {
 	return { gMutex, &gLogEntries };
 }

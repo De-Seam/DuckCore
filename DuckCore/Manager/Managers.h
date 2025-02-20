@@ -41,8 +41,8 @@ void Managers::sAdd(taManagerType* inManager)
 	TypeID<Manager> type_id = taManagerType::sManagerTypeID;
 
 	int length = sManagers.Length();
-	int next = gMax(length, gStaticCast<int>(type_id) + 1);
-	int size = gMax(length, next);
+	int next = Max(length, gStaticCast<int>(type_id) + 1);
+	int size = Max(length, next);
 	sManagers.Resize(size);
 	gAssert(sManagers[type_id] == nullptr, "Manager was already added.");
 	sManagers[type_id] = inManager;

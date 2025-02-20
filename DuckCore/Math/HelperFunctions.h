@@ -2,58 +2,40 @@
 namespace DC
 {
 
-constexpr double gPi()
-{
-	return 3.14159265358979323846;
-}
+static constexpr float cPiF = 3.14159265358979323846f;
+static constexpr double cPi = 3.14159265358979323846;
 
-constexpr float gPiF()
-{
-	return 3.14159265358979323846f;
-}
+inline float DegreesToRadians(float aDegrees);
+inline double DegreesToRadians(double aDegrees);
 
-inline double gToRadians(double inDegrees)
-{
-	return inDegrees * 0.01745329251994329576923690768489;
-}
+inline float RadiansToDegrees(float aRadians);
+inline double RadiansToDegrees(double aRadians);
 
-inline float gToRadiansF(float inDegrees)
-{
-	return inDegrees * 0.01745329251994329576923690768489f;
-}
+inline float Sqrt(float aValue);
+inline double Sqrt(double aValue);
 
-inline double gToDegrees(double inRadians)
+template<typename taType>
+inline taType Lerp(taType aFrom, taType aTo, taType aT)
 {
-	return inRadians * 57.295779513082320876798154814105;
-}
-
-inline float gToDegreesF(float inRadians)
-{
-	return inRadians * 57.295779513082320876798154814105f;
+	return aFrom + (aTo - aFrom) * aT;
 }
 
 template<typename taType>
-inline taType gLerp(taType a, taType b, taType t)
+inline taType Min(const taType& aA, const taType& aB)
 {
-	return a + (b - a) * t;
+	return aA < aB ? aA : aB;
 }
 
 template<typename taType>
-inline taType gMin(const taType& inA, const taType& inB)
+inline taType Max(const taType& aA, const taType& aB)
 {
-	return inA < inB ? inA : inB;
+	return aA > aB ? aA : aB;
 }
 
 template<typename taType>
-inline taType gMax(const taType& inA, const taType& inB)
+inline taType Clamp(const taType& aValue, const taType& aMin, const taType& aMax)
 {
-	return inA > inB ? inA : inB;
-}
-
-template<typename taType>
-inline taType gClamp(const taType& inValue, const taType& inMin, const taType& inMax)
-{
-	return gMin(gMax(inValue, inMin), inMax);
+	return Min(Max(aValue, aMin), aMax);
 }
 
 }

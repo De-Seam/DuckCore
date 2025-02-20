@@ -10,7 +10,7 @@ void File::Load()
 {
 	gAssert(!IsWriteOnly());
 
-	gLog(String::sFormatted("Loading file %s", *mPath));
+	Log(String::sFormatted("Loading file %s", *mPath));
 
 	mContents = "";
 
@@ -19,7 +19,7 @@ void File::Load()
 
 	if (!mFile.is_open())
 	{
-		gLog<LogCategoryFile>(ELogLevel::Info, String::sFormatted("Unable to open file %s for reading. The file will be created instead.", *mPath));
+		Log<LogCategoryFile>(ELogLevel::Info, String::sFormatted("Unable to open file %s for reading. The file will be created instead.", *mPath));
 		return;
 	}
 
@@ -51,7 +51,7 @@ void File::WriteToDisk()
 	if (!mFile.is_open())
 	{
 		gAssert(false);
-		gLog<LogCategoryFile>(ELogLevel::Error, String::sFormatted("Unable to open file %s for writing", *mPath));
+		Log<LogCategoryFile>(ELogLevel::Error, String::sFormatted("Unable to open file %s for writing", *mPath));
 		return;
 	}
 

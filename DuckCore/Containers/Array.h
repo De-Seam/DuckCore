@@ -188,7 +188,7 @@ template<typename taType>
 void Array<taType>::Add(taType inValue)
 {
 	if (mLength == mCapacity)
-		Reserve(gMax(mCapacity * 2, cBaseCapacity));
+		Reserve(Max(mCapacity * 2, cBaseCapacity));
 
 	new (&mData[mLength]) taType(Move(inValue));
 	mLength++;
@@ -199,7 +199,7 @@ template<typename ... taArgs>
 void Array<taType>::Emplace(taArgs&&... inArgs)
 {
 	if (mLength == mCapacity)
-		Reserve(gMax(mCapacity * 2, cBaseCapacity));
+		Reserve(Max(mCapacity * 2, cBaseCapacity));
 
 	new (&mData[mLength]) taType(std::forward<taArgs>(inArgs)...);
 	mLength++;

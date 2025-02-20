@@ -1,5 +1,4 @@
 #pragma once
-// Core includes
 #include <DuckCore/Config.h>
 #include <DuckCore/Core/Assert.h>
 #include <DuckCore/Core/Types.h>
@@ -7,7 +6,6 @@
 #include <DuckCore/Math/RGBA.h>
 #include <DuckCore/Utilities/Json.h>
 
-// Std includes
 #include <cmath>
 
 namespace DC
@@ -21,27 +19,27 @@ struct Vec2
 	taType mX, mY;
 
 	Vec2() : Vec2(0) {}
-	Vec2(const taType& inX, const taType& inY) : mX(inX), mY(inY) {}
-	explicit Vec2(const taType& inValue) : Vec2(inValue, inValue) {}
+	Vec2(const taType& aX, const taType& aY) : mX(aX), mY(aY) {}
+	explicit Vec2(const taType& aValue) : Vec2(aValue, aValue) {}
 
-	Vec2(const Vec2& inOther) : Vec2(inOther.mX, inOther.mY) {}
-	Vec2& operator=(const Vec2& inOther) = default;
+	Vec2(const Vec2& aOther) : Vec2(aOther.mX, aOther.mY) {}
+	Vec2& operator=(const Vec2& aOther) = default;
 
 	Vec2(Vec2&&) = default;
-	Vec2& operator=(Vec2&& inOther) = default;
+	Vec2& operator=(Vec2&& aOther) = default;
 
 	~Vec2() = default;
 
-	taType& operator[](int inIndex)
+	taType& operator[](int aIndex)
 	{
-		gAssert(inIndex < 2);
-		return *(&mX + inIndex);
+		gAssert(aIndex < 2);
+		return *(&mX + aIndex);
 	}
 
-	const taType& operator[](int inIndex) const
+	const taType& operator[](int aIndex) const
 	{
-		gAssert(inIndex < 2);
-		return *(&mX + inIndex);
+		gAssert(aIndex < 2);
+		return *(&mX + aIndex);
 	}
 
 	template<typename taOtherType>
@@ -57,32 +55,32 @@ struct Vec2
 	template <typename taSameType = taType, std::enable_if_t<std::is_signed_v<taSameType>>>
 	Vec2 operator -() const { return {-mX, -mY}; }
 
-	Vec2 operator +(const Vec2& inOther) const { return {mX + inOther.mX, mY + inOther.mY}; }
-	Vec2 operator -(const Vec2& inOther) const { return {mX - inOther.mX, mY - inOther.mY}; }
-	Vec2 operator *(const Vec2& inOther) const { return {mX * inOther.mX, mY * inOther.mY}; }
-	Vec2 operator *(const taType inMultiplier) const { return {mX * inMultiplier, mY * inMultiplier}; }
-	Vec2 operator /(const Vec2& inOther) const { return {mX / inOther.mX, mY / inOther.mY}; }
-	Vec2 operator /(const taType inDivider) const { return {mX / inDivider, mY / inDivider}; }
-	const Vec2& operator +=(const Vec2& inOther) { return *this = *this + inOther; }
-	const Vec2& operator -=(const Vec2& inOther) { return *this = *this - inOther; }
-	const Vec2& operator *=(const Vec2& inOther) { return *this = *this * inOther; }
-	const Vec2& operator *=(const taType inMultiplier) { return *this = *this * inMultiplier; }
-	const Vec2& operator /=(const Vec2& inOther) { return *this = *this / inOther; }
-	const Vec2& operator /=(const taType inDivider) { return *this = *this / inDivider; }
+	Vec2 operator +(const Vec2& aOther) const { return {mX + aOther.mX, mY + aOther.mY}; }
+	Vec2 operator -(const Vec2& aOther) const { return {mX - aOther.mX, mY - aOther.mY}; }
+	Vec2 operator *(const Vec2& aOther) const { return {mX * aOther.mX, mY * aOther.mY}; }
+	Vec2 operator *(const taType aMultiplier) const { return {mX * aMultiplier, mY * aMultiplier}; }
+	Vec2 operator /(const Vec2& aOther) const { return {mX / aOther.mX, mY / aOther.mY}; }
+	Vec2 operator /(const taType aDivider) const { return {mX / aDivider, mY / aDivider}; }
+	const Vec2& operator +=(const Vec2& aOther) { return *this = *this + aOther; }
+	const Vec2& operator -=(const Vec2& aOther) { return *this = *this - aOther; }
+	const Vec2& operator *=(const Vec2& aOther) { return *this = *this * aOther; }
+	const Vec2& operator *=(const taType aMultiplier) { return *this = *this * aMultiplier; }
+	const Vec2& operator /=(const Vec2& aOther) { return *this = *this / aOther; }
+	const Vec2& operator /=(const taType aDivider) { return *this = *this / aDivider; }
 
-	bool operator==(const Vec2& inOther) const { return mX == inOther.mX && mY == inOther.mY; }
-	bool operator!=(const Vec2& inOther) const { return !(*this == inOther); }
+	bool operator==(const Vec2& aOther) const { return mX == aOther.mX && mY == aOther.mY; }
+	bool operator!=(const Vec2& aOther) const { return !(*this == aOther); }
 
-	[[nodiscard]] taType Dot(const Vec2& inOther) const
+	[[nodiscard]] taType Dot(const Vec2& aOther) const
 	{
-		return (mX * inOther.mX + mY * inOther.mY);
+		return (mX * aOther.mX + mY * aOther.mY);
 	}
 
-	[[nodiscard]] Vec2 Cross(const Vec2& inOther) const
+	[[nodiscard]] Vec2 Cross(const Vec2& aOther) const
 	{
 		return Vec2(
-			mY * inOther.mX - mX * inOther.mY,
-			mX * inOther.mY - mY * inOther.mX);
+			mY * aOther.mX - mX * aOther.mY,
+			mX * aOther.mY - mY * aOther.mX);
 	}
 
 	[[nodiscard]] taType Length2() const
@@ -111,16 +109,16 @@ struct Vec2
 };
 
 template<typename taType>
-void ToJson(Json& outJson, const Vec2<taType>& inVariable)
+void ToJson(Json& outJson, const Vec2<taType>& aVariable)
 {
-    outJson = { inVariable.mX, inVariable.mY };
+	outJson = { aVariable.mX, aVariable.mY };
 }
 
 template<typename taType>
-void FromJson(const Json& inJson, Vec2<taType>& outVariable)
+void FromJson(const Json& aJson, Vec2<taType>& outVariable)
 {
-    outVariable.mX = inJson[0];
-	outVariable.mY = inJson[1];
+	outVariable.mX = aJson[0];
+	outVariable.mY = aJson[1];
 }
 
 template<typename taType>
@@ -129,66 +127,66 @@ struct Vec3
 	taType mX, mY, mZ;
 
 	Vec3() : Vec3(0) {}
-	Vec3(const taType& inX, const taType& inY, const taType& inZ) : mX(inX), mY(inY), mZ(inZ) {}
-	explicit Vec3(const taType& inValue) : Vec3(inValue, inValue, inValue) {}
+	Vec3(const taType& aX, const taType& aY, const taType& aZ) : mX(aX), mY(aY), mZ(aZ) {}
+	explicit Vec3(const taType& aValue) : Vec3(aValue, aValue, aValue) {}
 
-	Vec3(const Vec3& inOther) : Vec3(inOther.mX, inOther.mY, inOther.mZ) {}
-	Vec3& operator=(const Vec3& inOther) = default;
+	Vec3(const Vec3& aOther) : Vec3(aOther.mX, aOther.mY, aOther.mZ) {}
+	Vec3& operator=(const Vec3& aOther) = default;
 
-    Vec3(Vec3&&) = default;
-    Vec3& operator=(Vec3&& inOther) = default;
+	Vec3(Vec3&&) = default;
+	Vec3& operator=(Vec3&& aOther) = default;
 
 	~Vec3() = default;
 
-	taType& operator[](int inIndex)
+	taType& operator[](int aIndex)
 	{
-		gAssert(inIndex < 3);
-		return *(&mX + inIndex);
+		gAssert(aIndex < 3);
+		return *(&mX + aIndex);
 	}
 
-	const taType& operator[](int inIndex) const
+	const taType& operator[](int aIndex) const
 	{
-		gAssert(inIndex < 3);
-		return *(&mX + inIndex);
+		gAssert(aIndex < 3);
+		return *(&mX + aIndex);
 	}
 
 	template<typename taOtherType>
-    Vec2<taOtherType> As() const
+	Vec2<taOtherType> As() const
 	{
-	    return
-	    {
-	        static_cast<taOtherType>(mX),
-	        static_cast<taOtherType>(mY),
-	        static_cast<taOtherType>(mZ)
-	    };
+		return
+		{
+			static_cast<taOtherType>(mX),
+			static_cast<taOtherType>(mY),
+			static_cast<taOtherType>(mZ)
+		};
 	}
 
 	template <typename taSameType = taType, std::enable_if_t<std::is_signed_v<taSameType>>>
 	Vec3 operator -() const { return {-mX, -mY, -mZ}; }
 
-	Vec3 operator +(const Vec3& i) const { return {mX + i.mX, mY + i.mY, mZ + i.mZ}; }
-	Vec3 operator -(const Vec3& i) const { return {mX - i.mX, mY - i.mY, mZ - i.mZ}; }
-	Vec3 operator *(const Vec3& i) const { return {mX * i.mX, mY * i.mY, mZ * i.mZ}; }
-	Vec3 operator *(const taType i) const { return {mX * i, mY * i, mZ * i}; }
-	Vec3 operator /(const Vec3& i) const { return {mX / i.mX, mY / i.mY, mZ / i.mZ}; }
-	Vec3 operator /(const taType i) const { return {mX / i, mY / i, mZ / i}; }
-	const Vec3& operator +=(const Vec3& i) { return *this = *this + i; }
-	const Vec3& operator -=(const Vec3& i) { return *this = *this - i; }
-	const Vec3& operator *=(const Vec3& i) { return *this = *this * i; }
-	const Vec3& operator *=(const taType i) { return *this = *this * i; }
-	const Vec3& operator /=(const Vec3& i) { return *this = *this / i; }
-	const Vec3& operator /=(const taType i) { return *this = *this / i; }
+	Vec3 operator +(const Vec3& aOther) const { return {mX + aOther.mX, mY + aOther.mY, mZ + aOther.mZ}; }
+	Vec3 operator -(const Vec3& aOther) const { return {mX - aOther.mX, mY - aOther.mY, mZ - aOther.mZ}; }
+	Vec3 operator *(const Vec3& aOther) const { return {mX * aOther.mX, mY * aOther.mY, mZ * aOther.mZ}; }
+	Vec3 operator *(const taType aOther) const { return {mX * aOther, mY * aOther, mZ * aOther}; }
+	Vec3 operator /(const Vec3& aOther) const { return {mX / aOther.mX, mY / aOther.mY, mZ / aOther.mZ}; }
+	Vec3 operator /(const taType aOther) const { return {mX / aOther, mY / aOther, mZ / aOther}; }
+	const Vec3& operator +=(const Vec3& aOther) { return *this = *this + aOther; }
+	const Vec3& operator -=(const Vec3& aOther) { return *this = *this - aOther; }
+	const Vec3& operator *=(const Vec3& aOther) { return *this = *this * aOther; }
+	const Vec3& operator *=(const taType aOther) { return *this = *this * aOther; }
+	const Vec3& operator /=(const Vec3& aOther) { return *this = *this / aOther; }
+	const Vec3& operator /=(const taType aOther) { return *this = *this / aOther; }
 
-	bool operator==(const Vec3& inOther) { return mX == inOther.mX && mY == inOther.mY && mZ == inOther.mZ; }
+	bool operator==(const Vec3& aOther) { return mX == aOther.mX && mY == aOther.mY && mZ == aOther.mZ; }
 
 	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
 	[[nodiscard]] uint32 GetARGB() const
 	{
-        static_assert(std::is_floating_point_v<taType>);
+		static_assert(std::is_floating_point_v<taType>);
 
-		const taType t_r = gClamp<taType>(mX, 0, 1);
-		const taType t_g = gClamp<taType>(mY, 0, 1);
-		const taType t_b = gClamp<taType>(mZ, 0, 1);
+		const taType t_r = Clamp<taType>(mX, 0, 1);
+		const taType t_g = Clamp<taType>(mY, 0, 1);
+		const taType t_b = Clamp<taType>(mZ, 0, 1);
 		return static_cast<uint32>(255) | (static_cast<uint8_t>(t_r * 255) << 16) | (static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<
 			uint8_t>(t_b * 255));
 	}
@@ -196,7 +194,7 @@ struct Vec3
 	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
 	[[nodiscard]] RGBA GetRGBA() const
 	{
-		return RGBA(gClamp(mX, 0.0f, 1.0f), gClamp(mY, 0.0f, 1.0f), gClamp(mZ, 0.0f, 1.0f), 1.0f);
+		return RGBA(Clamp(mX, 0.0f, 1.0f), Clamp(mY, 0.0f, 1.0f), Clamp(mZ, 0.0f, 1.0f), 1.0f);
 	}
 
 	[[nodiscard]] taType Dot(const Vec3& inOther) const
@@ -249,8 +247,8 @@ struct alignas(4 * sizeof(taType)) Vec4
 	Vec4(const Vec4& inOther) : Vec4(inOther.mX, inOther.mY, inOther.mZ, inOther.mW) {}
 	Vec4& operator=(const Vec4& inOther) = default;
 
-    Vec4(Vec4&&) = default;
-    Vec4& operator=(Vec4&& inOther) = default;
+	Vec4(Vec4&&) = default;
+	Vec4& operator=(Vec4&& inOther) = default;
 
 	~Vec4() = default;
 
@@ -267,15 +265,15 @@ struct alignas(4 * sizeof(taType)) Vec4
 	}
 
 	template<typename taOtherType>
-    Vec2<taOtherType> As() const
+	Vec2<taOtherType> As() const
 	{
-	    return
-	    {
-	        static_cast<taOtherType>(mX),
-	        static_cast<taOtherType>(mY),
-	        static_cast<taOtherType>(mZ),
+		return
+		{
+			static_cast<taOtherType>(mX),
+			static_cast<taOtherType>(mY),
+			static_cast<taOtherType>(mZ),
 			static_cast<taOtherType>(mW)
-	    };
+		};
 	}
 
 	template <typename taSameType = taType, std::enable_if_t<std::is_signed_v<taSameType>>>
@@ -297,10 +295,10 @@ struct alignas(4 * sizeof(taType)) Vec4
 	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
 	[[nodiscard]] uint32 GetARGB() const
 	{
-		const taType t_a = gClamp<taType>(mW, 0, 1);
-		const taType t_r = gClamp<taType>(mX, 0, 1);
-		const taType t_g = gClamp<taType>(mY, 0, 1);
-		const taType t_b = gClamp<taType>(mZ, 0, 1);
+		const taType t_a = Clamp<taType>(mW, 0, 1);
+		const taType t_r = Clamp<taType>(mX, 0, 1);
+		const taType t_g = Clamp<taType>(mY, 0, 1);
+		const taType t_b = Clamp<taType>(mZ, 0, 1);
 		return static_cast<uint32>((static_cast<uint8_t>(t_a * 255) << 24) | (static_cast<uint8_t>(t_r * 255) << 16) |
 			(static_cast<uint8_t>(t_g * 255) << 8) | (static_cast<uint8_t>(t_b * 255)));
 	}
@@ -308,7 +306,7 @@ struct alignas(4 * sizeof(taType)) Vec4
 	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
 	[[nodiscard]] RGBA GetRGBA() const
 	{
-		return RGBA(gClamp(mX, 0.0f, 1.0f), gClamp(mY, 0.0f, 1.0f), gClamp(mZ, 0.0f, 1.0f), gClamp(mW, 0.0f, 1.0f));
+		return RGBA(Clamp(mX, 0.0f, 1.0f), Clamp(mY, 0.0f, 1.0f), Clamp(mZ, 0.0f, 1.0f), Clamp(mW, 0.0f, 1.0f));
 	}
 
 	[[nodiscard]] taType Dot(const Vec4& inOther) const
@@ -342,9 +340,9 @@ struct alignas(4 * sizeof(taType)) Vec4
 };
 
 template<typename taType>
-inline Vec2<taType> gNormalize(const Vec2<taType>& inVector)
+inline Vec2<taType> Normalize(const Vec2<taType>& inVector)
 {
-    static_assert(std::is_floating_point_v<taType>);
+	static_assert(std::is_floating_point_v<taType>);
 
 	taType mag = std::sqrt(inVector.mX * inVector.mX + inVector.mY * inVector.mY);
 	gAssert(mag != 0.f, "Try using normalize_safe instead");
@@ -353,9 +351,9 @@ inline Vec2<taType> gNormalize(const Vec2<taType>& inVector)
 }
 
 template<typename taType>
-inline Vec2<taType> gNormalizeSafe(const Vec2<taType>& inVector)
+inline Vec2<taType> NormalizeSafe(const Vec2<taType>& inVector)
 {
-    static_assert(std::is_floating_point_v<taType>);
+	static_assert(std::is_floating_point_v<taType>);
 
 	taType mag = std::sqrt(inVector.mX * inVector.mX + inVector.mY * inVector.mY);
 	if (mag == 0.f)
@@ -365,9 +363,9 @@ inline Vec2<taType> gNormalizeSafe(const Vec2<taType>& inVector)
 }
 
 template<typename taType>
-inline Vec3<taType> gNormalize(const Vec3<taType>& i)
+inline Vec3<taType> Normalize(const Vec3<taType>& i)
 {
-    static_assert(std::is_floating_point_v<taType>);
+	static_assert(std::is_floating_point_v<taType>);
 
 	taType mag = std::sqrt(i.mX * i.mX + i.mY * i.mY + i.mZ * i.mZ);
 	gAssert(mag != 0.f && "Try using normalize_safe instead");
@@ -376,9 +374,9 @@ inline Vec3<taType> gNormalize(const Vec3<taType>& i)
 }
 
 template<typename taType>
-inline Vec3<taType> gNormalizeSafe(const Vec3<taType>& i)
+inline Vec3<taType> NormalizeSafe(const Vec3<taType>& i)
 {
-    static_assert(std::is_floating_point_v<taType>);
+	static_assert(std::is_floating_point_v<taType>);
 
 	taType mag = std::sqrt(i.mX * i.mX + i.mY * i.mY + i.mZ * i.mZ);
 	if (mag == 0.f)
@@ -388,9 +386,9 @@ inline Vec3<taType> gNormalizeSafe(const Vec3<taType>& i)
 }
 
 template<typename taType>
-inline Vec4<taType> gNormalize(const Vec4<taType>& i)
+inline Vec4<taType> Normalize(const Vec4<taType>& i)
 {
-    static_assert(std::is_floating_point_v<taType>);
+	static_assert(std::is_floating_point_v<taType>);
 
 	taType mag = std::sqrt(i.mX * i.mX + i.mY * i.mY + i.mZ * i.mZ);
 	assert(mag != 0.f && "Try using normalize_safe instead");
@@ -399,9 +397,9 @@ inline Vec4<taType> gNormalize(const Vec4<taType>& i)
 }
 
 template<typename taType>
-inline Vec4<taType> gNormalizeSafe(const Vec4<taType>& inVector)
+inline Vec4<taType> NormalizeSafe(const Vec4<taType>& inVector)
 {
-    static_assert(std::is_floating_point_v<taType>);
+	static_assert(std::is_floating_point_v<taType>);
 
 	taType mag = std::sqrt(inVector.mX * inVector.mX + inVector.mY * inVector.mY + inVector.mZ * inVector.mZ);
 	if (mag == 0.f)
@@ -411,43 +409,43 @@ inline Vec4<taType> gNormalizeSafe(const Vec4<taType>& inVector)
 }
 
 template<typename taType>
-inline Vec2<taType> gClamp2(const Vec2<taType>& inValue, const Vec2<taType>& inMin, const Vec2<taType>& inMax)
+inline Vec2<taType> Clamp2(const Vec2<taType>& inValue, const Vec2<taType>& inMin, const Vec2<taType>& inMax)
 {
 	return
 	{
-		gClamp(inValue.mX, inMin.mX, inMax.mX),
-		gClamp(inValue.mY, inMin.mY, inMax.mY)
+		Clamp(inValue.mX, inMin.mX, inMax.mX),
+		Clamp(inValue.mY, inMin.mY, inMax.mY)
 	};
 }
 
 template<typename taType>
-inline Vec2<taType> gMax2(const Vec2<taType>& inA, const Vec2<taType>& inB)
+inline Vec2<taType> Max2(const Vec2<taType>& inA, const Vec2<taType>& inB)
 {
 	return
 	{
-		gMax(inA.mX, inB.mX),
-		gMax(inA.mY, inB.mY)
+		Max(inA.mX, inB.mX),
+		Max(inA.mY, inB.mY)
 	};
 }
 
 template<typename taType>
-inline Vec2<taType> gMin2(const Vec2<taType>& inA, const Vec2<taType>& inB)
+inline Vec2<taType> Min2(const Vec2<taType>& inA, const Vec2<taType>& inB)
 {
 	return
 	{
-		gMin(inA.mX, inB.mX),
-		gMin(inA.mY, inB.mY)
+		Min(inA.mX, inB.mX),
+		Min(inA.mY, inB.mY)
 	};
 }
 
 template<typename taType>
-inline Vec2<taType> gLerp2(const Vec2<taType>& inA, const Vec2<taType>& inB, taType inT)
+inline Vec2<taType> Lerp2(const Vec2<taType>& inA, const Vec2<taType>& inB, taType inT)
 {
 	return inA + (inB - inA) * inT;
 }
 
 template<typename taType>
-inline Vec3<taType> gLerp3(const Vec3<taType>& inA, const Vec3<taType>& inB, taType inT)
+inline Vec3<taType> Lerp3(const Vec3<taType>& inA, const Vec3<taType>& inB, taType inT)
 {
 	return inA + (inB - inA) * inT;
 }

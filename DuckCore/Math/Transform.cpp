@@ -13,14 +13,14 @@ Transform2D Transform2D::operator*(const Transform2D& inOther) const
 	return
 	{
 		mPosition + inOther.mPosition,
-		gMax2(mHalfSize, inOther.mHalfSize),
+		Max2(mHalfSize, inOther.mHalfSize),
 		mRotation + inOther.mRotation
 	};
 }
 
 AABB<TransformType> Transform2D::GetBounds() const
 {
-	TransformType rotation = gToRadiansF(mRotation);
+	TransformType rotation = DegreesToRadians(mRotation);
 	TransformType sin_r = std::abs(std::sin(rotation));
 	TransformType cos_r = std::abs(std::cos(rotation));
 

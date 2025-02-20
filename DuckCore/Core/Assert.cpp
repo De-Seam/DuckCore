@@ -12,5 +12,5 @@ class LogCategoryAsserts final : public LogCategory
 
 void gLogAssert(const String& aMessage)
 {
-	gLog<LogCategoryAsserts>(ELogLevel::Error, aMessage);
+	Log<LogCategoryAsserts>(ELogLevel::Error, aMessage);
 }

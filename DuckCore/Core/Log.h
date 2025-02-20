@@ -28,17 +28,17 @@ class LogCategoryDefault final : public LogCategory
 };
 
 // Internal log function
-void gLogInternal(const RTTI& inLogCategoryRTTI, ELogLevel inLevel, const char* inMessage);
+void LogInternal(const RTTI& aLogCategoryRTTI, ELogLevel aLevel, const char* aMessage);
 
 template<typename taCategory>
-void gLog(ELogLevel inLevel, const char* inMessage) { gLogInternal(taCategory::sGetRTTI(), inLevel, inMessage); }
-void gLog(ELogLevel inLevel, const char* inMessage); // Log helper function. Quickly logs something to the default category.
-void gLog(const char* inMessage); // Log helper function. Quickly logs something to the default category with ELogLevel::Info.
+void Log(ELogLevel aLevel, const char* aMessage) { LogInternal(taCategory::sGetRTTI(), aLevel, aMessage); }
+void Log(ELogLevel aLevel, const char* aMessage); // Log helper function. Quickly logs something to the default category.
+void Log(const char* aMessage); // Log helper function. Quickly logs something to the default category with ELogLevel::Info.
 
 template<typename taCategory>
-void gLog(ELogLevel inLevel, const String& inMessage) { gLogInternal(taCategory::sGetRTTI(), inLevel, *inMessage); }
-inline void gLog(ELogLevel inLevel, const String& inMessage) { gLog(inLevel, *inMessage); } // Log helper function. Quickly logs something to the default category.
-inline void gLog(const String& inMessage) { gLog(*inMessage); }; // Log helper function. Quickly logs something to the default category with ELogLevel::Info.
+void Log(ELogLevel aLevel, const String& aMessage) { LogInternal(taCategory::sGetRTTI(), aLevel, *aMessage); }
+inline void Log(ELogLevel aLevel, const String& aMessage) { Log(aLevel, *aMessage); } // Log helper function. Quickly logs something to the default category.
+inline void Log(const String& aMessage) { Log(*aMessage); }; // Log helper function. Quickly logs something to the default category with ELogLevel::Info.
 
 struct LogEntry
 {
@@ -47,6 +47,6 @@ struct LogEntry
 	String mMessage;
 };
 
-MutexProtectedPtr<const Array<LogEntry>> gGetLogArray(); // (Async) returns the array of log entries.
+MutexProtectedPtr<const Array<LogEntry>> GetLogArray(); // (Async) returns the array of log entries.
 
 }
