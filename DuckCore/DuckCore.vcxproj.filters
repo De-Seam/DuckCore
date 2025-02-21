@@ -57,9 +57,6 @@
     <ClCompile Include="Math\Rect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RTTI\RTTIRegistry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Math\RGBA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -177,9 +174,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Containers\Pair.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RTTI\RTTIRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Core.h">

@@ -39,6 +39,4 @@ lua.lib
 namespace DC
 {
 
-extern void RegisterCoreRTTI();
-
 }

@@ -39,6 +39,4 @@ private:
 	RTTITypeID mTypeID = RTTITypeID::sNew();
 };
 
-#define REGISTER_RTTI(inClassName) inClassName::sGetRTTI()
-
 }
