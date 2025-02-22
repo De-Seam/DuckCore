@@ -5,7 +5,7 @@
 #include <DuckCore/Containers/String.h>
 #include <DuckCore/Containers/File/TextFile.h>
 #include <DuckCore/Core/Assert.h>
-#include <DuckCore/Manager/Managers.h>
+#include <DuckCore/Managers/Managers.h>
 #include <DuckCore/Threads/ScopedMutex.h>
 
 #include <cstdio>

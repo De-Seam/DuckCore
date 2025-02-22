@@ -21,11 +21,14 @@ public:
 	};
 
 	explicit File(String aPath, uint8 aFlags = 0) : mPath(Move(aPath)), mFlags(aFlags) {}
+	explicit File(const Json& aJson);
+	Json ToJson() const;
 
 	virtual void Load(); // Loads mContents from mPath. This will clear potentially existing content.
 	virtual void WriteToDisk(); // Writes mContents to mPath. Child classes should override this to update mContents before calling this.
+	void ClearCachedContents(); // Clears mContents. This will not write to disk.
 
-	void SetContents(String aContents);
+	void SetContents(String aContents); // Set mContents to aContents. This will not write to disk.
 
 	const String& GetPath() const { return mPath; }
 	const String& GetContents() const { return mContents; }

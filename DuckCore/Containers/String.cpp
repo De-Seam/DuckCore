@@ -35,6 +35,11 @@ bool String::Contains(char inChar) const
 	return false;
 }
 
+bool String::Contains(const String& aString) const
+{
+	return mString.find(aString.mString) != std::string::npos;
+}
+
 int String::FindFirstCharOccurence(char inChar) const
 {
 	for (int i = 0; i < Length(); i++)
@@ -67,27 +72,47 @@ void String::FromJson(const Json& inJson)
 	mString = inJson.get<std::string>();
 }
 
-String gToString(int inValue)
+String ToString(int aValue)
 {
-	return std::to_string(inValue);
+	return std::to_string(aValue);
 }
 
-String gToString(uint32 inValue)
+String ToString(uint32 aValue)
 {
-	return std::to_string(inValue);
+	return std::to_string(aValue);
 }
 
-String gToString(float inValue)
+String ToString(float aValue)
 {
-	return std::to_string(inValue);
+	return std::to_string(aValue);
 }
 
-String gToString(double inValue)
+String ToString(double aValue)
 {
-	return std::to_string(inValue);
+	return std::to_string(aValue);
 }
 
-String gGetFileExtension(const String& aPath)
+int IntFromString(const String& aValue)
+{
+	return std::stoi(aValue.CStr());
+}
+
+uint UIntFromString(const String& aValue)
+{
+	return std::stoul(aValue.CStr());
+}
+
+float FloatFromString(const String& aValue)
+{
+	return std::stof(aValue.CStr());
+}
+
+double DoubleFromString(const String& aValue)
+{
+	return std::stod(aValue.CStr());
+}
+
+String GetFileExtension(const String& aPath)
 {
 	const int dot_pos = aPath.FindLastCharOccurence('.');
 	if (dot_pos == -1)
@@ -96,7 +121,7 @@ String gGetFileExtension(const String& aPath)
 	return aPath.SubStr(dot_pos, aPath.Length() - 1);
 }
 
-String gToLowerCase(const String& aString)
+String ToLowerCase(const String& aString)
 {
 	String result_string = aString;
 	for (int i = 0; i < result_string.Length(); i++)

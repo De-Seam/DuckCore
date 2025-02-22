@@ -81,6 +81,9 @@
     <ClCompile Include="AccelerationStructures\BVH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Managers\CommandLineArgumentsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Assert.h">
@@ -185,7 +188,7 @@
     <ClInclude Include="Math\Intersects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Manager\Managers.h">
+    <ClInclude Include="Managers\Managers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Threads\ScopedMutex.h">
@@ -212,7 +215,7 @@
     <ClInclude Include="Containers\AsyncQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Manager\Manager.h">
+    <ClInclude Include="Managers\Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AccelerationStructures\BVH.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AccelerationStructures\BVHObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\CommandLineArgumentsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

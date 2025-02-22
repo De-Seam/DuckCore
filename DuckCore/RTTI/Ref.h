@@ -131,11 +131,6 @@ public:
 	operator const taType*() const { return mPtr; }
 	operator taType*() { return mPtr; }
 
-	bool operator==(const Ref<taType>& inOther) const { return mPtr == inOther.mPtr; }
-	bool operator==(const taType* inOther) const { return mPtr == inOther; }
-	bool operator!=(const Ref<taType>& inOther) const { return mPtr != inOther.mPtr; }
-	bool operator!=(const taType* inOther) const { return mPtr != inOther; }
-
 	bool IsValid() const { return mPtr != nullptr; }
 
 private:

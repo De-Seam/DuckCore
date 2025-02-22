@@ -1,7 +1,7 @@
 #pragma once
 #include <DuckCore/Containers/Array.h>
 #include <DuckCore/Containers/UniquePtr.h>
-#include <DuckCore/Manager/Manager.h>
+#include <DuckCore/Managers/Manager.h>
 
 namespace DC
 {
