@@ -106,6 +106,7 @@
     <ClCompile Include="Containers\File\File.cpp" />
     <ClCompile Include="Core\Assert.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />
+    <ClCompile Include="Managers\CommandLineArgumentsManager.cpp" />
     <ClCompile Include="Math\AABB.cpp" />
     <ClCompile Include="Math\HelperFunctions.cpp" />
     <ClCompile Include="Math\Intersects.cpp" />
@@ -139,8 +140,9 @@
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\EventManager.h" />
-    <ClInclude Include="Manager\Manager.h" />
-    <ClInclude Include="Manager\Managers.h" />
+    <ClInclude Include="Managers\CommandLineArgumentsManager.h" />
+    <ClInclude Include="Managers\Manager.h" />
+    <ClInclude Include="Managers\Managers.h" />
     <ClInclude Include="Math\Intersects.h" />
     <ClInclude Include="Math\RGBA.h" />
     <ClInclude Include="Threads\MutexProtectedPtr.h" />

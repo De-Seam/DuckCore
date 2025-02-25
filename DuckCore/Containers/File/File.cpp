@@ -6,6 +6,15 @@
 
 namespace DC
 {
+File::File(const Json& aJson) :
+	File(aJson.get<String>(), 0)
+{}
+
+Json File::ToJson() const
+{
+	return mPath;
+}
+
 void File::Load()
 {
 	gAssert(!IsWriteOnly());
@@ -59,6 +68,11 @@ void File::WriteToDisk()
 
 	if (!ShouldKeepFileOpen())
 		mFile.close();
+}
+
+void File::ClearCachedContents()
+{
+	mContents.Clear();
 }
 
 void File::SetContents(String aContents)

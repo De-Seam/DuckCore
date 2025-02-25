@@ -25,6 +25,14 @@ public:
 	taKey* Find(const taKey& inKey);
 	const taKey* Find(const taKey& inKey) const;
 
+	// Iterator support
+	auto begin() { return mSet.begin(); }
+	auto end() { return mSet.end(); }
+	const auto begin() const { return mSet.begin(); }
+	const auto end() const { return mSet.end(); }
+	const auto cbegin() const { return mSet.begin(); }
+	const auto cend() const { return mSet.end(); }
+
 private:
 	phmap::flat_hash_set<taKey> mSet;
 };

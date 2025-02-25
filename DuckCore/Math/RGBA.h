@@ -9,8 +9,7 @@ namespace DC
 	struct RGBA
 	{
 		explicit RGBA(uint32 inRGBA): mRGBA(inRGBA) {}
-		explicit RGBA(uint8 inR, uint8 inG, uint8 inB, uint8 inA) : mR(inR), mG(inG), mB(inB), mA(inA) {}
-		explicit RGBA(float inR, float inG, float inB, float inA);
+		explicit RGBA(uint8 aR, uint8 aG, uint8 aB, uint8 aA) : mR(aR), mG(aG), mB(aB), mA(aA) {}
 
 		union
 		{
@@ -20,6 +19,10 @@ namespace DC
 			};
 			uint32 mRGBA;
 		};
+
+		static RGBA sFromFloats(float aR, float aG, float aB, float aA);
+		static RGBA sBlack() { return RGBA(0, 0, 0, 255); }
+		static RGBA sWhite() { return RGBA(255, 255, 255, 255); }
 	};
 }
 

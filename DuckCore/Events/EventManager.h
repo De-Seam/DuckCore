@@ -3,7 +3,7 @@
 #include <DuckCore/Containers/HashMap.h>
 #include <DuckCore/Containers/UniquePtr.h>
 #include <DuckCore/Events/Event.h>
-#include <DuckCore/Manager/Manager.h>
+#include <DuckCore/Managers/Manager.h>
 #include <DuckCore/Threads/Thread.h>
 
 namespace DC

@@ -4,15 +4,19 @@
 
 namespace DC
 {
-RGBA::RGBA(float inR, float inG, float inB, float inA) :
-	mR(static_cast<uint8>(inR * 255)), 
-	mG(static_cast<uint8>(inG * 255)), 
-	mB(static_cast<uint8>(inB * 255)), 
-	mA(static_cast<uint8>(inA * 255)) 
+RGBA RGBA::sFromFloats(float aR, float aG, float aB, float aA)
 {
-	gAssert(inR >= 0.0f && inR <= 1.0f);
-	gAssert(inG >= 0.0f && inG <= 1.0f);
-	gAssert(inB >= 0.0f && inB <= 1.0f);
-	gAssert(inA >= 0.0f && inA <= 1.0f);
+	gAssert(aR >= 0.0f && aR <= 1.0f);
+	gAssert(aG >= 0.0f && aG <= 1.0f);
+	gAssert(aB >= 0.0f && aB <= 1.0f);
+	gAssert(aA >= 0.0f && aA <= 1.0f);
+
+	return RGBA
+	(
+		static_cast<uint8>(aR * 255),
+		static_cast<uint8>(aG * 255), 
+		static_cast<uint8>(aB * 255), 
+		static_cast<uint8>(aA * 255)
+	);
 }
 }
