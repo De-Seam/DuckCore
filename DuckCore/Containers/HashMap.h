@@ -15,6 +15,43 @@ template<typename taKey, typename taValue>
 class HashMap
 {
 public:
+	class Iterator
+	{
+	public:
+		using iterator_category = std::forward_iterator_tag;
+		using value_type = std::pair<const taKey, taValue>;
+		using difference_type = std::ptrdiff_t;
+		using pointer = value_type*;
+		using reference = value_type&;
+	
+		explicit Iterator(typename phmap::flat_hash_map<taKey, taValue>::iterator aIterator) : mIterator(aIterator) {}
+	
+		reference operator*() const { return *mIterator; }
+		pointer operator->() const { return &(*mIterator); }
+	
+		Iterator& operator++()
+		{
+			++mIterator;
+			return *this;
+		}
+	
+		Iterator operator++(int)
+		{
+			Iterator temp = *this;
+			 ++mIterator;
+	        return temp;
+		}
+	
+		bool operator==(const Iterator& other) const { return mIterator == other.mIterator; }
+		bool operator!=(const Iterator& other) const { return mIterator != other.mIterator; }
+	
+	private:
+		typename phmap::flat_hash_map<taKey, taValue>::iterator mIterator;
+	};
+		
+	Iterator begin() { return Iterator(mMap.begin()); }
+	Iterator end() { return Iterator(mMap.end()); }
+
 	HashMap() = default;
 
 	taValue& operator[](const taKey& inKey) { return mMap[inKey]; }
