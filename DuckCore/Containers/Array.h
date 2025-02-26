@@ -32,9 +32,9 @@ public:
 	bool IsValidIndex(int inIndex) const { return inIndex >= 0 && inIndex < Length(); }
 
 	void Clear();
-	void Add(taType inValue);
-	template<typename... taArgs>
-	void Emplace(taArgs&&... inArgs);
+	int Add(taType inValue);
+	template<typename... taArgs> requires std::constructible_from<taType, taArgs...>
+	int Emplace(taArgs&&... inArgs);
 
 	void PopBack();
 
@@ -185,24 +185,28 @@ void Array<taType>::Clear()
 }
 
 template<typename taType>
-void Array<taType>::Add(taType inValue)
+int Array<taType>::Add(taType inValue)
 {
 	if (mLength == mCapacity)
 		Reserve(Max(mCapacity * 2, cBaseCapacity));
 
 	new (&mData[mLength]) taType(Move(inValue));
 	mLength++;
+
+	return mLength - 1;
 }
 
 template<typename taType>
-template<typename ... taArgs>
-void Array<taType>::Emplace(taArgs&&... inArgs)
+template<typename ... taArgs> requires std::constructible_from<taType, taArgs...>
+int Array<taType>::Emplace(taArgs&&... inArgs)
 {
 	if (mLength == mCapacity)
 		Reserve(Max(mCapacity * 2, cBaseCapacity));
 
 	new (&mData[mLength]) taType(std::forward<taArgs>(inArgs)...);
 	mLength++;
+
+	return mLength - 1;
 }
 
 template<typename taType>
