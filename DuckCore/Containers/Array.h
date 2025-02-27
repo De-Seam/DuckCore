@@ -17,6 +17,9 @@ public:
 	Array() = default;
 	~Array();
 
+	Array(Array&& aOther) noexcept;
+	Array& operator=(Array&& aOther) noexcept;
+
 	taType& operator[](int aIndex) { return At(aIndex); }
 	const taType& operator[](int aIndex) const { return At(aIndex); }
 	taType& At(int aIndex) { gAssert(IsValidIndex(aIndex)); return mData[aIndex]; }
@@ -96,6 +99,49 @@ Array<taType>::~Array()
 		mData = nullptr;
 		mCapacity = 0;
 	}
+}
+
+template<typename taType>
+Array<taType>::Array(Array&& aOther) noexcept
+{
+	if (this != &aOther)
+	{
+		if (mData != nullptr)
+		{
+			Clear();
+			free(mData);
+		}
+
+		mData = aOther.mData;
+		mLength = aOther.mLength;
+		mCapacity = aOther.mCapacity;
+
+		aOther.mData = nullptr;
+		aOther.mLength = 0;
+		aOther.mCapacity = 0;
+	}
+}
+
+template<typename taType>
+Array<taType>& Array<taType>::operator=(Array&& aOther) noexcept
+{
+	if (this != &aOther)
+	{
+		if (mData != nullptr)
+		{
+			Clear();
+			free(mData);
+		}
+
+		mData = aOther.mData;
+		mLength = aOther.mLength;
+		mCapacity = aOther.mCapacity;
+
+		aOther.mData = nullptr;
+		aOther.mLength = 0;
+		aOther.mCapacity = 0;
+	}
+	return *this;
 }
 
 template<typename taType>
