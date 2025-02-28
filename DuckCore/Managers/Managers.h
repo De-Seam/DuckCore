@@ -23,6 +23,9 @@ private:
 	inline static Array<Manager*> sManagers; // Array of managers. The index is the type id of the manager.
 };
 
+template<typename taType> requires std::is_base_of_v<Manager, taType>
+taType& Get() { return Managers::sGet<taType>(); }
+
 template <typename T, typename = void>
 struct has_myVar : std::false_type {};
 
