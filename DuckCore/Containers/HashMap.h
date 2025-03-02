@@ -24,19 +24,21 @@ public:
 		using pointer = value_type*;
 		using reference = value_type&;
 	
-		explicit Iterator(typename phmap::flat_hash_map<taKey, taValue>::iterator aIterator) : mIterator(aIterator) {}
+		explicit Iterator(typename phmap::flat_hash_map<taKey, taValue>::iterator aIterator, bool aIsValid) : mIterator(aIterator), mIsValid(aIsValid) {}
 	
-		reference operator*() const { return *mIterator; }
-		pointer operator->() const { return &(*mIterator); }
+		reference operator*() const { gAssert(IsValid()); return *mIterator; }
+		pointer operator->() const { gAssert(IsValid()); return &(*mIterator); }
 	
 		Iterator& operator++()
 		{
+			gAssert(IsValid());
 			++mIterator;
 			return *this;
 		}
 	
 		Iterator operator++(int)
 		{
+			gAssert(IsValid());
 			Iterator temp = *this;
 			 ++mIterator;
 	        return temp;
@@ -44,13 +46,62 @@ public:
 	
 		bool operator==(const Iterator& other) const { return mIterator == other.mIterator; }
 		bool operator!=(const Iterator& other) const { return mIterator != other.mIterator; }
-	
+		operator bool() const { return IsValid(); }
+
+		bool IsValid() const { return mIsValid; }
+		const taKey& GetKey() const { gAssert(IsValid()); return mIterator->first; }
+		taValue& GetValue() { gAssert(IsValid()); return mIterator->second; }
+		const taValue& GetValue() const { gAssert(IsValid()); return mIterator->second; }
+
 	private:
 		typename phmap::flat_hash_map<taKey, taValue>::iterator mIterator;
+		bool mIsValid = false;
+	};
+
+	class IteratorC
+	{
+	public:
+		using iterator_category = std::forward_iterator_tag;
+		using value_type = std::pair<const taKey, const taValue>;
+		using difference_type = std::ptrdiff_t;
+		using pointer = value_type*;
+		using reference = value_type&;
+
+		IteratorC(typename HashMap<taKey, taValue>::Iterator aIterator) : mIterator(aIterator), mIsValid(aIterator.IsValid()) {}
+		explicit IteratorC(typename phmap::flat_hash_map<taKey, taValue>::iterator aIterator, bool aIsValid) : mIterator(aIterator), mIsValid(aIsValid) {}
+		explicit IteratorC(typename phmap::flat_hash_map<taKey, taValue>::const_iterator aIterator, bool aIsValid) : mIterator(aIterator), mIsValid(aIsValid) {}
+
+		reference operator*() const { gAssert(IsValid()); return *mIterator; }
+		pointer operator->() const { gAssert(IsValid()); return &(*mIterator); }
+
+		IteratorC& operator++()
+		{
+			++mIterator;
+			return *this;
+		}
+
+		IteratorC operator++(int)
+		{
+			IteratorC temp = *this;
+			++mIterator;
+			return temp;
+		}
+
+		bool operator==(const IteratorC& aOther) const { return mIterator == aOther.mIterator; }
+		bool operator!=(const IteratorC& aOther) const { return mIterator != aOther.mIterator; }
+		operator bool() const { return IsValid(); }
+
+		bool IsValid() const { return mIsValid; }
+		const taKey& GetKey() const { gAssert(IsValid()); return mIterator->first; }
+		const taValue& GetValue() const { gAssert(IsValid()); return mIterator->second; }
+
+	private:
+		typename phmap::flat_hash_map<taKey, taValue>::const_iterator mIterator;
+		bool mIsValid = false;
 	};
 		
-	Iterator begin() { return Iterator(mMap.begin()); }
-	Iterator end() { return Iterator(mMap.end()); }
+	Iterator begin() { return Iterator(mMap.begin(), !mMap.empty()); }
+	Iterator end() { return Iterator(mMap.end(), false); }
 
 	HashMap() = default;
 
@@ -67,8 +118,8 @@ public:
 	int Length() const { return static_cast<int>(mMap.size()); }
 	bool Contains(const taKey& inKey) const { return mMap.contains(inKey); }
 
-	taValue* Find(const taKey& inKey);
-	const taValue* Find(const taKey& inKey) const;
+	Iterator Find(const taKey& inKey);
+	IteratorC Find(const taKey& inKey) const;
 
 	template<typename taLambda>
 	void ForEach(taLambda&& inLambda);
@@ -111,21 +162,17 @@ void HashMap<taKey, taValue>::Add(const taKey& inKey, const taValue& inValue)
 }
 
 template <typename taKey, typename taValue>
-taValue* HashMap<taKey, taValue>::Find(const taKey& inKey)
+typename HashMap<taKey, taValue>::Iterator HashMap<taKey, taValue>::Find(const taKey& inKey)
 {
-	auto it = mMap.find(inKey);
-	if (it != mMap.end())
-		return &it->second;
-	return nullptr;
+	typename phmap::flat_hash_map<taKey, taValue>::iterator iter = mMap.find(inKey);
+	return typename HashMap<taKey, taValue>::Iterator(iter, iter != mMap.end());
 }
 
 template <typename taKey, typename taValue>
-const taValue* HashMap<taKey, taValue>::Find(const taKey& inKey) const
+typename HashMap<taKey, taValue>::IteratorC HashMap<taKey, taValue>::Find(const taKey& inKey) const
 {
-	auto it = mMap.find(inKey);
-	if (it != mMap.end())
-		return &it->second;
-	return nullptr;
+	typename phmap::flat_hash_map<taKey, taValue>::const_iterator iter = mMap.find(inKey);
+	return typename HashMap<taKey, taValue>::IteratorC(iter, iter != mMap.end());
 }
 
 template<typename taKey, typename taValue>

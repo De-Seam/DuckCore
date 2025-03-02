@@ -25,9 +25,9 @@ CommandLineArgumentsManager::CommandLineArgumentsManager(int aArgumentCount, cha
 		String argument_name = argument.SubStr(0, equals_sign_index);
 		String argument_value = argument.SubStr(equals_sign_index + 1, argument.Length() - 1);
 
-		if (String* existing_argument_value = mArgumentValuePairs.Find(argument_name))
+		if (HashMap<String, String>::Iterator iter = mArgumentValuePairs.Find(argument))
 		{
-			Log<LogCategoryDefault>(ELogLevel::Warning, String::sFormatted("Duplicate command line argument: %s. Two given values: %s and %s", *argument_name, *argument_value, **existing_argument_value));
+			Log<LogCategoryDefault>(ELogLevel::Warning, String::sFormatted("Duplicate command line argument: %s. Two given values: %s and %s", *argument_name, *argument_value, *iter.GetValue()));
 			gAssert(false);
 			continue;
 		}

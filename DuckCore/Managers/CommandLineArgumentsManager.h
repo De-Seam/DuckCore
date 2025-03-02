@@ -24,22 +24,22 @@ private:
 template<typename taValueType>
 bool CommandLineArgumentsManager::FindArgumentValue(const String& aArgument, taValueType& outValue) const
 {
-	const String* value = mArgumentValuePairs.Find(aArgument);
-	if (value == nullptr)
+	HashMap<String, String>::IteratorC iter = mArgumentValuePairs.Find(aArgument);
+	if (!iter.IsValid())
 		return false;
 
-	outValue = FromString<taValueType>(*value);
+	outValue = FromString<taValueType>(iter.GetValue());
 	return true;
 }
 
 template<>
 inline bool CommandLineArgumentsManager::FindArgumentValue<String>(const String& aArgument, String& outValue) const
 {
-	const String* value = mArgumentValuePairs.Find(aArgument);
-	if (value == nullptr)
+	HashMap<String, String>::IteratorC iter = mArgumentValuePairs.Find(aArgument);
+	if (!iter.IsValid())
 		return false;
 
-	outValue = *value;
+	outValue = iter.GetValue();
 	if (outValue.Length() > 2 && outValue[0] == '\"' && outValue[outValue.Length() - 1] == '\"')
 		outValue = outValue.SubStr(1, outValue.Length() - 2);
 	return true;
