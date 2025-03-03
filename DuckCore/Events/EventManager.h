@@ -14,6 +14,7 @@ class EventHandleBase : public NoCopy, public NoMove
 {
 public:
 	virtual ~EventHandleBase() = default;
+
 protected:
 	virtual void Call(Event& ioEvent) = 0;
 
@@ -26,7 +27,8 @@ class EventHandle final : public EventHandleBase
 public:
 	virtual ~EventHandle() override;
 	EventHandle() = delete;
-	EventHandle(std::function<void(taEventType&)> inOnEventFunction, EventManager& inEventManager) :
+	EventHandle(const RTTIClass* aContext, std::function<void(taEventType&)> inOnEventFunction, EventManager& inEventManager) :
+		mContext(aContext),
 		mOnEventFunction(Move(inOnEventFunction)),
 		mEventManager(&inEventManager)
 	{}
@@ -35,6 +37,7 @@ protected:
 	virtual void Call(Event& ioEvent) override { mOnEventFunction(*gStaticCast<taEventType*>(&ioEvent)); }
 
 private:
+	const RTTIClass* mContext = nullptr;
 	std::function<void(taEventType&)> mOnEventFunction;
 	EventManager* mEventManager = nullptr;
 
@@ -46,16 +49,17 @@ class EventManager : public Manager
 	MANAGER_BASE_CLASS(EventManager)
 public:
 	template<typename taEventType> [[nodiscard]]
-	UniquePtr<EventHandle<taEventType>> AddEventListener(std::function<void(taEventType&)> inFunction);
+	UniquePtr<EventHandle<taEventType>> AddEventListener(const RTTIClass* aContext, std::function<void(taEventType&)> inFunction); // Context of the sender, or nullptr for global event.
 
 	template<typename taEventType>
-	void SendEvent(taEventType& ioEvent);
+	void SendEvent(const RTTIClass* aContext, taEventType& ioEvent); // Context of the sender, or nullptr for global event.
 
 private:
 	template<typename taEventType>
 	void UnregisterEventHandle(const EventHandle<taEventType>& inEventHandle);
 
-	HashMap<const RTTI*, Array<EventHandleBase*>> mEventCallbacks;
+	// HashMap<const RTTI*, Array<EventHandleBase*>> mEventCallbacks;
+	HashMap<const RTTIClass*, HashMap<const RTTI*, Array<EventHandleBase*>>> mContextToEventRTTIToListeners; // Maps [Context][Event RTTI] to array of listener to that event for that context.
 	IF_ASSERTS(Array<const RTTI*> mCurrentlyBroadcastingEvents;) // Asserts-only, array of events we are currently broadcasting using SendEvent.
 
 	template<typename taEventType>
@@ -69,21 +73,21 @@ EventHandle<taEventType>::~EventHandle()
 }
 
 template<typename taEventType>
-UniquePtr<EventHandle<taEventType>> EventManager::AddEventListener(std::function<void(taEventType&)> inFunction)
+UniquePtr<EventHandle<taEventType>> EventManager::AddEventListener(const RTTIClass* aContext, std::function<void(taEventType&)> inFunction)
 {
 	gAssert(gIsMainThread());
 	gAssert(!mCurrentlyBroadcastingEvents.Contains(&taEventType::sGetRTTI()), "Cant register event listeners while broadcasting that specific event.");
 
-	UniquePtr<EventHandle<taEventType>> handle = MakeUnique<EventHandle<taEventType>>(inFunction, *this);
+	UniquePtr<EventHandle<taEventType>> handle = MakeUnique<EventHandle<taEventType>>(aContext, inFunction, *this);
 
 	const RTTI* rtti = &taEventType::sGetRTTI();
-	mEventCallbacks[rtti].Add(handle);
+	mContextToEventRTTIToListeners[aContext][rtti].Add(handle);
 
 	return handle;
 }
 
 template<typename taEventType>
-void EventManager::SendEvent(taEventType& ioEvent)
+void EventManager::SendEvent(const RTTIClass* aContext, taEventType& ioEvent)
 {
 	gAssert(gIsMainThread());
 
@@ -92,7 +96,7 @@ void EventManager::SendEvent(taEventType& ioEvent)
 	gAssert(!mCurrentlyBroadcastingEvents.Contains(rtti), "Cant send event while broadcasting that same event.");
 	IF_ASSERTS(mCurrentlyBroadcastingEvents.Add(rtti);)
 
-	Array<EventHandleBase*>& event_callbacks = mEventCallbacks[rtti];
+	Array<EventHandleBase*>& event_callbacks = mContextToEventRTTIToListeners[aContext][rtti];
 
 	for (EventHandleBase* handle : event_callbacks)
 		handle->Call(ioEvent);
@@ -107,7 +111,7 @@ void EventManager::UnregisterEventHandle(const EventHandle<taEventType>& inEvent
 	gAssert(!mCurrentlyBroadcastingEvents.Contains(&taEventType::sGetRTTI()), "Cant unregister event listeners while broadcasting that specific event.");
 
 	const RTTI* rtti = &taEventType::sGetRTTI();
-	Array<EventHandleBase*>& event_callbacks = mEventCallbacks[rtti];
+	Array<EventHandleBase*>& event_callbacks = mContextToEventRTTIToListeners[inEventHandle.mContext][rtti];
 
 	const int index = event_callbacks.Find(&inEventHandle);
 
