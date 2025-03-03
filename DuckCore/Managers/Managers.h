@@ -11,7 +11,7 @@ public:
 	Managers() = delete;
 
 	template<typename taManagerType>
-	static void sAdd(taManagerType* inManager);
+	static void sAdd(taManagerType* aManager);
 
 	template<typename taManagerType>
 	static taManagerType& sGet();
@@ -36,7 +36,7 @@ template <typename T>
 constexpr bool has_myVar_v = has_myVar<T>::value;
 
 template<typename taManagerType>
-void Managers::sAdd(taManagerType* inManager) 
+void Managers::sAdd(taManagerType* aManager) 
 {
 	static_assert(std::is_base_of_v<Manager, taManagerType>);
 	static_assert(has_myVar_v<taManagerType>, "Manager needs to have MANAGER_BASE_CLASS()");
@@ -48,7 +48,7 @@ void Managers::sAdd(taManagerType* inManager)
 	int size = Max(length, next);
 	sManagers.Resize(size);
 	gAssert(sManagers[type_id] == nullptr, "Manager was already added.");
-	sManagers[type_id] = inManager;
+	sManagers[type_id] = aManager;
 }
 
 template<typename taManagerType>
