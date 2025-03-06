@@ -4,6 +4,8 @@
 #include <DuckCore/Containers/UniquePtr.h>
 #include <DuckCore/Events/Event.h>
 #include <DuckCore/Managers/Manager.h>
+#include <DuckCore/Threads/Mutex.h>
+#include <DuckCore/Threads/ScopedMutex.h>
 #include <DuckCore/Threads/Thread.h>
 
 namespace DC
@@ -58,6 +60,8 @@ private:
 	HashMap<const RTTI*, Array<EventHandleBase*>> mEventCallbacks;
 	IF_ASSERTS(Array<const RTTI*> mCurrentlyBroadcastingEvents;) // Asserts-only, array of events we are currently broadcasting using SendEvent.
 
+	RecursiveMutex mMutex;
+
 	template<typename taEventType>
 	friend class EventHandle;
 };
@@ -71,10 +75,11 @@ EventHandle<taEventType>::~EventHandle()
 template<typename taEventType>
 UniquePtr<EventHandle<taEventType>> EventManager::AddEventListener(std::function<void(taEventType&)> inFunction)
 {
-	gAssert(gIsMainThread());
-	gAssert(!mCurrentlyBroadcastingEvents.Contains(&taEventType::sGetRTTI()), "Cant register event listeners while broadcasting that specific event.");
-
 	UniquePtr<EventHandle<taEventType>> handle = MakeUnique<EventHandle<taEventType>>(inFunction, *this);
+
+	ScopedMutexRecursiveLock lock(mMutex);
+
+	gAssert(!mCurrentlyBroadcastingEvents.Contains(&taEventType::sGetRTTI()), "Cant register event listeners while broadcasting that specific event.");
 
 	const RTTI* rtti = &taEventType::sGetRTTI();
 	mEventCallbacks[rtti].Add(handle);
@@ -85,9 +90,9 @@ UniquePtr<EventHandle<taEventType>> EventManager::AddEventListener(std::function
 template<typename taEventType>
 void EventManager::SendEvent(taEventType& ioEvent)
 {
-	gAssert(gIsMainThread());
-
 	const RTTI* rtti = &taEventType::sGetRTTI();
+
+	ScopedMutexRecursiveLock lock(mMutex);
 
 	gAssert(!mCurrentlyBroadcastingEvents.Contains(rtti), "Cant send event while broadcasting that same event.");
 	IF_ASSERTS(mCurrentlyBroadcastingEvents.Add(rtti);)
@@ -103,7 +108,8 @@ void EventManager::SendEvent(taEventType& ioEvent)
 template<typename taEventType>
 void EventManager::UnregisterEventHandle(const EventHandle<taEventType>& inEventHandle)
 {
-	gAssert(gIsMainThread());
+	ScopedMutexRecursiveLock lock(mMutex);
+
 	gAssert(!mCurrentlyBroadcastingEvents.Contains(&taEventType::sGetRTTI()), "Cant unregister event listeners while broadcasting that specific event.");
 
 	const RTTI* rtti = &taEventType::sGetRTTI();
