@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BitBool\BitBool.cpp" />
-    <ClCompile Include="imgui\imgui-SFML.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -731,10 +730,7 @@
     <ClInclude Include="entt\signal\emitter.hpp" />
     <ClInclude Include="entt\signal\fwd.hpp" />
     <ClInclude Include="entt\signal\sigh.hpp" />
-    <ClInclude Include="imgui\imconfig-SFML.h" />
     <ClInclude Include="imgui\imconfig.h" />
-    <ClInclude Include="imgui\imgui-SFML.h" />
-    <ClInclude Include="imgui\imgui-SFML_export.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_opengl2.h" />
     <ClInclude Include="imgui\imgui_impl_opengl3.h" />

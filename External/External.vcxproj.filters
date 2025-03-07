@@ -33,9 +33,6 @@
     <ClCompile Include="imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\imgui-SFML.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="imgui\imgui_impl_opengl2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -287,19 +284,10 @@
     <ClInclude Include="imgui\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\imconfig-SFML.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="imgui\imgui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imgui_internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui-SFML.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui\imgui-SFML_export.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imstb_rectpack.h">
