@@ -2,6 +2,8 @@
 
 namespace DC
 {
-int gGetThreadID();
-bool gIsMainThread();
+void SetCurrentThreadAsMainThread();
+
+int GetThreadID();
+bool IsMainThread();
 }

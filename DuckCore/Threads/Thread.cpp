@@ -1,12 +1,20 @@
 #include <DuckCore/Threads/Thread.h>
 
+#include <DuckCore/Core/Assert.h>
 #include <DuckCore/Threads/Atomic.h>
 
 #include <thread>
 
 namespace DC
 {
-int gGetThreadID()
+int gMainThreadID = -1;
+
+void SetCurrentThreadAsMainThread()
+{
+	gMainThreadID = GetThreadID();
+}
+
+int GetThreadID()
 {
 	static Atomic<int> sNextThreadID = 0;
 	static thread_local int sThreadID = sNextThreadID++;
@@ -14,8 +22,9 @@ int gGetThreadID()
 	return sThreadID;
 }
 
-bool gIsMainThread()
+bool IsMainThread()
 {
-	return gGetThreadID() == 0;
+	gAssert(gMainThreadID != -1, "Main thread ID not set.");
+	return GetThreadID() == gMainThreadID;
 }
 }
