@@ -2,7 +2,7 @@
 
 namespace DC
 {
-uint32 gWangHash(uint32 inSeed)
+uint32 WangHash(uint32 inSeed)
 {
 	inSeed = (inSeed ^ 61) ^ (inSeed >> 16);
 	inSeed *= 9;
@@ -12,12 +12,12 @@ uint32 gWangHash(uint32 inSeed)
 	return inSeed;
 }
 
-float gWangHashF(uint32 inSeed)
+float WangHashF(uint32 inSeed)
 {
-	return gStaticCast<float>(gWangHash(inSeed)) * (1.0f / 4294967296.0f);
+	return gStaticCast<float>(WangHash(inSeed)) * (1.0f / 4294967296.0f);
 }
 
-uint32 gXorShift32(uint32* ioState)
+uint32 XorShift32(uint32* ioState)
 {
 	// Xorshift algorithm from George Marsaglia's paper
 	uint32 state = *ioState;
@@ -27,9 +27,9 @@ uint32 gXorShift32(uint32* ioState)
 	return (*ioState) = state;
 }
 
-float gXorShift32F(uint32* ioState)
+float XorShift32F(uint32* ioState)
 {
-	return gStaticCast<float>(gXorShift32(ioState)) * (1.0f / 4294967296.0f);
+	return gStaticCast<float>(XorShift32(ioState)) * (1.0f / 4294967296.0f);
 }
 
 uint32 Hash(const String& aString)
