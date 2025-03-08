@@ -32,4 +32,32 @@ float gXorShift32F(uint32* ioState)
 	return gStaticCast<float>(gXorShift32(ioState)) * (1.0f / 4294967296.0f);
 }
 
+uint32 Hash(const String& aString)
+{
+	uint32 hash = 0x811C9DC5; // Initial seed (can be any non-zero value)
+
+	for (int i = 0; i < aString.Length(); i++)
+	{
+		char character = aString[i];
+        hash ^= gStaticCast<uint32>(character);
+        hash ^= (hash << 13);
+        hash ^= (hash >> 17);
+        hash ^= (hash << 5);
+    }
+	return hash;
+}
+
+uint32 Hash(const char* aString)
+{
+	uint32 hash = 0x811C9DC5; // Initial seed (can be any non-zero value)
+
+	for (const char* character = aString; *character != '\0'; character++) 
+	{
+		hash ^= gStaticCast<uint32>(*character);
+		hash ^= (hash << 13);
+		hash ^= (hash >> 17);
+		hash ^= (hash << 5);
+	}
+	return hash;
+}
 }
