@@ -38,5 +38,9 @@ lua.lib
 
 namespace DC
 {
-
+class Core
+{
+public:
+	static void sStartup();
+};
 }
