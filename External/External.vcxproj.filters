@@ -2972,6 +2972,18 @@
     <ClInclude Include="asio.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GL\eglew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GL\glew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GL\glxew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GL\wglew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SFML\Audio\SoundFileFactory.inl">
