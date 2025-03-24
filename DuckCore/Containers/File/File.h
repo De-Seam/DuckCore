@@ -2,6 +2,7 @@
 #include <DuckCore/Containers/String.h>
 #include <DuckCore/Core/Log.h>
 #include <DuckCore/RTTI/Ref.h>
+#include <DuckCore/Utilities/Json.h>
 #include <DuckCore/Utilities/Utilities.h>
 
 #include <fstream>
