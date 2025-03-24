@@ -30,6 +30,7 @@ public:
 	void ShrinkToFit();
 
 	int Length() const { return mLength; }
+	int Capacity() const { return mCapacity; }
 	bool IsEmpty() const { return Length() == 0; }
 
 	bool IsValidIndex(int inIndex) const { return inIndex >= 0 && inIndex < Length(); }
