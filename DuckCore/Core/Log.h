@@ -33,11 +33,15 @@ void LogInternal(const RTTI& aLogCategoryRTTI, ELogLevel aLevel, const char* aMe
 template<typename taCategory>
 void Log(ELogLevel aLevel, const char* aMessage) { LogInternal(taCategory::sGetRTTI(), aLevel, aMessage); }
 void Log(ELogLevel aLevel, const char* aMessage); // Log helper function. Quickly logs something to the default category.
+template<typename taCategory>
+void Log(const char* aMessage) { Log(ELogLevel::Info, aMessage); } // Log helper function. Quickly logs something with ELogLevel::Info.
 void Log(const char* aMessage); // Log helper function. Quickly logs something to the default category with ELogLevel::Info.
 
 template<typename taCategory>
 void Log(ELogLevel aLevel, const String& aMessage) { LogInternal(taCategory::sGetRTTI(), aLevel, *aMessage); }
 inline void Log(ELogLevel aLevel, const String& aMessage) { Log(aLevel, *aMessage); } // Log helper function. Quickly logs something to the default category.
+template<typename taCategory>
+void Log(const String& aMessage) { Log<taCategory>(*aMessage); }
 inline void Log(const String& aMessage) { Log(*aMessage); }; // Log helper function. Quickly logs something to the default category with ELogLevel::Info.
 
 struct LogEntry

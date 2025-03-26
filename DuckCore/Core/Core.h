@@ -41,6 +41,6 @@ namespace DC
 class Core
 {
 public:
-	static void sStartup();
+	static void sStartup(int aArgumentCount, char* aArgumentValues[]);
 };
 }

@@ -21,6 +21,7 @@ struct Error
 class UnitTest
 {
 public:
+	virtual ~UnitTest() = default;
 	virtual void Run(Array<Error>& outErrors) = 0;
 };
 
