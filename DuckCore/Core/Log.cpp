@@ -26,13 +26,13 @@ void LogInternal(const RTTI& aLogCategoryRTTI, ELogLevel aLevel, const char* aMe
 	switch (aLevel)
 	{
 	case ELogLevel::Info:
-		entry.mMessage = String("[Info] ") + category_name + aMessage;
+		entry.mMessage = String("[Info] [") + category_name + "] " + aMessage;
 		break;
 	case ELogLevel::Warning:
-		entry.mMessage = String("[Warning] ") + category_name + aMessage;
+		entry.mMessage = String("[Warning] [") + category_name + "] " + aMessage;
 		break;
 	case ELogLevel::Error:
-		entry.mMessage = String("[Error] ") + category_name + aMessage;
+		entry.mMessage = String("[Error] [") + category_name + "] " + aMessage;
 		break;
 	}
 	entry.mCategory = &aLogCategoryRTTI;
