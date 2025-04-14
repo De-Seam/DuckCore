@@ -19,7 +19,7 @@ GUID::GUID(const char* inChars)
 {
 	uint32 parts[4] = {0};
 
-	if (sscanf_s(inChars, "%4x-%4x-%4x-%4x", &parts[0], &parts[1], &parts[2], &parts[3]) != 4)
+	if (sscanf(inChars, "%4x-%4x-%4x-%4x", &parts[0], &parts[1], &parts[2], &parts[3]) != 4)
 	{
 		gAssert(false && "Invalid GUID format!");
 		return;

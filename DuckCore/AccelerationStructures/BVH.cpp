@@ -7,19 +7,35 @@ using namespace DC;
 
 BVH::~BVH()
 {
+#ifdef __linux
+	if (mIndices != nullptr)
+		free(mIndices);
+#elif _WIN32
 	if (mIndices != nullptr)
 		_aligned_free(mIndices);
+#endif
 }
 
 void BVH::Build()
 {
+#ifdef __linux
+	if (mIndices != nullptr)
+		free(mIndices);
+#elif _WIN32
 	if (mIndices != nullptr)
 		_aligned_free(mIndices);
+#endif
 
 	mNodes.Clear();
 
 	mIndexCount = gStaticCast<uint32>(mObjects.Length());
+
+#ifdef __linux
+	posix_memalign((void**)&mIndices, (gStaticCast<size_t>(mIndexCount) + 1) * sizeof(uint32), 64);
+#elif _WIN32
 	mIndices = gStaticCast<uint32*>(_aligned_malloc((gStaticCast<size_t>(mIndexCount) + 1) * sizeof(uint32), 64));
+#endif
+
 	for (size_t i = 0; i < mObjects.Length(); i++)
 		mIndices[i] = gStaticCast<uint32>(i);
 

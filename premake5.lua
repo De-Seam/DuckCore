@@ -12,6 +12,13 @@ project "DuckCore"
     files { "DuckCore/**.h", "DuckCore/**.cpp" }
     includedirs { path.getabsolute("./") } -- Include the workspace/solution directory
 
+    filter "system:linux"
+        targetdir "Build/Out/%{prj.name}/linux_%{cfg.buildcfg}/"
+        objdir "Build/Int/%{prj.name}/linux_%{cfg.buildcfg}/"
+        defines { "SDL_VIDEO_DRIVER_X11" }  -- Define the appropriate driver for Linux
+        links { "SDL2" }  -- Link against the SDL2 library
+        includedirs { "/usr/include/SDL2" }  -- Include the SDL2 headers
+
     filter "configurations:Debug"
         defines { "DEBUG" }
 		warnings "Extra"
@@ -40,7 +47,13 @@ project "External"
     location "External"
     files { "External/**.h", "External/**.cpp" }
     includedirs { path.getabsolute("./") } -- Include the workspace/solution directory
-	links { "External" }
+
+    filter "system:linux"
+        targetdir "Build/Out/%{prj.name}/linux_%{cfg.buildcfg}/"
+        objdir "Build/Int/%{prj.name}/linux_%{cfg.buildcfg}/"
+        defines { "SDL_VIDEO_DRIVER_X11" }  -- Define the appropriate driver for Linux
+        links { "SDL2" }  -- Link against the SDL2 library
+        includedirs { "/usr/include/SDL2" }  -- Include the SDL2 headers
 
     filter "configurations:Debug"
         defines { "DEBUG" }
