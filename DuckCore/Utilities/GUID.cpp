@@ -8,10 +8,6 @@
 
 using namespace DC;
 
-static std::random_device sRandomDevice;
-static std::mt19937_64 sEngine(sRandomDevice());
-static std::uniform_int_distribution<uint64> sUniformDistribution;
-
 GUID::GUID(const String& inGUIDString)
 	: GUID(*inGUIDString) {}
 
@@ -44,6 +40,10 @@ String GUID::ToString() const
 
 GUID GUID::sCreate()
 {
+	static std::random_device sRandomDevice;
+	static std::mt19937_64 sEngine(sRandomDevice());
+	static std::uniform_int_distribution<uint64> sUniformDistribution;
+
 	GUID guid;
 	guid.mGUID = sUniformDistribution(sEngine);
 	return guid;
