@@ -6,11 +6,11 @@ project "DuckCore"
     language "C++"
     cppdialect "C++20"
     cdialect "C17"
-    targetdir "Build/Out/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
-    objdir "Build/Int/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
+    targetdir "Build/Out/%{prj.name}/%{cfg.buildcfg}/"
+    objdir "Build/Int/%{prj.name}/%{cfg.buildcfg}/"
     location "DuckCore"
     files { "DuckCore/**.h", "DuckCore/**.cpp" }
-    includedirs { path.getabsolute("./") } -- Include the workspace/solution directory
+    includedirs { path.getabsolute("./"), path.getabsolute("./") .. "/External/" }
 
     filter "configurations:Debug"
         defines { "DEBUG" }
@@ -35,12 +35,12 @@ project "External"
     language "C++"
     cppdialect "C++20"
     cdialect "C17"
-    targetdir "Build/Out/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
-    objdir "Build/Int/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
+    targetdir "Build/Out/%{prj.name}/%{cfg.buildcfg}/"
+    objdir "Build/Int/%{prj.name}/%{cfg.buildcfg}/"
     location "External"
     files { "External/**.h", "External/**.cpp" }
     includedirs { path.getabsolute("./") } -- Include the workspace/solution directory
-	links { "External" }
+	links { }
 
     filter "configurations:Debug"
         defines { "DEBUG" }
