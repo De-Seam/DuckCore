@@ -19,26 +19,26 @@ Mutex gLogFileMutex;
 
 void LogInternal(const RTTI& aLogCategoryRTTI, ELogLevel aLevel, const char* aMessage)
 {
-	String category_name = aLogCategoryRTTI.GetClassName();
-	category_name = category_name.SubStr(11, category_name.Length());
-
 	LogEntry entry;
+	entry.mMessage = aLogCategoryRTTI.GetClassName();
+	entry.mMessage = entry.mMessage.SubStr(11, entry.mMessage.Length());
+
 	switch (aLevel)
 	{
 	case ELogLevel::Info:
-		entry.mMessage = String("[Info] [") + category_name + "] " + aMessage;
+		entry.mMessage = String("[Info] [") + entry.mMessage + "] " + aMessage;
 		break;
 	case ELogLevel::Warning:
-		entry.mMessage = String("[Warning] [") + category_name + "] " + aMessage;
+		entry.mMessage = String("[Warning] [") + entry.mMessage + "] " + aMessage;
 		break;
 	case ELogLevel::Error:
-		entry.mMessage = String("[Error] [") + category_name + "] " + aMessage;
+		entry.mMessage = String("[Error] [") + entry.mMessage + "] " + aMessage;
 		break;
 	}
 	entry.mCategory = &aLogCategoryRTTI;
 	entry.mLevel = aLevel;
 
-	printf(*entry.mMessage);
+	printf("%s", *entry.mMessage);
 	printf("\n");
 
 	{

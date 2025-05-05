@@ -3,10 +3,25 @@
 #include <DuckCore/Core/Assert.h>
 #include <DuckCore/Utilities/Json.h>
 
-#pragma warning( push )
-#pragma warning( disable : 4702 )
+#ifdef _MSC_VER
+    #pragma warning(push)
+    #pragma warning(disable : 4702)
+#elif defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunreachable-code"
+#else
+    #error "Unsupported compiler"
+#endif
+
 #include <External/phmap/phmap.h>
-#pragma warning( pop )
+
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#elif defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop
+#else
+    #error "Unsupported compiler"
+#endif
 
 
 namespace DC

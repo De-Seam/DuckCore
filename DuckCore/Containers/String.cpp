@@ -5,6 +5,11 @@
 
 namespace DC
 {
+void String::Reserve(int aLength)
+{
+	mString.reserve(aLength);
+}
+
 uint64 String::Hash() const
 {
 	static std::hash<std::string> sHasher;

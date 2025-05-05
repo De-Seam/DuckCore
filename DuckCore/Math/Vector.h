@@ -10,8 +10,15 @@
 
 namespace DC
 {
-#pragma warning (push)
-#pragma warning (disable : 4201) //to avoid nameless struct / union warning.
+#ifdef _MSC_VER
+    #pragma warning(push)
+    #pragma warning(disable : 4201) //to avoid nameless struct / union warning.
+#elif defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wpedantic"
+#else
+    #error "Unsupported compiler"
+#endif
 
 template<typename taType>
 struct Vec2
@@ -480,6 +487,12 @@ extern template struct Vec4<float>;
 extern template struct Vec4<int32>;
 extern template struct Vec4<uint32>;
 
-#pragma warning (pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#elif defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop
+#else
+    #error "Unsupported compiler"
+#endif
 
 }

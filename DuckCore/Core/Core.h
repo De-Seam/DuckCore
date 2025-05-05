@@ -34,7 +34,13 @@ ws2_32.lib
 lua.lib
 */
 
-#pragma warning( disable : 4100 ) // Unreferenced formal parameter.
+#ifdef _MSC_VER
+    #pragma warning(disable : 4100) // Unreferenced formal parameter.
+#elif defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic ignored "-Wunused-parameter"
+#else
+    #error "Unsupported compiler"
+#endif
 
 namespace DC
 {

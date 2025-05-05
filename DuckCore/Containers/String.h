@@ -35,6 +35,7 @@ public:
 	const char& operator[](int inIndex) const { return mString[inIndex]; }
 
 	void Clear() { mString.clear(); }
+	void Reserve(int aLength);
 
 	bool IsEmpty() const { return mString.empty(); }
 
