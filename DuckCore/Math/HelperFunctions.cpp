@@ -26,7 +26,11 @@ float RadiansToDegrees(float aRadians)
 
 float Sqrt(float aValue)
 {
+#ifdef _WIN32
 	return std::sqrtf(aValue);
+#elif __linux__
+return std::sqrt(aValue);
+#endif
 }
 
 double Sqrt(double aValue)

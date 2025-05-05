@@ -91,7 +91,7 @@ struct Vec2
 	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
 	[[nodiscard]] float Length() const
 	{
-		return std::sqrtf(Length2());
+		return std::sqrt(Length2());
 	}
 
 	template <typename taSameType = double, typename = std::enable_if_t<std::is_same_v<taSameType, double>>>
@@ -218,7 +218,7 @@ struct Vec3
 	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
 	[[nodiscard]] float Length() const
 	{
-		return std::sqrtf(Length2());
+		return std::sqrt(Length2());
 	}
 
 	template <typename taSameType = double, typename = std::enable_if_t<std::is_same_v<taSameType, double>>>
@@ -322,7 +322,7 @@ struct alignas(4 * sizeof(taType)) Vec4
 	template <typename taSameType = float, typename = std::enable_if_t<std::is_same_v<taSameType, float>>>
 	[[nodiscard]] float Length() const
 	{
-		return std::sqrtf(Length2());
+		return std::sqrt(Length2());
 	}
 
 	template <typename taSameType = double, typename = std::enable_if_t<std::is_same_v<taSameType, double>>>

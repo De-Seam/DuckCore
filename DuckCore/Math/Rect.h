@@ -38,7 +38,7 @@ struct Rect2D
 	template<typename taOtherType>
 	Rect2D<taOtherType> As()
 	{
-		return Rect2D(mBottomLeft.As<taOtherType>(), mWidthHeight.As<taOtherType>());
+		return Rect2D(mBottomLeft.template As<taOtherType>(), mWidthHeight.template As<taOtherType>());
 	}
 
 	AABB<taType> ToAABB() const

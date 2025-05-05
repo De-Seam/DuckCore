@@ -1,7 +1,7 @@
 #include <DuckCore/Core/Types.h>
 
 #include <cfloat>
-#include <corecrt_math.h>
+#include <cmath> 
 
 float gFloatMax()
 {

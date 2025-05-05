@@ -226,12 +226,7 @@ public:
 	[[deprecated]] // use Ref() instead.
 	Ref<taType> Get()
 	{
-		return Ref();
-	}
-
-	Ref<taType> Ref()
-	{
-	    gAssert(IsAlive() && "Can't make a reference if it isn't alive anymore. Check IsAlive() first");
+		gAssert(IsAlive() && "Can't make a reference if it isn't alive anymore. Check IsAlive() first");
 		return mPtr;
 	}
 

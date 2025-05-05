@@ -74,5 +74,4 @@ private: \
 		&inBaseClassName::sGetRTTI() \
 	);
 
-#define RTTI_CLASS(inClassName, inBaseClassName) \
-RTTI_CLASS_DECLARATION_BASE(inClassName, inBaseClassName)
+#define RTTI_CLASS(inClassName, inBaseClassName) RTTI_CLASS_DECLARATION_BASE(inClassName, inBaseClassName)
