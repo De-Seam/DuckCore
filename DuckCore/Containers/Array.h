@@ -282,7 +282,7 @@ template<typename taType>
 void Array<taType>::SwapRemove(int inIndex)
 {
 	gAssert(IsValidIndex(inIndex));
-	gSwap(mData[inIndex], Back());
+	Swap(mData[inIndex], Back());
 	PopBack();
 }
 

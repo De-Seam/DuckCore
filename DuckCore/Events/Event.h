@@ -18,7 +18,6 @@ class WindowCloseEvent : public WindowEvent
 	RTTI_CLASS(inClassName, inBaseClassName) \
 	inline static const DC::EventTypeID sManagerTypeID = DC::EventTypeID::sNew();
 
-
 namespace DC
 {
 using EventTypeID = TypeID<class Event>;

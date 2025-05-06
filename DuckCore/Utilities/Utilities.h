@@ -12,7 +12,7 @@ template<typename T>
 }
 
 template<typename taType>
-void gSwap(taType& inA, taType& inB)
+void Swap(taType& inA, taType& inB)
 {
 	taType temp = Move(inA);
 	inA = Move(inB);
