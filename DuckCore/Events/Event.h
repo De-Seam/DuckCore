@@ -1,5 +1,6 @@
 #pragma once
 #include <DuckCore/RTTI/RTTIClass.h>
+#include <DuckCore/Utilities/TypeID.h>
 
 /*
 Example usage:
@@ -15,7 +16,7 @@ class WindowCloseEvent : public WindowEvent
 */
 #define RTTI_EVENT(inClassName, inBaseClassName) \
 	RTTI_CLASS(inClassName, inBaseClassName) \
-	inline static const EventTypeID sManagerTypeID = EventTypeID::sNew();
+	inline static const DC::EventTypeID sManagerTypeID = DC::EventTypeID::sNew();
 
 
 namespace DC
