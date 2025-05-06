@@ -78,10 +78,12 @@ GENERATED += $(OBJDIR)/Assert.o
 GENERATED += $(OBJDIR)/BVH.o
 GENERATED += $(OBJDIR)/CommandLineArgumentsManager.o
 GENERATED += $(OBJDIR)/Core.o
+GENERATED += $(OBJDIR)/EventHandle.o
 GENERATED += $(OBJDIR)/EventManager.o
 GENERATED += $(OBJDIR)/File.o
 GENERATED += $(OBJDIR)/GUID.o
 GENERATED += $(OBJDIR)/HelperFunctions.o
+GENERATED += $(OBJDIR)/IEventListener.o
 GENERATED += $(OBJDIR)/Intersects.o
 GENERATED += $(OBJDIR)/Log.o
 GENERATED += $(OBJDIR)/Mutex.o
@@ -103,10 +105,12 @@ OBJECTS += $(OBJDIR)/Assert.o
 OBJECTS += $(OBJDIR)/BVH.o
 OBJECTS += $(OBJDIR)/CommandLineArgumentsManager.o
 OBJECTS += $(OBJDIR)/Core.o
+OBJECTS += $(OBJDIR)/EventHandle.o
 OBJECTS += $(OBJDIR)/EventManager.o
 OBJECTS += $(OBJDIR)/File.o
 OBJECTS += $(OBJDIR)/GUID.o
 OBJECTS += $(OBJDIR)/HelperFunctions.o
+OBJECTS += $(OBJDIR)/IEventListener.o
 OBJECTS += $(OBJDIR)/Intersects.o
 OBJECTS += $(OBJDIR)/Log.o
 OBJECTS += $(OBJDIR)/Mutex.o
@@ -206,7 +210,13 @@ $(OBJDIR)/Log.o: Core/Log.cpp
 $(OBJDIR)/Types.o: Core/Types.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/EventHandle.o: Events/EventHandle.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/EventManager.o: Events/EventManager.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/IEventListener.o: Events/IEventListener.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/CommandLineArgumentsManager.o: Managers/CommandLineArgumentsManager.cpp

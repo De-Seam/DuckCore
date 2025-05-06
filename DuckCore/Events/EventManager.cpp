@@ -2,11 +2,6 @@
 
 namespace DC
 {
-EventHandle::~EventHandle()
-{
-    mEventManager.UnregisterEventHandle(*this);
-}
-
 void EventManager::UnregisterEventHandle(const EventHandle& inEventHandle)
 {
 	ScopedMutexRecursiveLock lock(mMutex);

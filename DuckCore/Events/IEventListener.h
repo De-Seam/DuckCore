@@ -1,20 +1,24 @@
 #pragma once
 #include <DuckCore/Containers/Array.h>
+#include <DuckCore/Containers/UniquePtr.h>
+#include <DuckCore/Events/EventHandle.h>
 #include <DuckCore/Events/EventManager.h>
 #include <DuckCore/Managers/Managers.h>
 
 namespace DC
 {
-class EventHandle;
-
 class IEventListener
 {
+public:
+    IEventListener();
+    virtual ~IEventListener();
+
 protected:
     template <typename tEventType>
     void RegisterEventListener(std::function<void(tEventType&)> aFunction);
 
 private:
-    DC::Array<EventHandle*> mRegisteredEventHandles;
+    DC::Array<UniquePtr<EventHandle>> mRegisteredEventHandles;
 };
 
 template <typename tEventType>
