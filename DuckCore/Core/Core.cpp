@@ -15,7 +15,9 @@ void Core::sStartup(int aArgumentCount, char* aArgumentValues[])
 	Managers::sAdd(new CommandLineArgumentsManager(aArgumentCount, aArgumentValues));
 	Managers::sAdd(new EventManager);
 
+#ifndef _SHIP
 	if (Get<CommandLineArgumentsManager>().HasArgument("enable_unit_tests"))
 		UnitTests::RunAllTests();
+#endif
 }
 }

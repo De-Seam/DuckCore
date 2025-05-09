@@ -1,5 +1,7 @@
 #include <DuckCore/UnitTests/UnitTests.h>
 
+#ifndef _SHIP
+
 #include <DuckCore/Containers/Array.h>
 #include <DuckCore/Containers/UniquePtr.h>
 #include <DuckCore/UnitTests/Containers/Array.h>
@@ -36,3 +38,5 @@ ETestResult RunAllTests()
 
 }
 }
+
+#endif

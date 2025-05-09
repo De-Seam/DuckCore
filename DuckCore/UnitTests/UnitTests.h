@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _SHIP
+
 #include <DuckCore/Core/Types.h>
 
 namespace DC
@@ -15,3 +17,5 @@ ETestResult RunAllTests();
 
 }
 }
+
+#endif

@@ -6,11 +6,16 @@ project "DuckCore"
     language "C++"
     cppdialect "C++20"
     cdialect "C17"
-    targetdir "Build/Out/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
-    objdir "Build/Int/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
-    location "DuckCore"
+    targetdir "%{wks.location}/Build/Out/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
+    objdir "%{wks.location}/Build/Int/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
     files { "DuckCore/**.h", "DuckCore/**.cpp" }
     includedirs { path.getabsolute("./") } -- Include the workspace/solution directory
+	location "DuckCore"
+	flags { "MultiProcessorCompile" }
+	warnings "Extra"
+
+	filter "system:windows"
+           buildoptions { "/MP", "/W4" }  -- Enable multi-processor and set warning level to 4
 
     filter "system:linux"
         targetdir "Build/Out/%{prj.name}/linux_%{cfg.buildcfg}/"
@@ -20,20 +25,16 @@ project "DuckCore"
         includedirs { "/usr/include/SDL2" }  -- Include the SDL2 headers
 
     filter "configurations:Debug"
-        defines { "DEBUG" }
-		warnings "Extra"
-        symbols "On"
-		flags { "MultiProcessorCompile" }
-        filter "system:windows"
-            buildoptions { "/MP", "/W4" }  -- Enable multi-processor and set warning level to 4
+        defines { "_DEBUG" }
+		symbols "On"
 
     filter "configurations:Release"
         defines { "NDEBUG" }
-		warnings "Extra"
-        optimize "On"
-		flags { "MultiProcessorCompile" }
-        filter "system:windows"
-            buildoptions { "/MP", "/W4" }  -- Enable multi-processor and set warning level to 4
+		optimize "On"
+			
+	filter "configurations:Ship"
+        defines { "_SHIP" }
+		optimize "On"
 			
 --- External project
 
@@ -42,11 +43,16 @@ project "External"
     language "C++"
     cppdialect "C++20"
     cdialect "C17"
-    targetdir "Build/Out/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
-    objdir "Build/Int/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
-    location "External"
+    targetdir "%{wks.location}/Build/Out/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
+    objdir "%{wks.location}/Build/Int/%{prj.name}/%{plat}_%{cfg.buildcfg}/"
     files { "External/**.h", "External/**.cpp" }
     includedirs { path.getabsolute("./") } -- Include the workspace/solution directory
+	location "DuckCore"
+	flags { "MultiProcessorCompile" }
+	warnings "Extra"
+
+	filter "system:windows"
+           buildoptions { "/MP", "/W4" }  -- Enable multi-processor and set warning level to 4
 
     filter "system:linux"
         targetdir "Build/Out/%{prj.name}/linux_%{cfg.buildcfg}/"
@@ -56,17 +62,13 @@ project "External"
         includedirs { "/usr/include/SDL2" }  -- Include the SDL2 headers
 
     filter "configurations:Debug"
-        defines { "DEBUG" }
-		warnings "Extra"
-        symbols "On"
-		flags { "MultiProcessorCompile" }
-        filter "system:windows"
-            buildoptions { "/MP", "/W4" }  -- Enable multi-processor and set warning level to 4
+        defines { "_DEBUG" }
+		symbols "On"
 
     filter "configurations:Release"
         defines { "NDEBUG" }
-		warnings "Extra"
-        optimize "On"
-		flags { "MultiProcessorCompile" }
-        filter "system:windows"
-            buildoptions { "/MP", "/W4" }  -- Enable multi-processor and set warning level to 4
+		optimize "On"
+			
+	filter "configurations:Ship"
+        defines { "_SHIP" }
+		optimize "On"
