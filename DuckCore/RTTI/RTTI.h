@@ -7,9 +7,10 @@ namespace DC
 {
 class String;
 
-using RTTITypeID = TypeID<class RTTIClass>;
+template <typename tType>
+void RegisterClass() { tType::sGetRTTI(); }
 
-class RTTIClass;
+using RTTITypeID = TypeID<class RTTIClass>;
 
 // RTTI are static per RTTI type. They are used to identify the type of a class
 class RTTI

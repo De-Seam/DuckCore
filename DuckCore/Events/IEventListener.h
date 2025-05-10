@@ -18,7 +18,7 @@ protected:
     void RegisterEventListener(std::function<void(tEventType&)> aFunction);
 
 private:
-    DC::Array<UniquePtr<EventHandle>> mRegisteredEventHandles;
+    Array<UniquePtr<EventHandle>> mRegisteredEventHandles;
 };
 
 template <typename tEventType>
