@@ -12,7 +12,6 @@ public:
 	virtual const RTTI& GetRTTI() const { return sRTTI; }
 	virtual RTTI& GetRTTI() { return sRTTI; }
 	static RTTI& sGetRTTI() { return sRTTI; }
-	static RTTIClass* sNewInstance() { return new RTTIClass; }
 
 	template<typename taType>
 	bool IsA() const;

@@ -22,6 +22,7 @@ public:
 	operator const std::string& () const { return mString; }
 
 	bool operator==(const String& inOther) const { return mString == inOther.mString; }
+	bool operator==(const char* inOther) const { return mString == inOther; }
 
 	String operator+(const String& inOther) const { return {mString + inOther.mString}; }
 	String operator+(const char* inOther) const { return {mString + inOther}; }

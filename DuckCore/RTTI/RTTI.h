@@ -5,6 +5,7 @@
 
 namespace DC
 {
+class String;
 
 using RTTITypeID = TypeID<class RTTIClass>;
 
@@ -31,6 +32,9 @@ public:
 	const RTTI* GetBaseClassRTTI() const { return mBaseClassRTTI; }
 
 	const RTTITypeID& GetTypeID() const { return mTypeID; }
+
+	static const RTTI* sFindRTTI(const String& aClassName);
+	static const RTTI& sGetRTTI(const String& aClassName);
 
 private:
 	const char* mClassName = nullptr;
