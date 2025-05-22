@@ -6,15 +6,15 @@
 Example usage:
 class WindowEvent : public Event
 {
-	RTTI_EVENT(WindowEvent, Event)
+	RTTI_EVENT_CLASS(WindowEvent, Event)
 };
 
 class WindowCloseEvent : public WindowEvent
 {
-	RTTI_EVENT(WindowCloseEvent, WindowEvent)
+	RTTI_EVENT_CLASS(WindowCloseEvent, WindowEvent)
 };
 */
-#define RTTI_EVENT(inClassName, inBaseClassName) \
+#define RTTI_EVENT_CLASS(inClassName, inBaseClassName) \
 	RTTI_CLASS(inClassName, inBaseClassName) \
 	inline static const DC::EventTypeID sManagerTypeID = DC::EventTypeID::sNew();
 
@@ -30,6 +30,6 @@ public:
 
 class ShutdownEvent : public Event
 {
-	RTTI_EVENT(ShutdownEvent, Event)
+	RTTI_EVENT_CLASS(ShutdownEvent, Event)
 };
 }
