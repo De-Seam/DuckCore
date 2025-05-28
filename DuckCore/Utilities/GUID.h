@@ -31,10 +31,12 @@ public:
 	static GUID sCreate();
 	static GUID sCombine(const GUID& inA, const GUID& inB, int inSalt = 0);
 
-	static GUID sNone() { return GUID(); }
+	static GUID sNone() { return {}; }
 
 	virtual Json ToJson() const;
 	virtual void FromJson(const Json& inJson);
+
+	int HashToInt() const;
 
 private:
 	uint64 mGUID = 0;

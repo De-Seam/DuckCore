@@ -66,3 +66,12 @@ void GUID::FromJson(const Json& inJson)
 	String guid_string = inJson.get<String>();
 	*this = GUID(guid_string);
 }
+
+int GUID::HashToInt() const
+{
+	// By XOR-ing the two 32 bit halves of the GUID we get a pseudo-hashed 32-bit number which we can reinterpret to an integer.
+	uint32* guid_value_halves = gReinterpretCast<uint32*>(&mGUID);
+	uint32 id_uint = guid_value_halves[0] ^ guid_value_halves[1];
+	int id = *gReinterpretCast<int*>(&id_uint);
+	return id;
+}
