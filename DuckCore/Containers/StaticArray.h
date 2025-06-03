@@ -54,9 +54,19 @@ private:
 template<typename taType, int taSize>
 StaticArray<taType, taSize>::StaticArray(std::initializer_list<taType> aList)
 {
-	gAssert(aList.size() == Length(), "Initializer list should be of the same length as the static array. Otherwise it should not be used, to prevent uninitialized memory.");
-	for (int i = 0; i < Length(); i++)
-		mData[i] = *(aList.begin() + i);
+	gAssert(aList.size() == Length() || aList.size() == 1, "Initializer list should be of the same length as the static array, or 1. Otherwise it should not be used, to prevent uninitialized memory.");
+	if (aList.size() == 1)
+	{
+		// Fill the array with the value.
+		for (int i = 0; i < Length(); i++)
+			mData[i] = *aList.begin();
+	}
+	else
+	{
+		// FIll the array with the values.
+		for (int i = 0; i < Length(); i++)
+			mData[i] = *(aList.begin() + i);
+	}
 }
 
 template<typename taType, int taSize>
