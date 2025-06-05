@@ -6,8 +6,8 @@
 
 namespace DC
 {
-File::File(const Json& aJson) :
-	File(aJson.get<String>(), 0)
+File::File(const Json& aJson, Flags aFlags) :
+	File(aJson.get<String>(), aFlags)
 {}
 
 Json File::ToJson() const
@@ -24,7 +24,12 @@ void File::Load()
 	mContents = "";
 
 	if (!mFile.is_open())
-		mFile.open(*mPath, std::fstream::in | std::fstream::out | std::fstream::trunc);
+	{
+		std::ios_base::openmode open_mode = std::fstream::out | std::fstream::trunc;
+		if (!IsReadOnly())
+			open_mode |= std::fstream::in;
+		mFile.open(*mPath, open_mode);
+	}
 
 	if (!mFile.is_open())
 	{
@@ -44,7 +49,11 @@ void File::WriteToDisk()
 	
 	if (!mFile.is_open())
 	{
-		mFile.open(*mPath, std::fstream::in | std::fstream::out | std::fstream::trunc);
+		std::ios_base::openmode open_mode = std::fstream::in | std::fstream::trunc;
+		if (!IsWriteOnly())
+			open_mode |= std::fstream::out;
+
+		mFile.open(*mPath, open_mode);
 		if (!mFile.is_open())
 		{
 			// If we failed to create the file, try to create the directory first.

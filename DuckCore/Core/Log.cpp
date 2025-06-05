@@ -54,7 +54,11 @@ void LogInternal(const RTTI& aLogCategoryRTTI, ELogLevel aLevel, const char* aMe
 	lock.SetLockedMutex(gLogFileMutex);
 
 	if (gLogFile == nullptr)
-		gLogFile = new TextFile("Logs/log.txt", (uint8)File::EFlags::KeepOpen);
+	{
+		File::Flags flags;
+		flags.SetFlag<File::FKeepOpen>(true);
+		gLogFile = new TextFile("Logs/log.txt", flags);
+	}
 	gLogFile->GetContentsForWriting() += entry.mMessage + "\n";
 	gLogFile->WriteToDisk();
 }

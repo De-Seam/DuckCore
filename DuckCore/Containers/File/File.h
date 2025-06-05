@@ -1,4 +1,5 @@
 #pragma once
+#include <DuckCore/Containers/BitFlags.h>
 #include <DuckCore/Containers/String.h>
 #include <DuckCore/Core/Log.h>
 #include <DuckCore/RTTI/Ref.h>
@@ -14,15 +15,13 @@ class LogCategoryFile final : public LogCategory {};
 class File : public RefClass
 {
 public:
-	enum class EFlags : uint8
-	{
-		KeepOpen = 1 << 0, // Keep the file open after loading it.
-		ReadOnly = 1 << 1, // Open the file in read-only mode.
-		WriteOnly = 1 << 2, // Open the file in write-only mode.
-	};
+	class FKeepOpen {}; // Keep the file open after loading it.
+	class FReadOnly {}; // Only allow reading from the file.
+	class FWriteOnly {}; // Only allow writing to the file.
+	using Flags = BitFlags<FKeepOpen, FReadOnly, FWriteOnly>;
 
-	explicit File(String aPath, uint8 aFlags = 0) : mPath(Move(aPath)), mFlags(aFlags) {}
-	explicit File(const Json& aJson);
+	explicit File(String aPath, Flags aFlags = {}) : mPath(Move(aPath)), mFlags(aFlags) {}
+	explicit File(const Json& aJson, Flags aFlags = {});
 	Json ToJson() const;
 
 	virtual void Load(); // Loads mContents from mPath. This will clear potentially existing content.
@@ -36,9 +35,9 @@ public:
 
 	String& GetContentsForWriting() { return mContents; }
 
-	bool ShouldKeepFileOpen() const { return (uint8)mFlags & (uint8)EFlags::KeepOpen; }
-	bool IsReadOnly() const { return (uint8)mFlags & (uint8)EFlags::ReadOnly; }
-	bool IsWriteOnly() const { return (uint8)mFlags & (uint8)EFlags::WriteOnly; }
+	bool ShouldKeepFileOpen() const { return mFlags.GetFlag<FKeepOpen>();}
+	bool IsReadOnly() const { return mFlags.GetFlag<FReadOnly>(); }
+	bool IsWriteOnly() const { return mFlags.GetFlag<FWriteOnly>(); }
 
 protected:
 	String GetFileExtension() const; // Get the file extension of mPath. This is without the dot. So, "png", not ".png".
@@ -49,6 +48,6 @@ private:
 	std::fstream mFile;
 
 	String mPath;
-	uint8 mFlags = 0;
+	Flags mFlags;
 };
 }

@@ -38,13 +38,16 @@ class BitFlags {
 	static_assert(IsUnique<tType...>::value, "BitFlags requires all flag types to be unique.");
 
 public:
+	BitFlags() = default;
+	BitFlags(std::initializer_list<bool> aList)
+	{
+		for (int i = 0; i < gStaticCast<int>(aList.size()); i++)
+			SetFlag(i, *(aList.begin() + i));
+	}
+
 	static constexpr size_t cCount = sizeof...(tType);
 	static constexpr size_t cStorageSize = (cCount + 7) / 8;
 
-private:
-	StaticArray<uint8, cStorageSize> mFlags { 0 };
-
-public:
 	template <typename T>
 	bool GetFlag() const
 	{
@@ -54,14 +57,19 @@ public:
 	}
 
 	template <typename T>
-	void SetFlag(bool value)
+	void SetFlag(bool aValue)
 	{
 		static_assert(Contains<T, tType...>::value, "tType must be one of the BitFlags types.");
 		constexpr size_t index = IndexOf<T, tType...>::cValue; // <-- Full template parameter list!
-		if (value)
-			mFlags[index / 8] |= (1 << (index % 8));
+		SetFlag((int)index, aValue);
+	}
+
+	void SetFlag(int aIndex, bool aValue)
+	{
+		if (aValue)
+			mFlags[aIndex / 8] |= (1 << (aIndex % 8));
 		else
-			mFlags[index / 8] &= ~(1 << (index % 8));
+			mFlags[aIndex / 8] &= ~(1 << (aIndex % 8));
 	}
 
 	template <typename T>
@@ -71,6 +79,9 @@ public:
 		constexpr size_t index = IndexOf<T, tType...>::cValue;
 		mFlags[index / 8] ^= (1 << (index % 8));
 	}
+
+private:
+	StaticArray<uint8, cStorageSize> mFlags { 0 };
 };
 
 }
