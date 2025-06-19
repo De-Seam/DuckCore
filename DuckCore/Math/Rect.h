@@ -31,7 +31,7 @@ struct Rect2D
 		};
 	};
 
-	Rect2D() = default;
+	Rect2D() : mX(0.0f), mY(0.0f), mWidth(0.0f), mHeight(0.0f) {}
 	Rect2D(const Vec2<taType>& inBottomLeft, const Vec2<taType>& inWidthHeight) :
 		mBottomLeft(inBottomLeft),
 		mWidthHeight(inWidthHeight)
@@ -40,7 +40,7 @@ struct Rect2D
 		mBottomLeft(inX, inY),
 		mWidthHeight(inWidth, inHeight)
 	{}
-	Rect2D(const Rect2D& inOther) = default;
+	Rect2D(const Rect2D<taType>& inOther) : mBottomLeft(inOther.mBottomLeft), mWidthHeight(inOther.mWidthHeight) {}
 
 	template<typename taOtherType>
 	Rect2D<taOtherType> As()
