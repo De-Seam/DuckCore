@@ -10,7 +10,7 @@ class LogCategoryAsserts final : public LogCategory
 	RTTI_CLASS(LogCategoryAsserts, LogCategory)
 };
 
-void gLogAssert(const String& aMessage)
+void LogAssert(const String& aBase, const String& aMessage)
 {
-	Log(ELogLevel::Error, aMessage);
+	Log(ELogLevel::Error, aBase + aMessage);
 }
