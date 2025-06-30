@@ -14,6 +14,7 @@ class RefClass : public NoCopy, public NoMove
 public:
 	virtual ~RefClass()
 	{
+		gAssert(mRefCount == 0);
 		if (mWeakRefCounter != nullptr)
 		{
 			mWeakRefCounter->mIsAlive = false;
