@@ -73,19 +73,20 @@ uint UIntFromString(const String& aValue);
 float FloatFromString(const String& aValue);
 double DoubleFromString(const String& aValue);
 
-template<typename taType>
-taType FromString(const String& aValue)
+template<typename tType>
+tType FromString(const String& aValue)
 {
-	if constexpr (std::is_same_v<taType, int>)
+	if constexpr (std::is_same_v<tType, int>)
 		return IntFromString(aValue);
-	else if constexpr (std::is_same_v<taType, uint>)
+	else if constexpr (std::is_same_v<tType, uint>)
 		return UIntFromString(aValue);
-	else if constexpr (std::is_same_v<taType, float>)
+	else if constexpr (std::is_same_v<tType, float>)
 		return FloatFromString(aValue);
-	else if constexpr (std::is_same_v<taType, double>)
+	else if constexpr (std::is_same_v<tType, double>)
 		return DoubleFromString(aValue);
 	else
-		static_assert(false, "Unsupported type for FromString");
+		// We use sizeof(tType) == 0 as an "always false", because if we just write false we don't use tType, and it will always fail.
+		static_assert(sizeof(tType) == 0, "Unsupported type for FromString");
 	return {};
 }
 
