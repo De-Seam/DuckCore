@@ -15,32 +15,32 @@
 namespace DC
 {
 
-template<typename taType>
+template<typename tType>
 struct Rect2D
 {
 	union
 	{
 		struct
 		{
-			taType mX, mY, mWidth, mHeight;
+			tType mX, mY, mWidth, mHeight;
 		};
 		struct
 		{
-			Vec2<taType> mBottomLeft;
-			Vec2<taType> mWidthHeight;
+			Vec2<tType> mBottomLeft;
+			Vec2<tType> mWidthHeight;
 		};
 	};
 
-	Rect2D() : mX(0.0f), mY(0.0f), mWidth(0.0f), mHeight(0.0f) {}
-	Rect2D(const Vec2<taType>& inBottomLeft, const Vec2<taType>& inWidthHeight) :
+	Rect2D() : mX(gStaticCast<tType>(0)), mY(gStaticCast<tType>(0)), mWidth(gStaticCast<tType>(0)), mHeight(gStaticCast<tType>(0)) {}
+	Rect2D(const Vec2<tType>& inBottomLeft, const Vec2<tType>& inWidthHeight) :
 		mBottomLeft(inBottomLeft),
 		mWidthHeight(inWidthHeight)
 	{}
-	Rect2D(taType inX, taType inY, taType inWidth, taType inHeight) :
+	Rect2D(tType inX, tType inY, tType inWidth, tType inHeight) :
 		mBottomLeft(inX, inY),
 		mWidthHeight(inWidth, inHeight)
 	{}
-	Rect2D(const Rect2D<taType>& inOther) : mBottomLeft(inOther.mBottomLeft), mWidthHeight(inOther.mWidthHeight) {}
+	Rect2D(const Rect2D<tType>& inOther) : mBottomLeft(inOther.mBottomLeft), mWidthHeight(inOther.mWidthHeight) {}
 
 	template<typename taOtherType>
 	Rect2D<taOtherType> As()
@@ -48,7 +48,7 @@ struct Rect2D
 		return Rect2D(mBottomLeft.template As<taOtherType>(), mWidthHeight.template As<taOtherType>());
 	}
 
-	AABB<taType> ToAABB() const
+	AABB<tType> ToAABB() const
 	{
 		return
 		{
