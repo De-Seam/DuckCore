@@ -17,7 +17,7 @@ void SetCurrentThreadAsMainThread()
 int GetThreadID()
 {
 	static Atomic<int> sNextThreadID = 0;
-	static thread_local int sThreadID = sNextThreadID++;
+	static thread_local int sThreadID = sNextThreadID.fetch_add(1, std::memory_order_relaxed);
 
 	return sThreadID;
 }
