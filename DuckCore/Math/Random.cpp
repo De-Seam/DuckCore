@@ -14,7 +14,7 @@ uint32 WangHash(uint32 inSeed)
 
 float WangHashF(uint32 inSeed)
 {
-	return gStaticCast<float>(WangHash(inSeed)) * (1.0f / 4294967296.0f);
+	return StaticCast<float>(WangHash(inSeed)) * (1.0f / 4294967296.0f);
 }
 
 uint32 XorShift32(uint32* ioState)
@@ -29,7 +29,7 @@ uint32 XorShift32(uint32* ioState)
 
 float XorShift32F(uint32* ioState)
 {
-	return gStaticCast<float>(XorShift32(ioState)) * (1.0f / 4294967296.0f);
+	return StaticCast<float>(XorShift32(ioState)) * (1.0f / 4294967296.0f);
 }
 
 uint32 Hash(const String& aString)
@@ -39,7 +39,7 @@ uint32 Hash(const String& aString)
 	for (int i = 0; i < aString.Length(); i++)
 	{
 		char character = aString[i];
-        hash ^= gStaticCast<uint32>(character);
+        hash ^= StaticCast<uint32>(character);
         hash ^= (hash << 13);
         hash ^= (hash >> 17);
         hash ^= (hash << 5);
@@ -53,7 +53,7 @@ uint32 Hash(const char* aString)
 
 	for (const char* character = aString; *character != '\0'; character++) 
 	{
-		hash ^= gStaticCast<uint32>(*character);
+		hash ^= StaticCast<uint32>(*character);
 		hash ^= (hash << 13);
 		hash ^= (hash >> 17);
 		hash ^= (hash << 5);

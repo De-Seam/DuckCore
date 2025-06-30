@@ -54,7 +54,7 @@ public:
 	int FindFirstCharOccurence(char inChar) const; // Find the index of the first time this char appeared in the string, or -1 if none
 	int FindLastCharOccurence(char inChar) const; // Find the index of the last time this char appeared in the string, or -1 if none
 
-	int Length() const { return gStaticCast<int>(mString.length()); }
+	int Length() const { return StaticCast<int>(mString.length()); }
 
 	Json ToJson() const;
 	void FromJson(const Json& inJson);

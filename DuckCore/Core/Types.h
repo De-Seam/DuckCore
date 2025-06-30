@@ -14,54 +14,54 @@ using uint64 = uint64_t;
 using uint = unsigned int;
 using byte = uint8_t;
 
-float gFloatMax(); // 3.402823466e+38F
-float gFloatMin(); // 1.175494351e-38F
-float gFloatEpsilon(); // 1.192092896e-07F
-float gFloatInfinity();
+float FloatMax(); // 3.402823466e+38F
+float FloatMin(); // 1.175494351e-38F
+float FloatEpsilon(); // 1.192092896e-07F
+float FloatInfinity();
 
-double gDoubleMax();
-double gDoubleMin();
-double gDoubleEpsilon();
-double gDoubleInfinity();
+double DoubleMax();
+double DoubleMin();
+double DoubleEpsilon();
+double DoubleInfinity();
 
-int8 gInt8Max(); // 127
-int8 gInt8Min(); // -128
-int16 gInt16Max(); // 32767
-int16 gInt16Min(); // 32768
-int32 gInt32Max(); // 2147483647
-int32 gInt32Min(); // 2147483648
-int64 gInt64Max(); // 9223372036854775807
-int64 gInt64Min(); // 9223372036854775808
+int8 Int8Max(); // 127
+int8 Int8Min(); // -128
+int16 Int16Max(); // 32767
+int16 Int16Min(); // -32768
+int32 Int32Max(); // 2147483647
+int32 Int32Min(); // -2147483648
+int64 Int64Max(); // 9223372036854775807
+int64 Int64Min(); // -9223372036854775808
 
-uint8 gUInt8Max(); // 255
-uint8 gUInt8Min(); // 0
-uint16 gUInt16Max(); // 65535
-uint16 gUInt16Min(); // 0
-uint32 gUInt32Max(); // 4294967295
-uint32 gUInt32Min(); // 0
-uint64 gUInt64Max(); // 18446744073709551615
-uint64 gUInt64Min(); // 0
+uint8 UInt8Max(); // 255
+uint8 UInt8Min(); // 0
+uint16 UInt16Max(); // 65535
+uint16 UInt16Min(); // 0
+uint32 UInt32Max(); // 4294967295
+uint32 UInt32Min(); // 0
+uint64 UInt64Max(); // 18446744073709551615
+uint64 UInt64Min(); // 0
 
-template<typename taCastType>
-taCastType gStaticCast(auto&& inItem)
+template <typename tCastType>
+tCastType StaticCast(auto&& inItem)
 {
-	return static_cast<taCastType>(inItem);
+	return static_cast<tCastType>(inItem);
 }
 
-template<typename taCastType>
-taCastType gSCast(auto&& inItem)
+template <typename tCastType>
+tCastType SCast(auto&& inItem)
 {
-	return static_cast<taCastType>(inItem);
+	return static_cast<tCastType>(inItem);
 }
 
-template<typename taCastType>
-taCastType gReinterpretCast(auto&& inItem)
+template <typename tCastType>
+tCastType ReinterpretCast(auto&& inItem)
 {
-	return reinterpret_cast<taCastType>(inItem);
+	return reinterpret_cast<tCastType>(inItem);
 }
 
-template<typename taCastType>
-taCastType gRCast(auto&& inItem)
+template <typename tCastType>
+tCastType RCast(auto&& inItem)
 {
-	return reinterpret_cast<taCastType>(inItem);
+	return reinterpret_cast<tCastType>(inItem);
 }

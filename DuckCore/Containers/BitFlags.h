@@ -41,7 +41,7 @@ public:
 	BitFlags() = default;
 	BitFlags(std::initializer_list<bool> aList)
 	{
-		for (int i = 0; i < gStaticCast<int>(aList.size()); i++)
+		for (int i = 0; i < StaticCast<int>(aList.size()); i++)
 			SetFlag(i, *(aList.begin() + i));
 	}
 

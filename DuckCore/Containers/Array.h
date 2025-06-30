@@ -175,7 +175,7 @@ void Array<taType>::Reserve(int aCapacity)
 	if (aCapacity <= mCapacity)
 		return;
 
-	taType* new_data = gStaticCast<taType*>(malloc(aCapacity * sizeof(taType)));
+	taType* new_data = StaticCast<taType*>(malloc(aCapacity * sizeof(taType)));
 	gAssert(new_data != nullptr);
 
 	// Move-construct existing elements into new memory
@@ -206,7 +206,7 @@ void Array<taType>::ShrinkToFit()
 		return;
 	}
 
-	taType* new_data = gStaticCast<taType*>(malloc(mLength * sizeof(taType)));
+	taType* new_data = StaticCast<taType*>(malloc(mLength * sizeof(taType)));
 
 	// Move-construct existing elements into new memory
 	for (int i = 0; i < mLength; i++)

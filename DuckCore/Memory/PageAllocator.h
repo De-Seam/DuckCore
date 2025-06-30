@@ -23,7 +23,7 @@ private:
 	public:
 		explicit MemoryPage(int aCount)
 		{
-			mData = gReinterpretCast<Element*>(malloc(aCount * sizeof(Element)));
+			mData = ReinterpretCast<Element*>(malloc(aCount * sizeof(Element)));
 			for (int i = 0; i < aCount; i++)
 			{
 				int next_element = i + 1;
@@ -85,7 +85,7 @@ private:
 		Element* mFirstFreeElement = nullptr; // Points to the first Element in mData that's free, or nullptr if none.
 	};
 
-	static int sGetCountForIndex(int aIndex) { const int count = gStaticCast<int>(gStaticCast<float>(aIndex) * sMemoryPageCountMultiplier); return count > 0 ? count : 1; }
+	static int sGetCountForIndex(int aIndex) { const int count = StaticCast<int>(StaticCast<float>(aIndex) * sMemoryPageCountMultiplier); return count > 0 ? count : 1; }
 
 	inline static Array<MemoryPage> sMemoryPages;
 	inline static Mutex sMutex;

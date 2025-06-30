@@ -35,7 +35,7 @@ private:
 template<typename taEventType>
 UniquePtr<EventHandle> EventManager::RegisterEventListener(std::function<void(taEventType&)> inFunction)
 {
-	UniquePtr<EventHandle> handle = MakeUnique<EventHandle>([inFunction](void* inArgument) { inFunction(*gReinterpretCast<taEventType*>(inArgument)); }, taEventType::sGetRTTI(), *this);
+	UniquePtr<EventHandle> handle = MakeUnique<EventHandle>([inFunction](void* inArgument) { inFunction(*ReinterpretCast<taEventType*>(inArgument)); }, taEventType::sGetRTTI(), *this);
 
 	ScopedMutexRecursiveLock lock(mMutex);
 

@@ -44,7 +44,7 @@ void Managers::sAdd(taManagerType* aManager)
 	TypeID<Manager> type_id = taManagerType::sManagerTypeID;
 
 	int length = sManagers.Length();
-	int next = Max(length, gStaticCast<int>(type_id) + 1);
+	int next = Max(length, StaticCast<int>(type_id) + 1);
 	int size = Max(length, next);
 	sManagers.Resize(size);
 	gAssert(sManagers[type_id] == nullptr, "Manager was already added.");
@@ -79,6 +79,6 @@ taManagerType* Managers::sFind()
 		return nullptr;
 
 	Manager* manager = sManagers[type_id];
-	return gStaticCast<taManagerType*>(manager);
+	return StaticCast<taManagerType*>(manager);
 }
 }

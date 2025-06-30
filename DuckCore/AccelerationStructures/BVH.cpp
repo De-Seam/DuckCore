@@ -28,16 +28,16 @@ void BVH::Build()
 
 	mNodes.Clear();
 
-	mIndexCount = gStaticCast<uint32>(mObjects.Length());
+	mIndexCount = StaticCast<uint32>(mObjects.Length());
 
 #ifdef __linux
-	posix_memalign((void**)&mIndices, (gStaticCast<size_t>(mIndexCount) + 1) * sizeof(uint32), 64);
+	posix_memalign((void**)&mIndices, (StaticCast<size_t>(mIndexCount) + 1) * sizeof(uint32), 64);
 #elif _WIN32
-	mIndices = gStaticCast<uint32*>(_aligned_malloc((gStaticCast<size_t>(mIndexCount) + 1) * sizeof(uint32), 64));
+	mIndices = StaticCast<uint32*>(_aligned_malloc((StaticCast<size_t>(mIndexCount) + 1) * sizeof(uint32), 64));
 #endif
 
 	for (size_t i = 0; i < mObjects.Length(); i++)
-		mIndices[i] = gStaticCast<uint32>(i);
+		mIndices[i] = StaticCast<uint32>(i);
 
 	mNodes.Reserve(mObjects.Length() * 2 + 1);
 	mNodes.Add(BVHNode()); //Root Node
@@ -63,7 +63,7 @@ AABB<float> BVH::CreateAABBFromObjects(uint64 inFirst, uint64 inCount)
 
 	for (uint32 i = 0; i < inCount; i++)
 	{
-		const AABB<float>& mObjectAABB = mObjects[gStaticCast<int>(mIndices[inFirst + i])]->GetAABB();
+		const AABB<float>& mObjectAABB = mObjects[StaticCast<int>(mIndices[inFirst + i])]->GetAABB();
 		min.mX = Min(mObjectAABB.mMin.mX, min.mX);
 		min.mY = Min(mObjectAABB.mMin.mY, min.mY);
 
@@ -110,10 +110,10 @@ void BVH::Partition(BVHNode* inNode, uint64 inFirst, uint64 inCount, uint64 inDe
 	}
 
 	//Leaf node
-	if (best_split_cost >= inNode->mAABB.Area() * gStaticCast<float>(inCount))
+	if (best_split_cost >= inNode->mAABB.Area() * StaticCast<float>(inCount))
 	{
-		inNode->mLeafNode.mFirstIndex = gStaticCast<uint32>(inFirst);
-		inNode->mLeafNode.mCount = gStaticCast<uint32>(inCount);
+		inNode->mLeafNode.mFirstIndex = StaticCast<uint32>(inFirst);
+		inNode->mLeafNode.mCount = StaticCast<uint32>(inCount);
 		return;
 	}
 
@@ -122,7 +122,7 @@ void BVH::Partition(BVHNode* inNode, uint64 inFirst, uint64 inCount, uint64 inDe
 	uint64 left_count = index - inFirst;
 
 	int left_node_index = mNodes.Length();
-	inNode->mBranchNode.mLeftIndex = gStaticCast<uint32>(left_node_index);
+	inNode->mBranchNode.mLeftIndex = StaticCast<uint32>(left_node_index);
 
 	//Children
 	mNodes.Add(BVHNode());

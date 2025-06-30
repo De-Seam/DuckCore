@@ -31,7 +31,7 @@ struct Rect2D
 		};
 	};
 
-	Rect2D() : mX(gStaticCast<tType>(0)), mY(gStaticCast<tType>(0)), mWidth(gStaticCast<tType>(0)), mHeight(gStaticCast<tType>(0)) {}
+	Rect2D() : mX(StaticCast<tType>(0)), mY(StaticCast<tType>(0)), mWidth(StaticCast<tType>(0)), mHeight(StaticCast<tType>(0)) {}
 	Rect2D(const Vec2<tType>& inBottomLeft, const Vec2<tType>& inWidthHeight) :
 		mBottomLeft(inBottomLeft),
 		mWidthHeight(inWidthHeight)

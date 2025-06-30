@@ -48,7 +48,7 @@ template <typename taType>
 taType& RTTIClass::Cast()
 {
 	gAssert(this->IsARTTI(taType::sGetRTTI()) && "Invalid cast!");
-	return *gStaticCast<taType*>(this);
+	return *StaticCast<taType*>(this);
 }
 
 }
