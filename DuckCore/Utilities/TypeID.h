@@ -46,7 +46,7 @@ private:
 template<typename taType>
 inline TypeID<taType>::TypeID()
 {
-	mID = sNextID++;
+	mID = sNextID.fetch_add(1, std::memory_order_relaxed);
 }
 
 }
