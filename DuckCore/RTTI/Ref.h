@@ -1,12 +1,12 @@
 #pragma once
 // Core includes
 #include <DuckCore/Core/Assert.h>
+#include <DuckCore/Memory/Memory.h>
 #include <DuckCore/Threads/Atomic.h>
 #include <DuckCore/Utilities/NoCopy.h>
 
 namespace DC
 {
-
 class RTTIClass;
 
 class RefClass : public NoCopy, public NoMove
@@ -19,7 +19,7 @@ public:
 		{
 			mWeakRefCounter->mIsAlive = false;
 			if (mWeakRefCounter->mRefCount <= 0)
-				delete mWeakRefCounter;
+				Delete<WeakRefCounter>(mWeakRefCounter);
 		}
 	}
 
@@ -79,7 +79,7 @@ public:
 		{
 			const_cast<NonConstType*>(mPtr)->mRefCount--;
 			if (mPtr->mRefCount <= 0)
-				delete mPtr;
+				Delete<taType>(mPtr);
 		}
 
 		mPtr = inOther.mPtr;
@@ -121,7 +121,7 @@ public:
 			const_cast<NonConstType*>(mPtr)->mRefCount--;
 
 			if (mPtr->mRefCount <= 0)
-				delete mPtr;
+				Delete<taType>(mPtr);
 		}
 	}
 
@@ -165,7 +165,7 @@ public:
 
 		if (mWeakRefCounter == nullptr)
 		{
-			mWeakRefCounter = new RefClass::WeakRefCounter();
+			mWeakRefCounter = New<RefClass::WeakRefCounter>();
 			mPtr->mWeakRefCounter = mWeakRefCounter;
 		}
 
@@ -179,7 +179,7 @@ public:
 
 		if (mWeakRefCounter == nullptr)
 		{
-			mWeakRefCounter = new RefClass::WeakRefCounter();
+			mWeakRefCounter = New<RefClass::WeakRefCounter>();
 			mPtr->mWeakRefCounter = mWeakRefCounter;
 		}
 
@@ -200,7 +200,7 @@ public:
 		{
 			if (--mWeakRefCounter->mRefCount <= 0 && !mWeakRefCounter->mIsAlive)
 			{
-				delete mWeakRefCounter;
+				Delete<taType>(mWeakRefCounter);
 			}
 			mPtr = inOther.mPtr;
 			mWeakRefCounter = inOther.mWeakRefCounter;
@@ -220,7 +220,7 @@ public:
 		{
 			// Only destroy it if the object is already destroyed
 			if (!mWeakRefCounter->mIsAlive)
-				delete mWeakRefCounter;
+				Delete<RefClass::WeakRefCounter>(mWeakRefCounter);
 		}
 	}
 

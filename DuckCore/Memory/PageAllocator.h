@@ -2,7 +2,6 @@
 #include <DuckCore/Containers/Array.h>
 #include <DuckCore/Threads/Mutex.h>
 #include <DuckCore/Threads/ScopedMutex.h>
-#include <DuckCore/Utilities/NoCopy.h>
 
 namespace DC
 {
@@ -53,7 +52,7 @@ private:
 		bool TryDelete(tType* aPtr, int aCount)
 		{
 			tType* min = GetMin();
-			tType* max = GetMax();
+			tType* max = GetMax(aCount);
 
 			// Test if aPtr is inside this memory page.
 			if (aPtr > max && aPtr < min)
@@ -62,7 +61,8 @@ private:
 			aPtr->~tType();
 			
 			// We can reinterpret cast because Element::mElement is the first variable in the Element struct.
-			Element* element = gReinterpretCast<Element*>(aPtr);
+			// We reinterpret cast to const Element first in case tType aPtr is const. Then we const cast the const away, because we take ownership over this memory anyway.
+			Element* element = const_cast<Element*>(ReinterpretCast<const Element*>(aPtr));
 
 			// aPtr will be the new first free element, and the old first free element will be aPtr their next free element.
 			element->mNextFreeElement = mFirstFreeElement;
