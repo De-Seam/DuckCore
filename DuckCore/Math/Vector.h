@@ -1,5 +1,6 @@
 #pragma once
 #include <DuckCore/Config.h>
+#include <DuckCore/Containers/String.h>
 #include <DuckCore/Core/Assert.h>
 #include <DuckCore/Core/Types.h>
 #include <DuckCore/Math/HelperFunctions.h>
@@ -113,6 +114,8 @@ struct Vec2
 		taType l = Length<taType>();
 		return {mX / l, mY / l};
 	}
+
+	String ToString() const { return String::sFormatted("%s : %s", *DC::ToString(mX), *DC::ToString(mY)); }
 };
 
 template<typename taType>

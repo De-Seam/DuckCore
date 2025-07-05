@@ -42,6 +42,7 @@ public:
 
 	uint64 Hash() const;
 
+	operator const char*() const { return mString.c_str(); }
 	const char* operator*() const { return mString.c_str(); }
 	const char* CStr() const { return mString.c_str(); }
 
