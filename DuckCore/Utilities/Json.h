@@ -95,3 +95,4 @@ void from_json(const Json& aJson, taType& outObject)
 
 #define JSON_SAVE(ioJson, inValue) (ioJson)[#inValue] = inValue
 #define JSON_LOAD(inJson, outValue) if (auto it = inJson.find(#outValue); it != inJson.end()) outValue = it.value();
+#define JSON_LOAD_OR(inJson, outValue, inDefault) if (auto it = inJson.find(#outValue); it != inJson.end()) { outValue = it.value(); } else { (outValue) = (inDefault); }
