@@ -75,8 +75,11 @@ void File::WriteToDisk()
 
 	mFile << *mContents;
 
+	
 	if (!ShouldKeepFileOpen())
 		mFile.close();
+	else
+		mFile.flush();
 }
 
 void File::ClearCachedContents()

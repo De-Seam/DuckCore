@@ -13,7 +13,7 @@
 namespace DC
 {
 Array<LogEntry> gLogEntries;
-Mutex gMutex;
+Mutex gLogEntriesMutex;
 Ref<TextFile> gLogFile;
 Mutex gLogFileMutex;
 
@@ -42,16 +42,16 @@ void LogInternal(const RTTI& aLogCategoryRTTI, ELogLevel aLevel, const char* aMe
 	printf("\n");
 
 	{
-		ScopedMutexLock lock(gMutex);
-		gLogEntries.Add(Move(entry));
+		ScopedMutexLock entries_lock(gLogEntriesMutex);
+		gLogEntries.Add(entry);
 	}
 
-	ScopedMutexLock lock;
+	ScopedMutexLock file_lock;
 
 	if (!gLogFileMutex.TryLock())
 		return;
 
-	lock.SetLockedMutex(gLogFileMutex);
+	file_lock.SetLockedMutex(gLogFileMutex);
 
 	if (gLogFile == nullptr)
 	{
@@ -75,6 +75,6 @@ void Log(const char* aMessage)
 
 MutexProtectedPtr<const Array<LogEntry>> GetLogArray()
 {
-	return { gMutex, &gLogEntries };
+	return { gLogEntriesMutex, &gLogEntries };
 }
 }
