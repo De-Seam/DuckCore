@@ -5,6 +5,7 @@
 #include <DuckCore/Containers/String.h>
 #include <DuckCore/Containers/File/TextFile.h>
 #include <DuckCore/Core/Assert.h>
+#include <DuckCore/Core/Core.h>
 #include <DuckCore/Managers/Managers.h>
 #include <DuckCore/Threads/ScopedMutex.h>
 
@@ -41,10 +42,10 @@ void LogInternal(const RTTI& aLogCategoryRTTI, ELogLevel aLevel, const char* aMe
 	printf("%s", *entry.mMessage);
 	printf("\n");
 
-	{
+	defer({
 		ScopedMutexLock entries_lock(gLogEntriesMutex);
-		gLogEntries.Add(entry);
-	}
+		gLogEntries.Add(Move(entry));
+	});
 
 	ScopedMutexLock file_lock;
 

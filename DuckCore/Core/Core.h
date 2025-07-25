@@ -42,6 +42,10 @@ lua.lib
     #error "Unsupported compiler"
 #endif
 
+#include <DuckCore/Utilities/Utilities.h>
+
+#include <functional>
+
 namespace DC
 {
 class Core
@@ -49,4 +53,19 @@ class Core
 public:
 	static void sStartup(int aArgumentCount, char* aArgumentValues[]);
 };
+
+namespace Private
+{
+	class DeferHelper
+	{
+	public:
+		explicit DeferHelper(std::function<void()> inFunction) : mFunction(Move(inFunction)) {}
+		~DeferHelper() { mFunction(); }
+
+	private:
+		std::function<void()> mFunction;
+	};
 }
+}
+
+#define defer(x) DC::Private::DeferHelper scoped_defer([&]() { x; })
